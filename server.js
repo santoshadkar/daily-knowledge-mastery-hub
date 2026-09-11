@@ -55,8 +55,8 @@ function getTodayConcept() {
 }
 
 // 7:00 AM Cron Job Scheduler (Runs in traditional node environments; Vercel uses Vercel Cron Jobs via /api/cron/renew)
+const cronSchedule = process.env.DAILY_RENEWAL_CRON || '0 7 * * *';
 if (!process.env.VERCEL) {
-  const cronSchedule = process.env.DAILY_RENEWAL_CRON || '0 7 * * *';
   cron.schedule(cronSchedule, async () => {
     console.log('⏰ 07:00 AM Triggered! Renewing daily concepts and sending 3-Track Morning Digest email...');
     activeConceptIndex = (activeConceptIndex + 1) % curriculumData.length;
@@ -152,6 +152,12 @@ app.post('/api/concept/rotate', async (req, res) => {
     track: newConcept.track,
     event: 'Manual Rotation'
   });
+
+  res.json({
+    message: "Concept rotated successfully to next concept in queue.",
+    concept: newConcept
+  });
+});
 
 // 3b. Vercel Cron 7:00 AM Endpoint Trigger
 app.get('/api/cron/renew', async (req, res) => {
