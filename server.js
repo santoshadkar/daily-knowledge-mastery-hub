@@ -54,31 +54,33 @@ function getTodayConcept() {
   return getTodayConcepts()[0];
 }
 
-// 7:00 AM Cron Job Scheduler
-const cronSchedule = process.env.DAILY_RENEWAL_CRON || '0 7 * * *';
-cron.schedule(cronSchedule, async () => {
-  console.log('⏰ 07:00 AM Triggered! Renewing daily concepts and sending 3-Track Morning Digest email...');
-  activeConceptIndex = (activeConceptIndex + 1) % curriculumData.length;
-  lastRotationTimestamp = new Date().toISOString();
-  
-  const todayConcepts = getTodayConcepts();
-  const emailResult = await emailService.sendMorningDigest(todayConcepts);
+// 7:00 AM Cron Job Scheduler (Runs in traditional node environments; Vercel uses Vercel Cron Jobs via /api/cron/renew)
+if (!process.env.VERCEL) {
+  const cronSchedule = process.env.DAILY_RENEWAL_CRON || '0 7 * * *';
+  cron.schedule(cronSchedule, async () => {
+    console.log('⏰ 07:00 AM Triggered! Renewing daily concepts and sending 3-Track Morning Digest email...');
+    activeConceptIndex = (activeConceptIndex + 1) % curriculumData.length;
+    lastRotationTimestamp = new Date().toISOString();
+    
+    const todayConcepts = getTodayConcepts();
+    const emailResult = await emailService.sendMorningDigest(todayConcepts);
 
-  // Record in History Log
-  todayConcepts.forEach(concept => {
-    learningHistoryLog.push({
-      timestamp: lastRotationTimestamp,
-      conceptId: concept.id,
-      title: concept.title,
-      track: concept.track,
-      event: '7:00 AM Scheduled Renewal & Morning Mail Dispatched',
-      emailStatus: emailResult.success ? 'Sent' : 'Failed'
+    // Record in History Log
+    todayConcepts.forEach(concept => {
+      learningHistoryLog.push({
+        timestamp: lastRotationTimestamp,
+        conceptId: concept.id,
+        title: concept.title,
+        track: concept.track,
+        event: '7:00 AM Scheduled Renewal & Morning Mail Dispatched',
+        emailStatus: emailResult.success ? 'Sent' : 'Failed'
+      });
     });
-  });
 
-  console.log(`✨ Concepts Renewed for AI, Agile, and Soft Skills.`);
-  console.log(`📧 Email Status:`, emailResult);
-});
+    console.log(`✨ Concepts Renewed for AI, Agile, and Soft Skills.`);
+    console.log(`📧 Email Status:`, emailResult);
+  });
+}
 
 // REST API Endpoints
 
