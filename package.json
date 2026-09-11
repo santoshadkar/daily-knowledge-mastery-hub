@@ -1,0 +1,32 @@
+{
+  "name": "daily-concept-mastery-portal",
+  "version": "1.0.0",
+  "description": "Daily micro-learning portal for AI, Agile Coaching, and Leadership Soft Skills with 7:00 AM renewal and email digests.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "jest --runInBand"
+  },
+  "keywords": [
+    "micro-learning",
+    "ai",
+    "agile-coaching",
+    "soft-skills",
+    "safe",
+    "nodemailer"
+  ],
+  "author": "Antigravity Engineering",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.13"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
+}

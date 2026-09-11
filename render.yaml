@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: daily-concept-mastery-portal
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production
+      - key: DAILY_RENEWAL_CRON
+        value: 0 7 * * *
+      - key: SUBSCRIBER_EMAIL
+        sync: false
+      - key: SIMULATION_MODE
+        value: "false"
+      - key: RESEND_API_KEY
+        sync: false
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false

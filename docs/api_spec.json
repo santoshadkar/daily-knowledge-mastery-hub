@@ -1,0 +1,216 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Daily Concept Mastery Portal API",
+    "description": "API specification for fetching daily concepts across AI, Agile Coaching, and Soft Skills, triggering morning email digests, managing notes, and taking quizzes.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api",
+      "description": "Local Development Server"
+    }
+  ],
+  "paths": {
+    "/concept/today": {
+      "get": {
+        "summary": "Get Today's Active Concept",
+        "description": "Returns the active concept of the day along with complete end-to-end multi-medium study materials (books, articles, videos, case studies, quiz, takeaways).",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved today's concept.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Concept"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/concepts": {
+      "get": {
+        "summary": "Get All Concepts Archive",
+        "description": "Returns the list of all available concepts across tracks for archive browsing and search.",
+        "responses": {
+          "200": {
+            "description": "List of all concepts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Concept"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/concept/rotate": {
+      "post": {
+        "summary": "Rotate Daily Concept (Next Concept)",
+        "description": "Forces immediate daily concept renewal for testing/admin purposes.",
+        "responses": {
+          "200": {
+            "description": "Concept successfully rotated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Concept"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/email/trigger": {
+      "post": {
+        "summary": "Trigger Morning Mail Digest",
+        "description": "Sends an instant email notification digest for today's concept to the subscriber list.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "recipient": {
+                    "type": "string",
+                    "example": "user@example.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email sent successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "message": { "type": "string" },
+                    "previewUrl": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/concept/{id}/notes": {
+      "post": {
+        "summary": "Save User Notes for Concept",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notes": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Notes saved successfully."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Concept": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "track": { "type": "string", "enum": ["Artificial Intelligence", "Agile Coaching", "Leadership & Soft Skills"] },
+          "title": { "type": "string" },
+          "tagline": { "type": "string" },
+          "estimatedTime": { "type": "string" },
+          "overview": { "type": "string" },
+          "corePrinciples": { "type": "array", "items": { "type": "string" } },
+          "books": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "author": { "type": "string" },
+                "keyChapters": { "type": "string" },
+                "summary": { "type": "string" }
+              }
+            }
+          },
+          "articles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "source": { "type": "string" },
+                "url": { "type": "string" },
+                "takeaway": { "type": "string" }
+              }
+            }
+          },
+          "media": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string" },
+                "title": { "type": "string" },
+                "channel": { "type": "string" },
+                "duration": { "type": "string" },
+                "keyInsight": { "type": "string" }
+              }
+            }
+          },
+          "caseStudy": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "context": { "type": "string" },
+              "solution": { "type": "string" },
+              "impact": { "type": "string" }
+            }
+          },
+          "actionPlan": { "type": "array", "items": { "type": "string" } },
+          "quiz": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "question": { "type": "string" },
+                "options": { "type": "array", "items": { "type": "string" } },
+                "answer": { "type": "integer" },
+                "explanation": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

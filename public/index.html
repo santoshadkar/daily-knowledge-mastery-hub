@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Concept Mastery Portal | AI, Agile Coaching & Soft Skills</title>
+  <meta name="description" content="Master 1 core concept every day in Artificial Intelligence, Agile Coaching, and Leadership Soft Skills. Deep-dive articles, books, videos, case studies, diagrams, AI prompts, and 7:00 AM email digests.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Mermaid.js Diagrams CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+    });
+  </script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Top Glass Header -->
+    <header class="navbar">
+      <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <div class="brand-text">
+          <h1>Daily Concept Mastery</h1>
+          <p class="brand-subtitle">AI • Agile Coaching • Leadership Soft Skills</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="timer-badge">
+          <span class="pulse-dot"></span>
+          <span class="timer-label">Next Renewal (7:00 AM):</span>
+          <span id="countdown-timer" class="timer-val">12h 17m 45s</span>
+        </div>
+
+        <button id="btn-trigger-email" class="btn btn-secondary">
+          <span class="btn-icon">📧</span> Test Morning Mail Digest
+        </button>
+
+        <button id="btn-rotate-concept" class="btn btn-accent">
+          <span class="btn-icon">🔄</span> Rotate Concept
+        </button>
+
+        <button id="btn-open-archive" class="btn btn-outline">
+          <span class="btn-icon">🗂️</span> Concept Archive
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Layout -->
+    <main class="main-layout">
+      
+      <!-- Left Track Navigation & Progress Panel -->
+      <aside class="sidebar">
+        
+        <!-- Today's Active Spotlight Banner -->
+        <div class="card spotlight-card">
+          <span class="spotlight-tag">TODAY'S CONCEPT</span>
+          <div id="sidebar-track-badge" class="track-chip">Artificial Intelligence</div>
+          <h2 id="sidebar-concept-title">Transformer Architecture & Attention Mechanisms</h2>
+          <p id="sidebar-concept-tagline">Unpacking Self-Attention, Multi-Head Attention, and positional encodings driving modern LLMs.</p>
+          <div class="meta-row">
+            <span>⏱️ <span id="sidebar-read-time">75 mins read</span></span>
+            <span>🎯 Day <span id="sidebar-day-index">1</span> of 3</span>
+          </div>
+        </div>
+
+        <!-- Audio Text-To-Speech Reader -->
+        <div class="card audio-reader-card">
+          <div class="card-header">
+            <h3>🎧 Audio Read-Aloud</h3>
+            <span class="tts-status" id="tts-status">Ready</span>
+          </div>
+          <p class="tts-desc">Listen to an executive AI audio summary of today's masterclass while commuting or multitasking.</p>
+          <div class="audio-controls">
+            <button id="btn-play-tts" class="btn btn-sm btn-primary">▶️ Listen Summary</button>
+            <button id="btn-stop-tts" class="btn btn-sm btn-danger">⏹️ Stop</button>
+          </div>
+        </div>
+
+        <!-- Masterclass Domains -->
+        <div class="card tracks-card">
+          <h3>🎓 Curriculum Tracks</h3>
+          <div class="track-item active" data-track="Artificial Intelligence">
+            <span class="track-icon">🤖</span>
+            <div class="track-info">
+              <h4>Artificial Intelligence</h4>
+              <p>Transformers, RAG, Agents & Prompt Engineering</p>
+            </div>
+          </div>
+          <div class="track-item" data-track="Agile Coaching">
+            <span class="track-icon">🎯</span>
+            <div class="track-info">
+              <h4>Agile Coaching</h4>
+              <p>SAFe PI Planning, ICF Coaching, Systemic Teams</p>
+            </div>
+          </div>
+          <div class="track-item" data-track="Leadership & Soft Skills">
+            <span class="track-icon">🧠</span>
+            <div class="track-info">
+              <h4>Leadership & Soft Skills</h4>
+              <p>Psychological Safety, EQ, Crucial Conversations</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Morning Mail Digest Subscription Card -->
+        <div class="card mail-settings-card">
+          <h3>📬 Daily Mail Digest</h3>
+          <p class="settings-desc">Sent every morning at 7:00 AM to kickstart your day.</p>
+          <div class="input-group">
+            <input type="email" id="subscriber-email-input" value="ananya@example.com" placeholder="Enter recipient email">
+            <button id="btn-save-email" class="btn btn-sm btn-secondary">Save Email</button>
+          </div>
+          <div id="email-toast" class="toast-msg">Email settings saved.</div>
+        </div>
+
+      </aside>
+
+      <!-- Right Main Masterclass Content Area -->
+      <section class="content-area">
+        
+        <!-- Concept Header Banner -->
+        <div class="concept-header-banner">
+          <div class="banner-badge-row">
+            <span id="concept-track-badge" class="badge badge-ai">ARTIFICIAL INTELLIGENCE</span>
+            <span id="concept-id-badge" class="badge badge-subtle">CONCEPT ID: AI-01</span>
+            <span class="badge badge-green">DAILY ACTIVE</span>
+          </div>
+          <h1 id="concept-main-title">Transformer Architecture & Attention Mechanisms</h1>
+          <p id="concept-main-tagline" class="lead-text">Unpacking Self-Attention, Multi-Head Attention, and positional encodings driving modern LLMs.</p>
+        </div>
+
+        <!-- Multi-Medium Study Navigation Tabs -->
+        <nav class="study-tabs">
+          <button class="tab-btn active" data-tab="tab-overview">📖 Core Overview & Diagrams</button>
+          <button class="tab-btn" data-tab="tab-books">📚 Books & Chapters</button>
+          <button class="tab-btn" data-tab="tab-articles">📰 Articles & Posts</button>
+          <button class="tab-btn" data-tab="tab-media">🎙️ Video & Podcasts</button>
+          <button class="tab-btn" data-tab="tab-case">🏢 Case Study & Actions</button>
+          <button class="tab-btn" data-tab="tab-quiz">🧠 Assessment Quiz</button>
+          <button class="tab-btn" data-tab="tab-notes">📝 My Study Notes</button>
+        </nav>
+
+        <!-- Tab 1: Core Overview -->
+        <div id="tab-overview" class="tab-content active">
+          <div class="card content-card">
+            <h2>💡 Deep Dive Overview & Visual Diagrams</h2>
+            <div id="concept-overview-body" class="body-text">Loading concept details...</div>
+            
+            <h3 class="section-heading" style="margin-top: 36px;">🔑 Key Core Principles (Detailed Masterclass Breakdown)</h3>
+            <div id="concept-principles-list" class="principles-container">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Books & Deep Readings -->
+        <div id="tab-books" class="tab-content">
+          <div class="card content-card">
+            <h2>📚 Mandatory & Recommended Books</h2>
+            <p class="tab-subtitle">Selected chapters with direct store/publisher links for complete conceptual depth.</p>
+            <div id="books-container" class="cards-grid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Articles & Web Posts -->
+        <div id="tab-articles" class="tab-content">
+          <div class="card content-card">
+            <h2>📰 Curated Articles, Papers & Web Posts</h2>
+            <p class="tab-subtitle">Top-tier research papers, engineering blogs, and framework guidelines with direct reading links.</p>
+            <div id="articles-container" class="articles-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Video & Podcasts -->
+        <div id="tab-media" class="tab-content">
+          <div class="card content-card">
+            <h2>🎙️ Multimedia & Audio Breakdowns</h2>
+            <p class="tab-subtitle">Engaging YouTube talks, visual guides, and expert podcasts with direct watch/listen links.</p>
+            <div id="media-container" class="cards-grid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 5: Case Study & Action Plan -->
+        <div id="tab-case" class="tab-content">
+          <div class="card content-card">
+            <h2>🏢 Enterprise Case Study</h2>
+            <div class="case-study-box">
+              <h3 id="case-study-title">Enterprise QA Scale-Up</h3>
+              <div class="case-grid">
+                <div class="case-item">
+                  <span class="case-label">CHALLENGE & CONTEXT</span>
+                  <div id="case-study-context">Context...</div>
+                </div>
+                <div class="case-item">
+                  <span class="case-label">ENGINEERED SOLUTION</span>
+                  <div id="case-study-solution">Solution...</div>
+                </div>
+                <div class="case-item full-width">
+                  <span class="case-label">MEASURED IMPACT</span>
+                  <div id="case-study-impact">Impact...</div>
+                </div>
+              </div>
+            </div>
+
+            <h3 class="section-heading" style="margin-top: 30px;">🚀 Step-by-Step Action Plan with Executive AI Prompts & Participant AI Toolkits</h3>
+            <ol id="concept-action-list" class="styled-numbered-list">
+              <!-- Dynamically populated -->
+            </ol>
+          </div>
+        </div>
+
+        <!-- Tab 6: Assessment Quiz -->
+        <div id="tab-quiz" class="tab-content">
+          <div class="card content-card">
+            <h2>🧠 Self-Assessment Quiz (25 Comprehensive Questions)</h2>
+            <p class="tab-subtitle">Test your end-to-end domain mastery across 25 scenario-based questions.</p>
+            <div id="quiz-container" class="quiz-box">
+              <!-- Dynamically populated -->
+            </div>
+            <div class="quiz-actions">
+              <button id="btn-submit-quiz" class="btn btn-primary">Submit 25 Answers & Evaluate Score</button>
+              <div id="quiz-score-banner" class="score-banner hidden"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 7: My Study Notes -->
+        <div id="tab-notes" class="tab-content">
+          <div class="card content-card">
+            <h2>📝 Personal Study Notes Studio</h2>
+            <p class="tab-subtitle">Reflect, summarize, and record your key insights for today's topic.</p>
+            <textarea id="user-notes-input" placeholder="Type your personal insights, code snippets, or team coaching action items here..."></textarea>
+            <div class="notes-footer">
+              <button id="btn-save-notes" class="btn btn-secondary">💾 Save Notes</button>
+              <span id="notes-status-msg" class="status-msg"></span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Archive & Search Modal -->
+    <div id="archive-modal" class="modal-backdrop hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2>🗂️ Concept Archive & Search Hub</h2>
+          <button id="btn-close-modal" class="btn-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="archive-search-input" placeholder="Search concepts by title, track, or keywords...">
+          <div id="archive-list" class="archive-grid">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Email Preview Trigger Modal -->
+    <div id="email-preview-modal" class="modal-backdrop hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2>📧 Morning Email Digest Sent</h2>
+          <button id="btn-close-email-modal" class="btn-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="success-alert">
+            <span class="alert-icon">✅</span>
+            <div>
+              <h4 id="email-modal-status">Email Notification Dispatched!</h4>
+              <p id="email-modal-desc">The 7:00 AM Morning Digest email has been sent successfully.</p>
+            </div>
+          </div>
+          <div class="preview-link-box">
+            <label>Preview Email Link (Ethereal Mailer):</label>
+            <a id="email-modal-preview-link" href="#" target="_blank">http://localhost:3000</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
