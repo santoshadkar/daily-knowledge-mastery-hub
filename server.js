@@ -93,6 +93,22 @@ if (!process.env.VERCEL) {
 
 // REST API Endpoints
 
+// 0. API Root Status Summary
+app.get(['/api', '/api/'], (req, res) => {
+  res.json({
+    status: "online",
+    service: "Daily Concept Mastery Portal API",
+    version: "1.0.0",
+    endpoints: {
+      todayConcepts: "/api/concept/today",
+      conceptsArchive: "/api/concepts",
+      learningHistory: "/api/history",
+      triggerEmail: "/api/email/trigger (POST)",
+      cronRenew: "/api/cron/renew"
+    }
+  });
+});
+
 // 1. Get Today's Active Concepts
 app.get('/api/concept/today', (req, res) => {
   const todayConcepts = getTodayConcepts();
