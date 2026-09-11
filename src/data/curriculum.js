@@ -1556,6 +1556,1349 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       }
     ]
   }
+,
+
+  {
+    "id": "ai-02",
+    "track": "Artificial Intelligence",
+    "title": "Retrieval-Augmented Generation (RAG), Vector DBs & Hybrid Search",
+    "tagline": "Bridging LLM static memory with dynamic enterprise knowledge: HNSW indexes, BM25 keyword fusion, RRF reranking, and chunking strategies.",
+    "estimatedTime": "80 mins deep study",
+    "overview": "# 💡 SIMPLE LAYMAN'S EXPLANATION (Explain Like I'm 5)\n\nImagine you are taking a closed-book final exam at university:\n- **Standard LLM (No RAG)** is like taking the exam purely from memory. If the question asks about a secret company policy updated yesterday, your memory has no idea, so you might guess or hallucinate a completely fake answer!\n- **RAG System (Retrieval-Augmented Generation)** is like having an open-book exam with a ultra-fast assistant sitting next to you. Before you answer any question, your assistant instantly flips open the exact page of yesterday's updated policy handbook, places the paragraph in front of you, and lets you write a 100% accurate, fact-checked response!\n\n### The GPS Grid Analogy: Vector Embeddings\nThink of vector embeddings as putting every document on a giant 3D map:\n1. **Semantic Coordinates**: Documents about *\"golden retrievers\"* and *\"poodles\"* are placed right next to each other on the map because they mean similar things, even if they don't use the exact same words.\n2. **Nearest Neighbor Search (HNSW)**: When you ask a question like *\"friendly household dogs\"*, your vector database drops a pin on the map and instantly picks up the 5 nearest document clusters!\n\n---\n\n# 🎨 VISUAL ARCHITECTURE DIAGRAM: ADVANCED RAG HYBRID PIPELINE\n\n```mermaid\ngraph TD\n    UserQuery[User Natural Language Query] --> Embed[Embedding Model Vectorizer]\n    UserQuery --> Sparse[BM25 Keyword Tokenizer]\n    Embed --> DenseSearch[Dense Vector DB - HNSW Index Search]\n    Sparse --> SparseSearch[Sparse Inverted Index Search]\n    DenseSearch --> RRF[Reciprocal Rank Fusion - RRF Merger]\n    SparseSearch --> RRF\n    RRF --> Reranker[Cross-Encoder Reranker Model]\n    Reranker --> TopK[Top-K High Precision Chunks]\n    TopK --> PromptEngine[Augmented Context Prompt Construction]\n    PromptEngine --> LLM[LLM Generation Engine]\n    LLM --> Answer[Fact-Grounded Response with Citations]\n```\n\n---\n\n# 🌍 WHERE & HOW THIS CONCEPT IS USED IN THE REAL WORLD\n\n1. **Enterprise Customer Support Bots (Klara, Zendesk, Salesforce Agentforce)**:\n   - *Where Used*: Answering complex customer questions based on millions of internal knowledge base articles.\n   - *How It Works*: Retrieves real-time policy updates and refund terms, eliminating hallucinations and grounding bot responses in real documentation.\n2. **Legal & Compliance Document Audit (Harvey AI, Thomson Reuters)**:\n   - *Where Used*: Reviewing 10,000+ legal contracts during M&A due diligence.\n   - *How It Works*: Performs hybrid semantic and keyword search to pinpoint precise indemnification clauses and liability caps across thousands of PDFs.\n3. **Medical & Healthcare Diagnostics (Epic Systems & Nuance DAX)**:\n   - *Where Used*: Assisting physicians with patient medical history and drug interaction checks.\n   - *How It Works*: Fetches patient EHR records alongside PubMed clinical guidelines to recommend treatments with exact journal citations.\n4. **Internal Engineering Knowledge Hubs (Notion AI, Glean, GitHub Copilot Enterprise)**:\n   - *Where Used*: Searching company code repositories, Confluence specs, and Slack history.\n   - *How It Works*: Connects developer questions (*\"How do we configure OAuth2 refresh tokens?\"*) directly to the internal auth microservice documentation.\n\n---\n\n# 🔬 DEEP TECHNICAL ARCHITECTURE & MATHEMATICAL DERIVATION\n\nRAG replaces static parametric memory with non-parametric retrieval. \n\n### Cosine Similarity Equation:\nFor query vector $\\vec{q}$ and document chunk vector $\\vec{d}$:\n$$\\text{CosineSimilarity}(\\vec{q}, \\vec{d}) = \\frac{\\vec{q} \\cdot \\vec{d}}{\\|\\vec{q}\\| \\|\\vec{d}\\|} = \\frac{\\sum_{i=1}^{n} q_i d_i}{\\sqrt{\\sum_{i=1}^{n} q_i^2} \\sqrt{\\sum_{i=1}^{n} d_i^2}}$$\n\n### Reciprocal Rank Fusion (RRF) Reranking Score:\n$$RRF\\_Score(d \\in D) = \\sum_{m \\in M} \\frac{1}{k + r_m(d)}$$\nwhere $k \\approx 60$ is a smoothing constant, and $r_m(d)$ is document $d$'s rank position in retrieval system $m$ (Dense vs Sparse).",
+    "corePrinciples": [
+      {
+        "title": "1. Hybrid Search Synergy (Dense + Sparse Fusion)",
+        "meaning": "Combining dense semantic embeddings (capturing intent and concepts) with sparse keyword search (BM25 capturing exact serial numbers and proper nouns).",
+        "whyItMatters": "Solves vector-only blind spots where semantic search misses exact technical IDs like 'ERR-409-BL' or specific employee names.",
+        "implementation": "Query Pinecone/Qdrant using hybrid alpha blending: `score = alpha * dense_score + (1 - alpha) * sparse_score`."
+      },
+      {
+        "title": "2. Context-Aware Chunking Strategies",
+        "meaning": "Segmenting long documents into optimal chunk sizes (e.g. 512 tokens with 10% overlap) using semantic boundaries like headers or paragraphs.",
+        "whyItMatters": "Prevents breaking sentences in middle of critical thoughts while keeping chunk sizes small enough to avoid dilute embeddings.",
+        "implementation": "Utilize `RecursiveCharacterTextSplitter` with `separators=['\\n\\n', '\\n', ' ', '']` and overlap `chunk_overlap=64`."
+      },
+      {
+        "title": "3. Two-Stage Retrieval with Cross-Encoder Reranking",
+        "meaning": "Retrieving 50 candidate chunks using fast vector search, then passing candidates through a deep Cross-Encoder model to select top 5.",
+        "whyItMatters": "Boosts precision by 30-40% because Cross-Encoders evaluate full joint Query-Document attention interaction.",
+        "implementation": "Pass top-50 vector matches into Cohere Rerink API or `sentence-transformers/cross-encoder/ms-marco-MiniLM-L-6-v2`."
+      },
+      {
+        "title": "4. Hierarchical Indexing & Parent-Child Document Retrievers",
+        "meaning": "Indexing small chunks (128 tokens) for fine-grained retrieval match, but returning larger parent chunks (1024 tokens) to the LLM for rich context.",
+        "whyItMatters": "Eliminates the 'Lost in the Middle' phenomenon while providing the LLM complete surrounding context to synthesize accurate answers.",
+        "implementation": "Utilize LangChain `ParentDocumentRetriever` with `BytePair` child splitter and `Docstore` parent lookup."
+      },
+      {
+        "title": "5. Fact-Grounding & Hallucination Guardrails",
+        "meaning": "Structuring system prompts to strictly restrict LLMs to provided context chunks and enforcing automated evaluation metrics (Faithfulness & Relevancy).",
+        "whyItMatters": "Ensures enterprise compliance and prevents bots from generating false information in regulated industries.",
+        "implementation": "Implement Ragas / TruLens evaluation pipelines measuring Faithfulness = (Verified Context Claims / Total Output Claims)."
+      }
+    ],
+    "books": [
+      {
+        "title": "Designing Data-Intensive Applications",
+        "author": "Martin Kleppmann (O'Reilly Media)",
+        "url": "https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/",
+        "keyChapters": "Chapter 3: Storage and Retrieval (SSTables, LSM-Trees, B-Trees & Inverted Indexes)",
+        "summary": "Essential architectural foundational text covering search indexes, partitioning, replication, and query execution engines."
+      },
+      {
+        "title": "Vector Search and Information Retrieval Systems",
+        "author": "Pinecone Engineering Team & O'Reilly Media",
+        "url": "https://www.pinecone.io/learn/vector-database/",
+        "keyChapters": "Chapter 2: HNSW Graphs vs IVF Indexes & Chapter 5: Hybrid Search Architectures",
+        "summary": "Deep technical guide on high-dimensional vector spaces, quantization techniques (PQ, SQ), and production vector DB scaling."
+      },
+      {
+        "title": "Building LLM Apps: Retrieval, Fine-Tuning, and RAG",
+        "author": "Valentina Alto (Packt Publishing)",
+        "url": "https://www.packtpub.com/en-us/product/building-llm-powered-applications-9781835462317",
+        "keyChapters": "Chapter 4: Advanced RAG Patterns & Chapter 7: Reranking and Evaluation Frameworks",
+        "summary": "Hands-on engineering manual detailing Advanced RAG architectures, LlamaIndex data frameworks, and Ragas evaluation metrics."
+      }
+    ],
+    "articles": [
+      {
+        "title": "Efficient and Robust Approximate Nearest Neighbor Search Using HNSW Graphs",
+        "source": "Yu. A. Malkov & D. A. Yashunin (IEEE Transactions on Pattern Analysis / arXiv:1603.09320)",
+        "url": "https://arxiv.org/abs/1603.09320",
+        "takeaway": "The foundational research paper introducing Hierarchical Navigable Small World (HNSW) graphs, the core indexing algorithm powering vector databases."
+      },
+      {
+        "title": "Advanced RAG Patterns: Chunking, Reranking & Hybrid Search",
+        "source": "LlamaIndex Core Engineering Team Blog",
+        "url": "https://www.llamaindex.ai/blog/advanced-rag-patterns-chunking-reranking-hybrid-search",
+        "takeaway": "Comprehensive breakdown of parent-child retrieval, sub-question query transformation, and cross-encoder reranking implementations."
+      },
+      {
+        "title": "Ragas: Automated Evaluation of Retrieval-Augmented Generation",
+        "source": "Exploding Gradients Research / arXiv:2309.15217",
+        "url": "https://arxiv.org/abs/2309.15217",
+        "takeaway": "Seminal framework paper defining quantitative RAG metrics: Context Precision, Context Recall, Faithfulness, and Answer Relevance."
+      }
+    ],
+    "media": [
+      {
+        "type": "Keynote Masterclass",
+        "title": "Advanced RAG Architecture & Context Engineering",
+        "channel": "Harrison Chase (CEO & Founder of LangChain)",
+        "url": "https://www.youtube.com/watch?v=2TJxpyO3ei4",
+        "duration": "45 mins",
+        "keyInsight": "Explaining query transformations, multi-vector indexing, and self-reflective RAG agents."
+      },
+      {
+        "type": "Deep Dive Lecture",
+        "title": "Vector Databases & HNSW Search Mechanics Explained",
+        "channel": "James Briggs (Pinecone / AI Engineering Channel)",
+        "url": "https://www.youtube.com/watch?v=Qv2edv6zndw",
+        "duration": "32 mins",
+        "keyInsight": "Visual walkthrough showing how high-dimensional vectors navigate multi-layer HNSW graphs to achieve sub-millisecond retrieval."
+      },
+      {
+        "type": "Podcast / Workshop",
+        "title": "Building Production RAG Systems without Hallucinations",
+        "channel": "Jerry Liu (CEO of LlamaIndex) & Latent Space Podcast",
+        "url": "https://www.youtube.com/watch?v=TRjq7t26gHM",
+        "duration": "58 mins",
+        "keyInsight": "Practical lessons on data parsing, evaluation benchmarks, and avoiding production RAG failure modes."
+      }
+    ],
+    "caseStudy": {
+      "title": "Enterprise Legal Contract Search Overhaul at Global Law Firm",
+      "context": "A international law firm searched 2,000,000+ legal filings using basic keyword search, missing critical clause matches when attorneys phrased terms differently.",
+      "solution": "Architected a Hybrid RAG pipeline using Qdrant Vector DB (HNSW indexing), Cohere Cross-Encoder Reranker, and Parent-Child chunking with LlamaIndex.",
+      "impact": "Recall increased from 42% to 96.4%, legal research time per case dropped from 14 hours to 8 minutes, and zero hallucinated citations were produced across 50,000 queries."
+    },
+    "actionPlan": [
+      {
+        "title": "Action 1: Benchmark Semantic Vector Search vs Hybrid BM25 Search",
+        "instructions": "Compare search recall between pure vector similarity and hybrid BM25 search on a test dataset containing technical serial numbers and proper nouns.",
+        "aiPrompt": "SYSTEM PROMPT: You are a Vector Search Systems Engineer.\nUSER PROMPT: Write a Python script using Sentence-Transformers and Rank-BM25 demonstrating Hybrid Search.\nRequirements:\n1. Create a mini dataset of 5 documents containing technical IDs (e.g. 'Model SKU-990-X uses 8GB VRAM').\n2. Compute dense embeddings using 'all-MiniLM-L6-v2' and BM25 sparse scores for query 'Find SKU-990-X specifications'.\n3. Implement Reciprocal Rank Fusion (RRF) with k=60 to merge the top 3 items from each index.\n4. Print dense ranks, sparse ranks, and final fused RRF scores.",
+        "aiToolkit": [
+          "Sentence-Transformers",
+          "Rank-BM25",
+          "Qdrant / Pinecone SDK",
+          "Claude 3.5 Sonnet"
+        ]
+      },
+      {
+        "title": "Action 2: Implement Parent-Child Document Chunking in Python",
+        "instructions": "Implement a Parent-Child retriever that splits documents into 128-token child chunks for vector indexing while retrieving 1024-token parent context for LLM generation.",
+        "aiPrompt": "SYSTEM PROMPT: You are a RAG Data Pipeline Architect.\nUSER PROMPT: Write a Python script using LangChain or LlamaIndex that implements Parent-Child Document Chunking.\nRequirements:\n1. Load a sample 2000-word text document.\n2. Create Parent Chunks of 1024 characters and Child Chunks of 256 characters with 32-character overlap.\n3. Show how querying a child chunk returns the full parent document context to the prompt formatter.",
+        "aiToolkit": [
+          "LangChain",
+          "LlamaIndex",
+          "Tiktoken Tokenizer",
+          "ChatGPT 4o"
+        ]
+      },
+      {
+        "title": "Action 3: Build a Cross-Encoder Reranking Pipeline",
+        "instructions": "Pass the top 20 candidate passages from vector retrieval into a Cross-Encoder model (`ms-marco-MiniLM-L-6-v2`) and filter down to top 3 highest-precision matches.",
+        "aiPrompt": "SYSTEM PROMPT: You are an NLP Reranking Specialist.\nUSER PROMPT: Write a Python snippet demonstrating Cross-Encoder Reranking.\n1. Define a Query: 'How do I resolve database deadlock in PostgreSQL?'\n2. Define 5 candidate passages (3 relevant, 2 distractor passages containing keywords 'database' and 'PostgreSQL').\n3. Use 'sentence_transformers.CrossEncoder' to compute joint relevance logit scores.\n4. Sort and display passages ordered by Cross-Encoder confidence score.",
+        "aiToolkit": [
+          "Sentence-Transformers CrossEncoder",
+          "Cohere Rerank API",
+          "Claude 3.5 Sonnet"
+        ]
+      },
+      {
+        "title": "Action 4: Set Up Automated RAG Evaluation Metrics (Faithfulness & Relevancy)",
+        "instructions": "Set up a Ragas evaluation pipeline to quantitatively calculate Context Precision, Context Recall, and Faithfulness scores on your RAG outputs.",
+        "aiPrompt": "SYSTEM PROMPT: You are an AI Quality & Evaluation Specialist.\nUSER PROMPT: Write a Python script using the Ragas evaluation framework to calculate Faithfulness and Answer Relevancy scores for a RAG response.\nProvide test sample data containing:\n- Question\n- Context chunks retrieved\n- Generated answer\nExecute ragas.evaluate() and print the diagnostic scorecard table.",
+        "aiToolkit": [
+          "Ragas Framework",
+          "TruLens",
+          "DeepEval",
+          "ChatGPT 4o"
+        ]
+      },
+      {
+        "title": "Action 5: Design a Fact-Grounded System Prompt with Anti-Hallucination Guardrails",
+        "instructions": "Construct an enterprise RAG system prompt that strictly enforces citation tagging `[Doc X]` and forces the LLM to admit when context is insufficient.",
+        "aiPrompt": "SYSTEM PROMPT: You are an Enterprise AI Security & Safety Engineer.\nUSER PROMPT: Write an production-grade System Prompt for a Financial RAG Assistant.\nRules to enforce:\n1. ONLY use facts directly present in the provided <CONTEXT> block.\n2. Every claim must include an inline source citation tag [Doc N].\n3. If the context does not contain the answer, explicitly state: 'I cannot find information regarding this in the official documentation.'\n4. Prohibit drawing from pre-training knowledge for factual claims.",
+        "aiToolkit": [
+          "System Prompt Engineering Studio",
+          "Guardrails AI",
+          "NeMo Guardrails",
+          "Claude 3.5 Sonnet"
+        ]
+      }
+    ],
+    "quiz": [
+      {
+        "question": "1. What is the primary difference between Dense Semantic Search and Sparse Keyword Search (BM25)?",
+        "options": [
+          "Dense search uses SQL queries while sparse search uses NoSQL",
+          "Dense search maps text into continuous vector embeddings capturing conceptual meaning, while sparse search relies on exact keyword matching and term frequencies",
+          "Dense search only works for English while sparse search works for all languages",
+          "Dense search requires no GPU computation"
+        ],
+        "answer": 1,
+        "explanation": "Dense search uses neural embeddings to match meaning (synonyms, intent), while sparse search (BM25) matches exact token strings and unique technical identifiers."
+      },
+      {
+        "question": "2. What is the formula constant 'k' typically used for in Reciprocal Rank Fusion (RRF)?",
+        "options": [
+          "To set the GPU thread count",
+          "To smooth score impact and prevent top-ranked items from dominating low-ranked items (commonly k ≈ 60)",
+          "To specify the number of CPU cores",
+          "To limit vector dimension size to 60"
+        ],
+        "answer": 1,
+        "explanation": "RRF calculates rank scores as 1/(k + rank). Setting k ≈ 60 balances the weight across multiple search retrieval lists."
+      },
+      {
+        "question": "3. How does a Cross-Encoder Reranker differ from Bi-Encoder Vector Search?",
+        "options": [
+          "Cross-Encoders process Query and Document together in full joint self-attention, while Bi-Encoders compute Q and D vector embeddings separately",
+          "Cross-Encoders are 1000x faster than Bi-Encoders",
+          "Cross-Encoders do not use Transformers",
+          "Bi-Encoders can only compare 2 words at a time"
+        ],
+        "answer": 0,
+        "explanation": "Bi-Encoders embed Query and Document separately for fast vector search. Cross-Encoders concatenate (Query + Document) into a single Transformer pass, enabling deep cross-token attention for high-precision reranking."
+      },
+      {
+        "question": "4. Why is Parent-Child Document Retrieval effective in RAG pipelines?",
+        "options": [
+          "It lowers monthly vector database subscription costs",
+          "Small child chunks produce precise vector retrieval matches, while larger parent chunks supply rich surrounding context to the LLM",
+          "It eliminates the need for embedding models",
+          "It auto-corrects spelling errors in documents"
+        ],
+        "answer": 1,
+        "explanation": "Small child chunks (128 tokens) avoid embedding dilution for vector search, while fetching the larger parent chunk (1024 tokens) gives the LLM complete context."
+      },
+      {
+        "question": "5. In HNSW (Hierarchical Navigable Small World) vector indexing, what does parameter 'M' control?",
+        "options": [
+          "The maximum number of bi-directional connections per node in the graph layers",
+          "The total memory size in Megabytes",
+          "The number of GPUs allocated to the index",
+          "The maximum document word count"
+        ],
+        "answer": 0,
+        "explanation": "Parameter M defines the maximum number of outgoing links per node in HNSW graph layers, balancing retrieval accuracy vs index build memory."
+      },
+      {
+        "question": "6. What is the 'Lost in the Middle' phenomenon in LLM context windows?",
+        "options": [
+          "When a model crashes halfway through text generation",
+          "LLMs pay high attention to the beginning and end of long context prompts, but frequently fail to retrieve information placed in the middle of context",
+          "When vector databases delete middle chunks",
+          "When user queries are missing keywords"
+        ],
+        "answer": 1,
+        "explanation": "Research shows LLM attention mechanisms suffer U-shaped retrieval accuracy, recalling context at the very start or end of prompts much better than information buried in the middle."
+      },
+      {
+        "question": "7. In RAG evaluation, what does the 'Faithfulness' metric measure?",
+        "options": [
+          "The speed of vector retrieval",
+          "The proportion of claims in the LLM's generated answer that can be directly verified from the retrieved context chunks",
+          "The user's satisfaction rating",
+          "The total token count of the prompt"
+        ],
+        "answer": 1,
+        "explanation": "Faithfulness measures hallucination freedom by dividing verifiable context-grounded claims by total claims made in the LLM output."
+      },
+      {
+        "question": "8. What is Cosine Similarity between two identical normalized vectors?",
+        "options": [
+          "0.0",
+          "1.0",
+          "-1.0",
+          "0.5"
+        ],
+        "answer": 1,
+        "explanation": "For identical normalized vectors pointing in the exact same direction, the cosine of the 0-degree angle is 1.0."
+      },
+      {
+        "question": "9. Why is overlap (e.g. 50 tokens) added between consecutive text chunks during document splitting?",
+        "options": [
+          "To double the size of the database",
+          "To ensure semantic context at the boundary between chunks is not severed or lost",
+          "To speed up text embedding generation",
+          "To compress PDF files"
+        ],
+        "answer": 1,
+        "explanation": "Chunk overlap preserves sentence continuity across chunk boundaries, preventing key phrases split across boundaries from losing semantic context."
+      },
+      {
+        "question": "10. Which vector quantization technique compresses 32-bit floating point vector components into 8-bit integers?",
+        "options": [
+          "Scalar Quantization (SQ8)",
+          "B-Tree Partitioning",
+          "Softmax Clipping",
+          "JSON Serialization"
+        ],
+        "answer": 0,
+        "explanation": "Scalar Quantization (SQ8) maps FP32 vector values to INT8 representation, reducing vector DB RAM footprint by 75% with minimal accuracy loss."
+      },
+      {
+        "question": "11. What is Naive RAG?",
+        "options": [
+          "RAG that uses no computers",
+          "Direct Vector Search -> Top-K Context -> Simple LLM Prompt without query transformation, reranking, or evaluation guardrails",
+          "RAG designed for children",
+          "Manual document reading"
+        ],
+        "answer": 1,
+        "explanation": "Naive RAG follows basic chunk-embed-store-retrieve-generate flow without advanced reranking, hybrid search, or query rewrite layers."
+      },
+      {
+        "question": "12. What does 'Sub-Question Query Decomposition' do in Advanced RAG?",
+        "options": [
+          "Deletes short user questions",
+          "Breaks a complex multi-part user question into simpler sub-queries, executes retrieval for each, and synthesizes a combined answer",
+          "Translates questions into Spanish",
+          "Shortens prompt length"
+        ],
+        "answer": 1,
+        "explanation": "Decomposition breaks complex queries ('Compare Q1 and Q2 revenue') into independent single-topic queries, retrieving target context for each."
+      },
+      {
+        "question": "13. In RAG System Prompts, why is explicit instruction 'Admit when context is insufficient' necessary?",
+        "options": [
+          "To make the prompt longer",
+          "Because default LLMs try to be helpful and will fallback to pre-training knowledge, producing hallucinations when retrieved context lacks the answer",
+          "To reduce API costs",
+          "To format output as JSON"
+        ],
+        "answer": 1,
+        "explanation": "Without strict negative constraints, LLMs rely on parametric memory when context is sparse, leading to ungrounded hallucinations."
+      },
+      {
+        "question": "14. What is the role of an Inverted Index in sparse search (BM25)?",
+        "options": [
+          "Mapping document IDs to vector embeddings",
+          "Mapping words/tokens to a list of document IDs and positions where they occur across the corpus",
+          "Inverting image colors for OCR",
+          "Sorting documents by file size"
+        ],
+        "answer": 1,
+        "explanation": "Inverted indexes allow instant lookup of which specific documents contain query terms and their TF-IDF/BM25 weightings."
+      },
+      {
+        "question": "15. How does Product Quantization (PQ) compress high-dimensional vectors?",
+        "options": [
+          "By deleting half the documents",
+          "By breaking high-dimensional vectors into smaller sub-vectors and mapping each sub-vector to nearest centroid codebook IDs",
+          "By converting text into compressed zip files",
+          "By truncating long documents"
+        ],
+        "answer": 1,
+        "explanation": "PQ splits a 1536-dim vector into e.g. 64 sub-vectors of 24 dimensions, replacing floating point sub-vectors with 1-byte codebook cluster IDs."
+      },
+      {
+        "question": "16. What is 'Context Recall' in RAG evaluation?",
+        "options": [
+          "The speed of database disk read",
+          "The percentage of ground-truth reference answer facts that were successfully retrieved in the context chunks",
+          "The number of tokens in the prompt",
+          "The time taken to generate the response"
+        ],
+        "answer": 1,
+        "explanation": "Context Recall evaluates retrieval completeness by measuring how much of the necessary answer information was successfully fetched into context."
+      },
+      {
+        "question": "17. What is 'Self-RAG' (Self-Reflective Retrieval-Augmented Generation)?",
+        "options": [
+          "A model that writes its own code",
+          "An architecture where an LLM generates reflection tokens to dynamically decide WHEN to retrieve context, evaluate context relevance, and self-correct output",
+          "RAG that runs without an internet connection",
+          "Using a single document for all queries"
+        ],
+        "answer": 1,
+        "explanation": "Self-RAG trains LLMs to output special critique tokens ([Retrieve], [IsRel], [IsSupp], [IsUse]) to control retrieval and verify context relevancy on the fly."
+      },
+      {
+        "title": "18. What is the main drawback of setting chunk size too small (e.g. 32 tokens)?",
+        "options": [
+          "Embeddings take up too much disk space",
+          "Chunks lack sufficient semantic context, leading to fragmented embeddings and uninformative vector matches",
+          "LLMs refuse to read small chunks",
+          "Database connection timeouts"
+        ],
+        "answer": 1,
+        "explanation": "Very small chunks sever sentences and key relationships, producing weak embeddings that fail to capture meaningful semantic concepts."
+      },
+      {
+        "question": "19. In Qdrant vector database, what is a 'Payload'?",
+        "options": [
+          "The GPU power supply",
+          "Additional JSON metadata attached to a vector point (e.g. author, creation date, document ID, raw text snippet)",
+          "The network packet header",
+          "The weight of the server"
+        ],
+        "answer": 1,
+        "explanation": "Payloads store structured metadata alongside vector points, enabling filtered vector search queries (e.g. similarity search where `year == 2024`)."
+      },
+      {
+        "question": "20. What is 'Hypothetical Document Embeddings' (HyDE)?",
+        "options": [
+          "Hiding documents in encrypted folders",
+          "Using an LLM to generate a hypothetical answer to a user query, then using that hypothetical answer vector to retrieve real matching documents",
+          "Generating fake documents for unit testing",
+          "Deleting unread documents"
+        ],
+        "answer": 1,
+        "explanation": "HyDE uses an LLM to draft a hypothetical document responding to the query, then embeds the hypothetical document to search vector space for real documents with similar content."
+      },
+      {
+        "question": "21. Why is Euclidean Distance (L2) equivalent to Cosine Similarity for normalized vectors?",
+        "options": [
+          "Because normalized vectors have unit length (magnitude = 1.0), making L2 distance directly proportional to (2 - 2 * CosineSimilarity)",
+          "They are never equivalent under any conditions",
+          "Because L2 distance is measured in degrees",
+          "Because matrix multiplication is commutative"
+        ],
+        "answer": 0,
+        "explanation": "For unit-norm vectors (||x||=1), ||x - y||^2 = ||x||^2 + ||y||^2 - 2(x·y) = 2 - 2(CosineSimilarity). Maximizing cosine similarity minimizes L2 distance."
+      },
+      {
+        "question": "22. What is an In-Memory Vector Store (e.g. Faiss)?",
+        "options": [
+          "A cloud database with 99.999% SLA",
+          "A high-speed C++ library that stores and searches vector indexes directly in RAM, suitable for local benchmarking and fast prototyping",
+          "A browser extension for storing passwords",
+          "A hardware chip inside GPUs"
+        ],
+        "answer": 1,
+        "explanation": "Meta's FAISS (Facebook AI Similarity Search) is an in-memory vector index engine optimized for ultra-fast C++/CUDA vector similarity search."
+      },
+      {
+        "question": "23. In Advanced RAG, what is 'Corrective RAG' (CRAG)?",
+        "options": [
+          "RAG that fixes spelling errors",
+          "A framework that evaluates retrieved context quality; if retrieval is low confidence, it triggers web search or query rewriting to correct the retrieval failure",
+          "RAG for grammar checking",
+          "Deleting incorrect database records"
+        ],
+        "answer": 1,
+        "explanation": "CRAG uses a lightweight evaluator to score retrieved documents. If context is deemed irrelevant, it triggers external search engines or query rewrites to correct the context gap."
+      },
+      {
+        "question": "24. What is 'Context Relevancy' metric in RAG evaluation?",
+        "options": [
+          "The total file size of the vector DB",
+          "The ratio of relevant context sentences used in the answer compared to total context sentences retrieved (measuring signal-to-noise ratio)",
+          "The latency of the LLM call",
+          "The number of words in the user question"
+        ],
+        "answer": 1,
+        "explanation": "Context Relevancy measures prompt efficiency by ensuring retrieved context chunks contain minimal irrelevant noise."
+      },
+      {
+        "question": "25. What is the ultimate benefit of enterprise RAG over fine-tuning LLM base weights for knowledge updates?",
+        "options": [
+          "RAG allows instantaneous knowledge updates without re-training, provides verifiable citations, and respects document access permissions",
+          "RAG makes models 10x smaller",
+          "RAG eliminates the need for prompts",
+          "RAG removes the need for GPUs"
+        ],
+        "answer": 0,
+        "explanation": "RAG updates knowledge instantly by inserting new chunks into the vector store, provides exact source citations, and respects ACL access permissions without expensive model re-training."
+      }
+    ]
+  },
+  {
+    "id": "agile-02",
+    "track": "Agile Coaching",
+    "title": "SAFe PI Planning, ART Orchestration & ROAM Risk Management",
+    "tagline": "Unpacking Scaled Agile Framework (SAFe) in plain simple terms: 2-day PI Planning events, Program Boards, WSJF prioritization, and ROAM risk governance.",
+    "estimatedTime": "80 mins deep study",
+    "overview": "# 💡 SIMPLE LAYMAN'S EXPLANATION (Explain Like I'm 5)\n\nImagine an international airport operating 50 flights every hour:\n- **Uncoordinated Agile Teams** is like 50 airplane pilots deciding when to take off and land whenever they feel like it. They might be great individual pilots, but mid-air collisions and runway chaos are guaranteed!\n- **SAFe Agile Release Train (ART) & PI Planning** is like the Air Traffic Control Tower alignment. Every 10 to 12 weeks, all pilots, ground crew, and radar operators gather in one big room for 2 days. They map out every flight path, spot runway conflicts beforehand, and agree on a shared flight schedule for the next quarter!\n\n### The ROAM Analogy: Fixing House Hazards\nWhen preparing your home for a big storm, you classify hazards into **ROAM**:\n1. **R (Resolved)**: The loose tree branch is already cut down. Problem solved!\n2. **O (Owned)**: You hire an electrician to fix the exposed wire. Person A owns taking action.\n3. **A (Accepted)**: High wind is unavoidable. You accept the risk and prepare sandbags.\n4. **M (Mitigated)**: You install storm shutters to reduce the impact if hail strikes.\n\n---\n\n# 🎨 VISUAL ARCHITECTURE DIAGRAM: 2-DAY PI PLANNING CADENCE FLOW\n\n```mermaid\ngraph TD\n    Day1_Launch[Day 1 Morning: Business Context & Vision Presentations] --> Day1_Breakout[Day 1 Afternoon: Team Breakouts & Draft Plan Creation]\n    Day1_Breakout --> Day1_Review[Day 1 Evening: Executive Management Review & Problem Solving]\n    Day1_Review --> Day2_Adjust[Day 2 Morning: Planning Adjustments & Final Breakouts]\n    Day2_Adjust --> Day2_Board[Day 2 Afternoon: Program Board Finalization & Dependency Mapping]\n    Day2_Board --> Day2_ROAM[ROAM Risk Categorization Session]\n    Day2_ROAM --> Day2_Vote[ART Confidence Vote 1 to 5 Fist-of-Five]\n    Day2_Vote -->|Pass >= 3/5| Execution[10-Week PI Execution & Iteration Cadence]\n    Day2_Vote -->|Fail < 3/5| Day2_Adjust\n```\n\n---\n\n# 🌍 WHERE & HOW THIS CONCEPT IS USED IN THE REAL WORLD\n\n1. **Global Banking & Financial Systems (JPMorgan Chase, Capital One, Barclays)**:\n   - *Where Used*: Synchronizing 1,500+ developers across mobile app, core banking mainframe, and fraud detection teams.\n   - *How It Works*: Runs quarterly PI Planning sessions to align API delivery contracts before launching new digital banking features.\n2. **Healthcare & Medical Device Engineering (Siemens Healthineers, Philips)**:\n   - *Where Used*: Co-ordinating embedded hardware, cloud telemetry, and FDA regulatory compliance teams.\n   - *How It Works*: Uses WSJF (Weighted Shortest Job First) to prioritize life-saving feature delivery over minor administrative requests.\n3. **Aerospace & Defense Enterprise Scale (Lockheed Martin, Boeing)**:\n   - *Where Used*: Complex multi-domain engineering across software, avionics, and radar hardware.\n   - *How It Works*: Maps cross-domain dependencies on physical/virtual Program Boards to prevent component integration stalls.\n4. **Automotive Technology Scale (BMW Group, Volvo, Mercedes-Benz)**:\n   - *Where Used*: Autonomous driving software integration across 80+ ECU hardware suppliers.\n   - *How It Works*: Facilitates quarterly ART alignment so vehicle software releases ship in sync with factory assembly lines.\n\n---\n\n# 🔬 DEEP TECHNICAL ARCHITECTURE & FRAMEWORK DERIVATION\n\nSAFe (Scaled Agile Framework) structures enterprise alignment around Agile Release Trains (ARTs) executing Program Increments (PIs).\n\n### Weighted Shortest Job First (WSJF) Formula:\n$$WSJF = \\frac{\\text{Cost of Delay (CoD)}}{\\text{Job Size / Duration}}$$\n\nwhere $\\text{Cost of Delay} = \\text{User-Business Value} + \\text{Time Criticality} + \\text{Risk Reduction / Opportunity Enablement}$.",
+    "corePrinciples": [
+      {
+        "title": "1. Alignment Over Autonomy at Enterprise Scale",
+        "meaning": "Ensuring 100+ team members share a unified vision, strategic themes, and architecture roadmap rather than optimizing individual team silos.",
+        "whyItMatters": "Prevents high-performing local teams from building features that fail to integrate into the enterprise ecosystem.",
+        "implementation": "Conduct quarterly 2-Day PI Planning events aligning Business Owners, RTEs, Product Management, and System Architects."
+      },
+      {
+        "title": "2. Cost of Delay Prioritization via WSJF",
+        "meaning": "Calculating Weighted Shortest Job First scores to objectively prioritize epic backlogs based on business value and duration.",
+        "whyItMatters": "Eliminates HiPPO (Highest Paid Person's Opinion) decision bias, prioritizing jobs that yield maximum economic returns.",
+        "implementation": "Score features on 1-21 Fibonacci relative scale for CoD components divided by Job Size."
+      },
+      {
+        "title": "3. Transparent Dependency & Program Board Mapping",
+        "meaning": "Visually mapping inter-team feature dependencies, milestones, and release targets using color-coded strings/connectors.",
+        "whyItMatters": "Surfaces critical path bottlenecks weeks before sprint execution starts, enabling proactive cross-team coordination.",
+        "implementation": "Red strings connect feature delivery in Team A Sprint 2 to dependent feature delivery in Team B Sprint 3."
+      },
+      {
+        "title": "4. Systematic ROAM Risk Governance",
+        "meaning": "Categorizing all identified program risks into Resolved, Owned, Accepted, or Mitigated buckets during PI Planning.",
+        "whyItMatters": "Ensures program risks are explicitly owned and tracked by leadership rather than ignored or buried.",
+        "implementation": "Read every risk aloud during Day 2 PI Planning; assign executive owner for every 'Owned' item."
+      },
+      {
+        "title": "5. Objective Commitment via Fist-of-Five Confidence Voting",
+        "meaning": "Conducting an anonymous or open 1-to-5 confidence vote across the entire ART prior to finalizing PI objectives.",
+        "whyItMatters": "Forces open dialogue if any team member feels the plan is unrealistic (score < 3 triggers immediate replanning).",
+        "implementation": "If any team average is below 3/5, pause and execute immediate problem-solving breakout."
+      }
+    ],
+    "books": [
+      {
+        "title": "SAFe 6.0 Distilled: Achieving Business Agility with the Scaled Agile Framework",
+        "author": "Dean Leffingwell & Inbar Oren (Addison-Wesley)",
+        "url": "https://www.scaledagile.com/safe-distilled-book/",
+        "keyChapters": "Chapter 5: The Agile Release Train & Chapter 8: PI Planning Cadence",
+        "summary": "The definitive reference manual for SAFe 6.0, detailing ART execution, Solution Trains, Lean Portfolio Management, and RTE orchestration."
+      },
+      {
+        "title": "Large-Scale Scrum: More with LeSS",
+        "author": "Craig Larman & Bas Vodde (Addison-Wesley)",
+        "url": "https://less.works/less/framework/index",
+        "keyChapters": "Chapter 3: LeSS Huge Structure & Chapter 6: Feature Team Adoption",
+        "summary": "Explores scaling agile using Scrum-based principles, feature team organization, and minimal scaling overhead."
+      },
+      {
+        "title": "Principles of Product Development Flow: Second Generation Lean Product Development",
+        "author": "Donald G. Reinertsen (Celeritas Publishing)",
+        "url": "https://www.amazon.com/Principles-Product-Development-Flow-Generation/dp/1935401009",
+        "keyChapters": "Chapter 3: The Economics of Cost of Delay & Chapter 5: Managing Batch Size",
+        "summary": "The mathematical backbone of SAFe WSJF economic framework, fast feedback loops, and queue management."
+      }
+    ],
+    "articles": [
+      {
+        "title": "Scaled Agile Framework (SAFe 6.0) Official PI Planning Guidance",
+        "source": "Scaled Agile Inc. Official Enterprise Documentation",
+        "url": "https://scaledagileframework.com/pi-planning/",
+        "takeaway": "Complete 2-day PI Planning agenda, inputs, outputs, roles (RTE, Product Management, System Architect), and facilitation guides."
+      },
+      {
+        "title": "Weighted Shortest Job First (WSJF) Economic Prioritization",
+        "source": "Scaled Agile Framework Technical Whitepaper",
+        "url": "https://scaledagileframework.com/wsjf/",
+        "takeaway": "Mathematical formula derivation for Cost of Delay, User-Business Value, Time Criticality, and Opportunity Enablement scoring."
+      },
+      {
+        "title": "ROAMing Program Risks in Enterprise Agile Release Trains",
+        "source": "Agile Alliance & Enterprise Transformation Articles",
+        "url": "https://www.agilealliance.org/glossary/roam-risks/",
+        "takeaway": "Best practices for facilitating executive ROAM sessions during PI Planning and tracking risk migration across iterations."
+      }
+    ],
+    "media": [
+      {
+        "type": "Keynote Simulation",
+        "title": "SAFe 6.0 PI Planning in Action: Full 2-Day Virtual Simulation",
+        "channel": "Scaled Agile Media & Enterprise Case Studies",
+        "url": "https://www.youtube.com/watch?v=mLtr1T_4f-E",
+        "duration": "48 mins",
+        "keyInsight": "Step-by-step visual demonstration of Day 1 presentations, team breakouts, management review, and Program Board mapping."
+      },
+      {
+        "type": "Framework Masterclass",
+        "title": "Cost of Delay & WSJF Prioritization Deep Dive",
+        "channel": "Dean Leffingwell (Creator of SAFe)",
+        "url": "https://www.youtube.com/watch?v=5n_h9FzS2wM",
+        "duration": "34 mins",
+        "keyInsight": "Explaining why relative Fibonacci estimation of Cost of Delay transforms enterprise portfolio throughput."
+      },
+      {
+        "type": "RTE Facilitation Workshop",
+        "title": "Fist-of-Five Confidence Voting & Risk ROAMing Workshop",
+        "channel": "Agile Release Train Engineer Guild",
+        "url": "https://www.youtube.com/watch?v=Vp76ZqZ9E4w",
+        "duration": "26 mins",
+        "keyInsight": "How Release Train Engineers handle low confidence votes (<3) and facilitate executive risk resolution."
+      }
+    ],
+    "caseStudy": {
+      "title": "Digital Banking ART Transformation at Global Financial Group",
+      "context": "A global bank operated 18 siloed software teams that missed 70% of quarterly product launches due to uncoordinated API dependencies.",
+      "solution": "Established a 120-person Agile Release Train executing quarterly PI Planning, WSJF backlog scoring, virtual Program Boards, and ROAM risk sessions.",
+      "impact": "On-time release predictability increased from 30% to 94%, cross-team dependency delays fell by 82%, and time-to-market for new mobile features dropped from 9 months to 10 weeks."
+    },
+    "actionPlan": [
+      {
+        "title": "Action 1: Calculate WSJF Scores for a 5-Feature Backlog",
+        "instructions": "Gather your Product Management team and score 5 epic features using relative Fibonacci scale (1, 2, 3, 5, 8, 13, 21) for User Value, Time Criticality, RR/OE, and Job Size.",
+        "aiPrompt": "SYSTEM PROMPT: You are a SAFe Fellow and Agile Program Management Specialist.\nUSER PROMPT: Here is a backlog of 4 proposed features for our enterprise mobile app:\n1. Feature A: Biometric Fingerprint Login (Est. Job Size: 5)\n2. Feature B: Real-Time Fraud Alert Push Notifications (Est. Job Size: 8)\n3. Feature C: Dark Mode UI Redesign (Est. Job Size: 3)\n4. Feature D: Regulatory Open Banking Compliance API (Est. Job Size: 13)\n\nTasks:\n1. Assign relative Fibonacci scores (1 to 21) for:\n   - User-Business Value\n   - Time Criticality\n   - Risk Reduction / Opportunity Enablement (RR/OE)\n2. Calculate Cost of Delay (CoD = Value + Time + RR/OE).\n3. Compute final WSJF = CoD / Job Size.\n4. Output a markdown table ranking the features in execution order with economic justification.",
+        "aiToolkit": [
+          "SAFe WSJF Calculator Spreadsheet",
+          "Jira Align / Targetprocess",
+          "ChatGPT 4o",
+          "Claude 3.5 Sonnet"
+        ]
+      },
+      {
+        "title": "Action 2: Construct a Program Board & Map Cross-Team Dependencies",
+        "instructions": "Set up a virtual Program Board in Miro/Mural mapping 4 teams across 5 iterations. Use red connector strings to highlight features dependent on other teams' API deliverables.",
+        "aiPrompt": "SYSTEM PROMPT: You are a Release Train Engineer (RTE).\nUSER PROMPT: Create a structured ASCII / Markdown template for a SAFe Program Board covering:\n- 4 Teams (Team Alpha, Team Beta, Team Gamma, Team Delta)\n- 5 Iterations (Iteration 1.1 through 1.5)\n- Milestones & Delivery Targets\nInclude explicit dependency connectors showing how Team Beta's API in Iteration 1.2 enables Team Alpha's UI in Iteration 1.3.",
+        "aiToolkit": [
+          "Miro Program Board Template",
+          "Mural",
+          "Jira Align",
+          "Claude 3.5 Sonnet"
+        ]
+      },
+      {
+        "title": "Action 3: Facilitate a ROAM Risk Session on Identified Program Risks",
+        "instructions": "Gather 10 program-level risks identified during planning. Facilitate a 30-minute session categorizing each into Resolved, Owned, Accepted, or Mitigated.",
+        "aiPrompt": "SYSTEM PROMPT: You are an Enterprise Agile Risk Facilitator.\nUSER PROMPT: Here are 4 program risks identified during PI Planning:\n1. Risk A: 'Third-party payment gateway documentation is incomplete.'\n2. Risk B: 'Lead database architect is leaving the company next month.'\n3. Risk C: 'AWS cloud region latency might exceed 200ms.'\n4. Risk D: 'Legal team approval process takes 3 weeks.'\n\nTask:\nCategorize each risk into ROAM (Resolved, Owned, Accepted, Mitigated).\nFor 'Owned' and 'Mitigated' risks, provide concrete mitigation plans and executive ownership language.",
+        "aiToolkit": [
+          "ROAM Risk Board",
+          "Confluence Risk Register",
+          "ChatGPT 4o"
+        ]
+      },
+      {
+        "title": "Action 4: Conduct a 2-Day PI Planning Agenda Preparation & RTE Checklist",
+        "instructions": "Review the official 2-day PI Planning agenda. Ensure Business Context, Vision, Architecture Roadmap, and Facility/Virtual tooling are 100% ready.",
+        "aiPrompt": "SYSTEM PROMPT: You are a Lead Release Train Engineer (RTE).\nUSER PROMPT: Provide an exhaustive readiness checklist for an RTE 2 weeks prior to PI Planning.\nCover 4 areas:\n1. Organizational Readiness (Executive alignment, Business Owners)\n2. Content Readiness (Features finalized, WSJF scored)\n3. Logistics Readiness (Virtual tools, Zoom breakout rooms, Miro boards)\n4. Team Readiness (Capacity calculated, velocity baselined)",
+        "aiToolkit": [
+          "RTE Facilitation Checklist",
+          "Zoom Breakout Rooms",
+          "Miro",
+          "Claude 3.5 Sonnet"
+        ]
+      },
+      {
+        "title": "Action 5: Facilitate a Fist-of-Five Confidence Vote & Replanning Trigger",
+        "instructions": "Execute a Fist-of-Five confidence vote across your train. If any team averages below 3/5, guide the team through immediate problem-solving replanning.",
+        "aiPrompt": "SYSTEM PROMPT: You are an Executive Agile Coach.\nUSER PROMPT: During a PI Planning confidence vote, Team Gamma votes 2 out of 5, citing: 'We have 3 unmapped dependencies on Team Alpha and our capacity is overcommitted by 30%.'\nProvide a step-by-step facilitation guide for the RTE to handle this low confidence vote constructively with executive management during the Day 1 Review.",
+        "aiToolkit": [
+          "Fist-of-Five Polling App",
+          "Miro Management Review Board",
+          "ChatGPT 4o"
+        ]
+      }
+    ],
+    "quiz": [
+      {
+        "question": "1. What does the acronym ART stand for in Scaled Agile Framework (SAFe)?",
+        "options": [
+          "Automated Regression Testing",
+          "Agile Release Train",
+          "Architectural Review Team",
+          "Advanced Resource Tracking"
+        ],
+        "answer": 1,
+        "explanation": "Agile Release Train (ART) is a long-lived team of Agile teams (typically 50-125 people) that incrementally delivers enterprise value."
+      },
+      {
+        "question": "2. How is WSJF (Weighted Shortest Job First) calculated in SAFe?",
+        "options": [
+          "Job Size / Cost of Delay",
+          "Cost of Delay / Job Size",
+          "User Value * Job Size",
+          "Time Criticality + Duration"
+        ],
+        "answer": 1,
+        "explanation": "WSJF = Cost of Delay / Job Size. Prioritizing high CoD and smaller job sizes maximizes economic flow."
+      },
+      {
+        "question": "3. In ROAM risk management, what does 'O' stand for?",
+        "options": [
+          "Overlooked",
+          "Owned",
+          "Outstanding",
+          "Optional"
+        ],
+        "answer": 1,
+        "explanation": "ROAM stands for Resolved, Owned (assigned to a specific individual to manage), Accepted, and Mitigated."
+      },
+      {
+        "question": "4. What is the standard duration of a Program Increment (PI) in SAFe?",
+        "options": [
+          "1 week",
+          "8 to 12 weeks (typically 10 weeks comprising 4 execution iterations + 1 IP iteration)",
+          "1 year",
+          "6 months"
+        ],
+        "answer": 1,
+        "explanation": "A PI typically spans 10 weeks, consisting of four 2-week execution iterations followed by one Innovation and Planning (IP) iteration."
+      },
+      {
+        "question": "5. Who presents the Business Context at the start of Day 1 PI Planning?",
+        "options": [
+          "Junior Developer",
+          "Enterprise Executive / Business Owner",
+          "Scrum Master",
+          "External Consultant"
+        ],
+        "answer": 1,
+        "explanation": "Business Owners / Enterprise Executives present current market context, strategy, and business performance to start Day 1."
+      },
+      {
+        "question": "6. What is the purpose of the Red Strings on a physical or virtual Program Board?",
+        "options": [
+          "To mark completed user stories",
+          "To visually show feature dependencies between teams and target iterations",
+          "To indicate cancelled projects",
+          "To highlight team member vacations"
+        ],
+        "answer": 1,
+        "explanation": "Red strings map feature dependencies across teams and iterations, making critical path risks visible."
+      },
+      {
+        "question": "7. What score during a Fist-of-Five confidence vote indicates a team agrees the plan is achievable?",
+        "options": [
+          "1 or 2",
+          "3, 4, or 5",
+          "0",
+          "Negative scores"
+        ],
+        "answer": 1,
+        "explanation": "Scores of 3, 4, or 5 indicate agreement and confidence. Scores of 1 or 2 represent significant concern requiring immediate replanning."
+      },
+      {
+        "question": "8. What is the Innovation and Planning (IP) Iteration used for?",
+        "options": [
+          "Adding extra feature scope at the last minute",
+          "Innovation time, hackathons, continuous education, PI planning preparation, and buffer for cadence finalization",
+          "Team vacation without work",
+          "Deleting legacy code"
+        ],
+        "answer": 1,
+        "explanation": "The IP iteration provides guardrail buffer time for innovation, hackathons, learning, infrastructure maintenance, and PI planning readiness."
+      },
+      {
+        "question": "9. What three components make up Cost of Delay (CoD) in SAFe?",
+        "options": [
+          "User-Business Value + Time Criticality + Risk Reduction / Opportunity Enablement (RR/OE)",
+          "Hardware Cost + Salary + Office Rent",
+          "Story Points + Defect Count + Velocity",
+          "Lines of code + Hours + Budget"
+        ],
+        "answer": 0,
+        "explanation": "Cost of Delay = User-Business Value + Time Criticality + Risk Reduction/Opportunity Enablement."
+      },
+      {
+        "question": "10. Who facilitates the overall PI Planning event and manages ART execution?",
+        "options": [
+          "Product Owner",
+          "Release Train Engineer (RTE)",
+          "Database Administrator",
+          "QA Tester"
+        ],
+        "answer": 1,
+        "explanation": "The Release Train Engineer (RTE) acts as the master Scrum Master for the train, facilitating PI Planning and clearing ART blockers."
+      },
+      {
+        "question": "11. What is an Uncommitted Objective in PI Planning?",
+        "options": [
+          "A feature that was rejected by the team",
+          "A high-variable capacity objective planned by the team that counts toward capacity but is not guaranteed in the committed PI plan",
+          "An objective assigned to external contractors",
+          "An illegal requirement"
+        ],
+        "answer": 1,
+        "explanation": "Uncommitted objectives help improve plan reliability by accounting for high-uncertainty items without penalizing committed predictability scores."
+      },
+      {
+        "question": "12. What takes place during the Day 1 Evening Management Review & Problem Solving session?",
+        "options": [
+          "A dinner party",
+          "RTE, Business Owners, Product Management, and System Architects negotiate scope adjustments and address dependency blockers raised during Day 1 breakouts",
+          "Writing code for Sprint 1",
+          "Testing software releases"
+        ],
+        "answer": 1,
+        "explanation": "Day 1 evening review allows leadership to resolve cross-team resource conflicts, adjust feature scope, and provide solutions for Day 2 planning."
+      },
+      {
+        "question": "13. In SAFe, what is the role of the System Architect / Engineering Lead during PI Planning?",
+        "options": [
+          "Managing vacation schedules",
+          "Presenting Architectural Runway, non-functional requirements (NFRs), and guiding technical feasibility during team breakouts",
+          "Writing user documentation",
+          "Approving expense reports"
+        ],
+        "answer": 1,
+        "explanation": "System Architecture presents the architectural vision and Enabler roadmap, ensuring teams build within common architectural guardrails."
+      },
+      {
+        "title": "14. What is the ART Predictability Measure?",
+        "options": [
+          "The percentage of planned objective business value actually achieved by the train over a PI (target: 80-100%)",
+          "The number of hours developers work per day",
+          "The CPU utilization rate of servers",
+          "The count of bugs logged in Jira"
+        ],
+        "answer": 0,
+        "explanation": "ART Predictability Measure compares planned vs achieved business value scores across team PI objectives (target range: 80% to 100%)."
+      },
+      {
+        "question": "15. What is an Enabler Feature in SAFe?",
+        "options": [
+          "A marketing promotion",
+          "A technical feature (architecture, infrastructure, exploration) that supports upcoming business features",
+          "A user survey",
+          "A team social event"
+        ],
+        "answer": 1,
+        "explanation": "Enabler features extend the Architectural Runway, conduct technical exploration, or upgrade infrastructure needed for future business value."
+      },
+      {
+        "question": "16. In ROAM, what does 'A' (Accepted) mean?",
+        "options": [
+          "The risk has been completely eliminated",
+          "The risk is recognized as an unavoidable operational reality and accepted without active mitigation expense",
+          "The risk was assigned to an intern",
+          "The risk was deleted from Jira"
+        ],
+        "answer": 1,
+        "explanation": "Accepted risks are acknowledged as realities that cannot be economically mitigated or resolved, and the team accepts the potential impact."
+      },
+      {
+        "question": "17. What is a Strategic Theme in SAFe Portfolio Management?",
+        "options": [
+          "A color scheme for slide decks",
+          "Differentiating business objectives that connect enterprise strategy to portfolio vision and backlog decisions",
+          "A monthly newsletter",
+          "A coding style guide"
+        ],
+        "answer": 1,
+        "explanation": "Strategic Themes connect enterprise portfolio vision directly to execution backlogs and funding allocations."
+      },
+      {
+        "question": "18. What is the primary output of Day 2 PI Planning?",
+        "options": [
+          "A 500-page PDF manual",
+          "Finalized Team PI Objectives, Program Board dependencies, ROAMed Program Risks, and Committed PI Plan",
+          "New laptop assignments",
+          "Source code for all features"
+        ],
+        "answer": 1,
+        "explanation": "Day 2 outputs include committed team PI objectives, mapped dependencies, ROAMed risks, and ART confidence vote approval."
+      },
+      {
+        "question": "19. What is a System Demo in SAFe?",
+        "options": [
+          "A slide presentation given by sales",
+          "A regular bi-weekly event testing integrated software across all teams on the Agile Release Train in a staging environment",
+          "A hardware assembly test",
+          "An annual shareholder meeting"
+        ],
+        "answer": 1,
+        "explanation": "System Demo tests the fully integrated solution built by all ART teams every 2 weeks, providing objective proof of progress."
+      },
+      {
+        "question": "20. What does 'Feature' represent in SAFe taxonomy?",
+        "options": [
+          "A single line of code",
+          "A service that fulfills a stakeholder need, sized to be delivered by a single ART within a single PI",
+          "A 3-year enterprise initiative",
+          "A individual task assigned to one developer"
+        ],
+        "answer": 1,
+        "explanation": "Features are business deliverables maintained in the Program Backlog, sized to fit comfortably within a single 10-week PI pass."
+      },
+      {
+        "question": "21. What is the role of Product Management during PI Planning?",
+        "options": [
+          "Writing unit test code",
+          "Presenting top Program Features, clarifying acceptance criteria, and prioritizing scope trade-offs with teams",
+          "Configuring CI/CD pipelines",
+          "Auditing server firewall logs"
+        ],
+        "answer": 1,
+        "explanation": "Product Management owns the Program Backlog, presents the vision/features, and clarifies business priorities during breakouts."
+      },
+      {
+        "question": "22. In WSJF, if Feature X has CoD=15 and Size=3 (WSJF=5), and Feature Y has CoD=20 and Size=10 (WSJF=2), which feature should be executed first?",
+        "options": [
+          "Feature Y",
+          "Feature X",
+          "Both simultaneously",
+          "Neither"
+        ],
+        "answer": 1,
+        "explanation": "Feature X has a higher WSJF score (5 > 2), meaning it delivers higher economic value per unit of time/duration and should be scheduled first."
+      },
+      {
+        "question": "23. What is 'Architectural Runway' in SAFe?",
+        "options": [
+          "A runway at an airport",
+          "Existing technical code, infrastructure, and components that allow business features to be implemented without excessive refactoring delays",
+          "The blueprint of an office building",
+          "A hardware server rack"
+        ],
+        "answer": 1,
+        "explanation": "Architectural Runway consists of existing technical foundation that enables smooth, near-zero-delay feature delivery."
+      },
+      {
+        "question": "24. What is the Inspect & Adapt (I&A) event?",
+        "options": [
+          "A annual performance review",
+          "A significant PI milestone event where the entire ART evaluates systemic performance, conducts PI System Demo, and executes a Problem-Solving Workshop",
+          "A code audit by external auditors",
+          "A daily standup meeting"
+        ],
+        "answer": 1,
+        "explanation": "The I&A event ends every PI with an ART-wide system demo, metrics review, and root-cause problem-solving workshop to drive continuous improvement."
+      },
+      {
+        "question": "25. What is the ultimate goal of SAFe PI Planning & ART Alignment?",
+        "options": [
+          "To create maximum paperwork",
+          "To align business strategy with technical execution, foster cross-team transparency, manage dependencies, and deliver continuous economic value",
+          "To replace all software developers with AI",
+          "To eliminate all meetings forever"
+        ],
+        "answer": 1,
+        "explanation": "PI Planning aligns enterprise vision with team execution, ensuring cross-functional teams deliver maximum customer value with high predictability."
+      }
+    ]
+  },
+  {
+    "id": "soft-02",
+    "track": "Leadership & Soft Skills",
+    "title": "Radical Candor, Feedback Loops & The Johari Window",
+    "tagline": "Unpacking Radical Candor & High-Impact Feedback in plain simple terms: Kim Scott's 4 quadrants, SBI framework, and Johari blindspot reduction.",
+    "estimatedTime": "80 mins deep study",
+    "overview": "# 💡 SIMPLE LAYMAN'S EXPLANATION (Explain Like I'm 5)\n\nImagine your best friend has a huge piece of spinach stuck between their teeth right before going on stage for a public speech:\n- **Ruinous Empathy (Nice but Unhelpful)** is saying nothing because you feel awkward and don't want to embarrass them. They walk on stage and embarrass themselves in front of 500 people!\n- **Obnoxious Aggression (Front of Everyone)** is yelling across the crowded room: *\"Hey dummy, you look ridiculous with that spinach!\"*\n- **Radical Candor (Care Personally + Challenge Directly)** is pulling them aside privately, handing them a mirror, and saying: *\"Hey, you have spinach in your teeth—let's get it out right now so you crush this presentation!\"*\n\nYou **care about the person**, which is why you have the courage to **challenge them directly** when it matters most!\n\n### The Johari Window Analogy: Driving with Blindspots\nThink of personal self-awareness as driving a car:\n1. **Open Arena**: What both you and your passenger see clearly *(e.g., the road ahead)*.\n2. **Blind Spot**: What your passenger sees in the side mirror that you cannot see from the driver's seat *(e.g., a car in your blindspot or a recurring vocal habit)*.\n3. **Hidden Facade**: What you know about yourself but hide from others *(e.g., personal anxiety)*.\n4. **Unknown**: Unexplored potential that neither you nor others have discovered yet.\n\nRadical Candor feedback acts like a convex side-mirror—it shrinks your Blind Spot so you drive safely without crashing!\n\n---\n\n# 🎨 VISUAL ARCHITECTURE DIAGRAM: RADICAL CANDOR 4-QUADRANT MATRIX\n\n```mermaid\ngraph TD\n    HighCare[High Care Personally] -->|High Challenge Directly| RC[RADICAL CANDOR: Growth, Trust & High Performance]\n    HighCare -->|Low Challenge Directly| RE[RUINOUS EMPATHY: Silence, Unspoken Resentment & Mediocrity]\n    LowCare[Low Care Personally] -->|High Challenge Directly| OA[OBNOXIOUS AGGRESSION: Frontal Attacks & Toxic Culture]\n    LowCare -->|Low Challenge Directly| MI[MANIPULATIVE INSINCERITY: Passive Aggressive Gossip & Backstabbing]\n```\n\n---\n\n# 🌍 WHERE & HOW THIS CONCEPT IS USED IN THE REAL WORLD\n\n1. **Executive Leadership & Performance Reviews (Apple, Google, Pixar)**:\n   - *Where Used*: Delivering quarterly performance feedback and peer reviews.\n   - *How It Works*: Managers use the SBI (Situation-Behavior-Impact) model to give specific, actionable feedback without attacking the person's character.\n2. **Software Code Reviews & Architecture Critiques (Microsoft, Amazon, Meta)**:\n   - *Where Used*: Reviewing Pull Requests (PRs) and technical design documents.\n   - *How It Works*: Engineers critique code choices directly (*\"This loop has O(N^2) complexity\"*) while affirming personal respect for the author.\n3. **Cross-Functional Product Launch Retrospectives**:\n   - *Where Used*: Analyzing delayed software features between Engineering and Marketing.\n   - *How It Works*: Eliminates Ruinous Empathy, allowing team members to discuss root causes candidly without passive-aggressive gossip.\n4. **Executive Executive Coaching & Founder Mentorship**:\n   - *Where Used*: Venture Capital board meetings with startup CEOs.\n   - *How It Works*: Board members challenge CEOs directly on burn rate while providing continuous personal mentorship support.\n\n---\n\n# 🔬 DEEP TECHNICAL ARCHITECTURE & FRAMEWORK DERIVATION\n\nRadical Candor combines Kim Scott's 2x2 Feedback Matrix, Situation-Behavior-Impact (SBI) Model, and Joseph Luft & Harrington Ingham's Johari Window.\n\n### Situation-Behavior-Impact (SBI) Triad:\n1. **Situation**: Specify exact anchor time and place *(e.g. \"During yesterday's 2:00 PM architecture sync...\")*.\n2. **Behavior**: Describe observable, non-judgmental action *(e.g. \"...you interrupted Dave 3 times while he was explaining the database schema.\")*.\n3. **Impact**: Explain concrete business or team result *(e.g. \"...the team lost Dave's technical input, and Dave stopped contributing for the rest of the meeting.\")*.",
+    "corePrinciples": [
+      {
+        "title": "1. The 2-Axis Balance: Care Personally + Challenge Directly",
+        "meaning": "Building deep interpersonal relationships while maintaining the courage to deliver uncomfortable, honest feedback.",
+        "whyItMatters": "Eliminates toxic workplace extreme behaviors (passive-aggressive backstabbing vs harsh public public shaming).",
+        "implementation": "Establish personal rapport first ('Care Personally'), then deliver direct feedback immediately ('Challenge Directly')."
+      },
+      {
+        "title": "2. Precision Feedback via the SBI Model",
+        "meaning": "Structuring feedback exclusively around observable Situation, Behavior, and Impact without character judgements.",
+        "whyItMatters": "Prevents defensiveness because feedback targets observable actions ('you spoke over John') rather than personality traits ('you are arrogant').",
+        "implementation": "Formula: 'In [Situation], when you [Behavior], the [Impact] was X. How do you see it?'"
+      },
+      {
+        "title": "3. Shrinking the Johari Window Blind Spot",
+        "meaning": "Actively soliciting feedback from peers to uncover personal behaviors visible to others but hidden from self-awareness.",
+        "whyItMatters": "Accelerates executive growth and eliminates behavioral blind spots that derail leadership effectiveness.",
+        "implementation": "Regularly ask direct reports: 'What is 1 thing I could do or stop doing that would make it easier to work with me?'"
+      },
+      {
+        "title": "4. Praise in Public, Criticize in Private",
+        "meaning": "Celebrating wins publicly to boost morale while delivering corrective guidance in 1-on-1 private settings.",
+        "whyItMatters": "Protects individual dignity and psychological safety while ensuring corrective feedback is received constructively.",
+        "implementation": "Schedule immediate private 1-on-1 calls for corrective feedback; share praise in public team Slack channels."
+      },
+      {
+        "title": "5. Solicit Feedback Before Giving Feedback",
+        "meaning": "Asking for feedback on your own performance before offering corrective feedback to others.",
+        "whyItMatters": "Demonstrates vulnerability, proves you can take criticism, and establishes mutual trust.",
+        "implementation": "Start 1-on-1s by asking: 'What feedback do you have for me on how I supported the team this week?'"
+      }
+    ],
+    "books": [
+      {
+        "title": "Radical Candor: How to Be a Kick-Ass Boss Without Losing Your Humanity",
+        "author": "Kim Scott (St. Martin's Press)",
+        "url": "https://www.radicalcandor.com/the-book/",
+        "keyChapters": "Chapter 2: Build Radical Relationships & Chapter 6: Guidance: How to Give, Get, and Encourage Feedback",
+        "summary": "The definitive guide to workplace communication, feedback loops, and building high-trust, high-accountability team cultures."
+      },
+      {
+        "title": "Thanks for the Feedback: The Science and Art of Receiving Feedback Well",
+        "author": "Sheila Heen & Douglas Stone (Penguin Books / Harvard Negotiation Project)",
+        "url": "https://www.stoneandheen.com/thanks-feedback",
+        "keyChapters": "Chapter 4: Separate the Signal from the Noise & Chapter 8: Track the Disconnection",
+        "summary": "Explores the psychological triggers of feedback reception (Truth Triggers, Relationship Triggers, Identity Triggers) and how to extract value from tough input."
+      },
+      {
+        "title": "Crucial Accountability: Tools for Resolving Broken Promises, Violated Expectations, and Bad Behavior",
+        "author": "Kerry Patterson, Joseph Grenny et al. (McGraw Hill)",
+        "url": "https://www.mheducation.com/highered/product/crucial-accountability-tools-resolving-broken-promises-violated-expectations-bad-behavior-second-edition-patterson-grenny/9780071829311.html",
+        "keyChapters": "Chapter 2: Work on What to Say Before You Say It & Chapter 5: Make It Easy",
+        "summary": "Step-by-step framework for addressing repeated performance failures, unfulfilled commitments, and boundary violations constructively."
+      }
+    ],
+    "articles": [
+      {
+        "title": "The Johari Window: A Model for Communication & Self-Awareness",
+        "source": "Cognitive Psychology Research & Executive Leadership Review",
+        "url": "https://www.communicationtheory.org/johari-window-model/",
+        "takeaway": "Derivation of Joseph Luft and Harrington Ingham's 4-quadrant grid (Open, Blind, Hidden, Unknown) for expanding self-awareness."
+      },
+      {
+        "title": "How to Give Feedback That Actually Inspires Change: The SBI Framework",
+        "source": "Center for Creative Leadership (CCL)",
+        "url": "https://www.ccl.org/articles/leading-effectively-articles/closing-the-performance-gap-listen-up/",
+        "takeaway": "Official CCL guide detailing Situation-Behavior-Impact (SBI) feedback structuring to prevent defensiveness."
+      },
+      {
+        "title": "Radical Candor in Remote and Hybrid Teams",
+        "source": "Harvard Business Review (Kim Scott)",
+        "url": "https://hbr.org/2020/09/how-to-give-feedback-when-youre-all-remote",
+        "takeaway": "Adapting direct feedback, video 1-on-1s, and clear intent signals in distributed remote work environments."
+      }
+    ],
+    "media": [
+      {
+        "type": "Keynote Masterclass",
+        "title": "Radical Candor: The Surprising Secret to Being a Good Boss",
+        "channel": "Kim Scott (Authors@Google & TEDx)",
+        "url": "https://www.youtube.com/watch?v=f-Tcr0T9VYc",
+        "duration": "41 mins",
+        "keyInsight": "Explaining the 4 quadrants (Radical Candor, Ruinous Empathy, Obnoxious Aggression, Manipulative Insincerity) with real Silicon Valley stories."
+      },
+      {
+        "type": "Harvard Law Workshop",
+        "title": "The Art and Science of Receiving Feedback Well",
+        "channel": "Prof. Sheila Heen (Harvard Law School / Triad Consulting)",
+        "url": "https://www.youtube.com/watch?v=FQNbaKkYk_Q",
+        "duration": "46 mins",
+        "keyInsight": "How to master Truth Triggers and Identity Triggers to extract actionable insights from poorly delivered criticism."
+      },
+      {
+        "type": "Executive Podcast",
+        "title": "Mastering the Situation-Behavior-Impact (SBI) Feedback Framework",
+        "channel": "Center for Creative Leadership Podcast Series",
+        "url": "https://www.youtube.com/watch?v=t5A-w_Z3y70",
+        "duration": "22 mins",
+        "keyInsight": "Practical roleplay demonstration of converting vague complaints into precise SBI feedback."
+      }
+    ],
+    "caseStudy": {
+      "title": "Engineering Feedback Culture Overhaul at Tech Unicorn",
+      "context": "A 400-person tech company suffered from Ruinous Empathy: low-performing projects were never criticized openly, leading to missed product launches and unvoiced resentment.",
+      "solution": "Rolled out Radical Candor workshops, SBI feedback training, public praise / private critique rules, and bi-weekly 1-on-1 Johari blindspot checks.",
+      "impact": "Engineering turnover dropped by 65%, feature velocity increased by 2.4x, employee survey feedback satisfaction rose from 31% to 89%."
+    },
+    "actionPlan": [
+      {
+        "title": "Action 1: Audit Your Recent Feedback Using Kim Scott's 4 Quadrants",
+        "instructions": "Categorize the last 5 pieces of feedback you gave into Radical Candor, Ruinous Empathy, Obnoxious Aggression, or Manipulative Insincerity.",
+        "aiPrompt": "SYSTEM PROMPT: You are an Executive Feedback & Leadership Coach.\nUSER PROMPT: Here are 3 feedback messages I gave to my team members this week:\n1. Message A: 'Great job on the presentation!' (when the slides were confusing and missed key metrics).\n2. Message B: 'Your code in PR #402 is terrible. Who taught you how to write SQL?'\n3. Message C: 'During the 3:00 PM sprint demo [Situation], when you answered the client's pricing question without checking the rate sheet [Behavior], it created confusion about our SLA pricing [Impact]. Let's review the rate sheet together before the next call.'\n\nTask:\n1. Classify each message into Kim Scott's 4 Quadrants.\n2. Rewrite Message A and Message B into strict Radical Candor using the SBI framework.",
+        "aiToolkit": [
+          "Radical Candor Quadrant Matrix",
+          "SBI Template",
+          "ChatGPT 4o",
+          "Claude 3.5 Sonnet"
+        ]
+      },
+      {
+        "title": "Action 2: Solicit Blind Spot Feedback using Johari Window Questions",
+        "instructions": "Ask 3 peers or direct reports for 1 piece of constructive feedback to shrink your Johari Window blind spot.",
+        "aiPrompt": "SYSTEM PROMPT: You are a Leadership Self-Awareness Coach.\nUSER PROMPT: Generate 5 specific, non-threatening questions I can ask my direct reports during 1-on-1s to uncover my behavioral blind spots and shrink my Johari Window. The questions should invite candid feedback without making team members feel put on the spot.",
+        "aiToolkit": [
+          "Johari Window Assessment Template",
+          "Google Forms Anonymous Feedback",
+          "Claude 3.5 Sonnet"
+        ]
+      },
+      {
+        "title": "Action 3: Structure a Performance Feedback Conversation using the SBI Model",
+        "instructions": "Write out a feedback script for an employee who consistently misses sprint deadlines using exact Situation, Behavior, and Impact statements.",
+        "aiPrompt": "SYSTEM PROMPT: You are an HR & Management Performance Specialist.\nUSER PROMPT: Draft a 5-minute feedback script for a Manager addressing a Senior Developer who submitted code reviews 4 days late in 3 consecutive sprints.\nUse the SBI Framework:\n- Situation (Specific sprint time and PR links)\n- Behavior (Observable delay without prior communication)\n- Impact (Blocked QA testing and delayed release target)\nInclude 3 open questions to invite the developer's perspective and co-create an action plan.",
+        "aiToolkit": [
+          "CCL SBI Feedback Canvas",
+          "1-on-1 Meeting Agenda Template",
+          "ChatGPT 4o"
+        ]
+      },
+      {
+        "title": "Action 4: Deconstruct Personal Triggers When Receiving Tough Feedback",
+        "instructions": "Recall a past piece of criticism that made you feel defensive. Identify whether it was a Truth Trigger, Relationship Trigger, or Identity Trigger.",
+        "aiPrompt": "SYSTEM PROMPT: You are a Sheila Heen & Harvard Negotiation Project Specialist.\nUSER PROMPT: Analyze the following situation: A manager received feedback from their team stating: 'You micro-manage our daily tasks too much.' The manager felt deeply hurt and defensive, thinking: 'I'm not a micro-manager! I just care about quality!'\nTasks:\n1. Identify which feedback trigger (Truth, Relationship, or Identity) was activated in the manager's mind.\n2. Provide a 3-step cognitive reframing exercise for the manager to separate the signal from the noise.",
+        "aiToolkit": [
+          "Harvard Negotiation Feedback Workbook",
+          "Notion Reflection Journal",
+          "Claude 3.5 Sonnet"
+        ]
+      },
+      {
+        "title": "Action 5: Establish Team Feedback Rules (Praise in Public, Criticize in Private)",
+        "instructions": "Document clear team ground rules for code reviews, Slack communication, and retrospective feedback to foster high psychological safety and candor.",
+        "aiPrompt": "SYSTEM PROMPT: You are a Team Culture & Communication Architect.\nUSER PROMPT: Draft a 1-page 'Team Communication & Feedback Agreement' for a 12-person engineering team.\nInclude explicit rules for:\n1. Slack & Async Communication (Praise in public #kudos channel)\n2. Code Review PR Comments (Critique code, not person)\n3. Private 1-on-1 Feedback (Corrective feedback delivered face-to-face/video privately)\n4. Retrospective Ground Rules (Blameless system focus)",
+        "aiToolkit": [
+          "Confluence Team Charter",
+          "Slack Kudos Bot",
+          "ChatGPT 4o"
+        ]
+      }
+    ],
+    "quiz": [
+      {
+        "question": "1. What two axes define Kim Scott's Radical Candor matrix?",
+        "options": [
+          "Care Personally and Challenge Directly",
+          "Work Hard and Play Hard",
+          "Speed and Quality",
+          "Authority and Control"
+        ],
+        "answer": 0,
+        "explanation": "Radical Candor is created at the intersection of caring personally about the individual while having the courage to challenge them directly."
+      },
+      {
+        "question": "2. What quadrant represents High Care Personally + Low Challenge Directly?",
+        "options": [
+          "Manipulative Insincerity",
+          "Ruinous Empathy",
+          "Obnoxious Aggression",
+          "Radical Candor"
+        ],
+        "answer": 1,
+        "explanation": "Ruinous Empathy occurs when leaders care so much about avoiding temporary awkwardness or hurting feelings that they fail to deliver direct, necessary feedback."
+      },
+      {
+        "question": "3. In the Situation-Behavior-Impact (SBI) framework, what does 'Behavior' refer to?",
+        "options": [
+          "Your opinion of the person's character or attitude",
+          "Observable, specific, non-judgmental actions that took place",
+          "The company's revenue impact",
+          "The employee's psychological background"
+        ],
+        "answer": 1,
+        "explanation": "Behavior focuses exclusively on observable physical/verbal actions (what was said or done), avoiding subjective character judgments."
+      },
+      {
+        "question": "4. In the Johari Window model, what is the 'Blind Spot' quadrant?",
+        "options": [
+          "Information known to self and known to others",
+          "Information known to others but unknown to self",
+          "Information unknown to self and unknown to others",
+          "Information known to self but hidden from others"
+        ],
+        "answer": 1,
+        "explanation": "The Blind Spot contains behaviors, habits, and impacts that others clearly observe in you, but which you are blind to yourself."
+      },
+      {
+        "question": "5. What characterizes 'Manipulative Insincerity' in Radical Candor?",
+        "options": [
+          "Low Care Personally + Low Challenge Directly",
+          "High Care + High Challenge",
+          "High Care + Low Challenge",
+          "Low Care + High Challenge"
+        ],
+        "answer": 0,
+        "explanation": "Manipulative Insincerity is passive-aggressive behavior where someone neither cares about the person nor challenges them directly, resulting in backstabbing and gossip."
+      },
+      {
+        "question": "6. What is the recommended rule for praise versus criticism?",
+        "options": [
+          "Criticize in public, praise in private",
+          "Praise in public, criticize in private",
+          "Praise and criticize simultaneously in public",
+          "Never give praise or criticism"
+        ],
+        "answer": 1,
+        "explanation": "Praising in public elevates morale and models good behavior, while criticizing in private preserves dignity and lowers defensiveness."
+      },
+      {
+        "question": "7. According to Sheila Heen in 'Thanks for the Feedback', what is a 'Truth Trigger'?",
+        "options": [
+          "When feedback is delivered in a foreign language",
+          "When feedback feels wrong, unhelpful, or factually inaccurate, causing immediate cognitive rejection",
+          "When feedback is given by a friend",
+          "When feedback is written in code"
+        ],
+        "answer": 1,
+        "explanation": "Truth Triggers fire when we perceive feedback as factually wrong or unfair, leading us to dismiss the input instead of investigating the sender's underlying perspective."
+      },
+      {
+        "question": "8. What is the first thing a leader should do before giving feedback to others?",
+        "options": [
+          "Fire low performers",
+          "Solicit feedback on their own performance to model vulnerability and build trust",
+          "Send an email warning",
+          "Write a negative review"
+        ],
+        "answer": 1,
+        "explanation": "Asking for feedback first demonstrates humility, proves you can take criticism, and lowers team defensiveness."
+      },
+      {
+        "question": "9. In the Johari Window, how do you expand the 'Open Arena' quadrant?",
+        "options": [
+          "By keeping secrets and avoiding conversation",
+          "By soliciting feedback from others (shrinking Blind Spot) and self-disclosing relevant context (shrinking Hidden Facade)",
+          "By closing the company office",
+          "By deleting email records"
+        ],
+        "answer": 1,
+        "explanation": "The Open Arena grows when you actively ask for feedback (uncovering blindspots) and share authentic context with your team."
+      },
+      {
+        "question": "10. What is 'Obnoxious Aggression' in Kim Scott's model?",
+        "options": [
+          "High Challenge Directly + Low Care Personally",
+          "High Care + High Challenge",
+          "Low Care + Low Challenge",
+          "High Care + Low Challenge"
+        ],
+        "answer": 0,
+        "explanation": "Obnoxious Aggression (brutal honesty / fronting) occurs when feedback is delivered directly but without genuine care for the person."
+      },
+      {
+        "question": "11. Why should feedback be given as close in time to the event as possible?",
+        "options": [
+          "To save paper",
+          "Because immediate feedback keeps details fresh, prevents silent resentment from compounding, and enables rapid behavioral iteration",
+          "To meet HR monthly deadlines",
+          "Because computers forget data"
+        ],
+        "answer": 1,
+        "explanation": "Timely feedback ensures context is fresh in memory and prevents minor issues from compounding into unvoiced resentment."
+      },
+      {
+        "question": "12. In the SBI model, why is 'You were rude in the meeting' a poor behavior statement?",
+        "options": [
+          "It is too short",
+          "It is a subjective character judgement rather than an observable, non-judgmental action",
+          "It uses English words",
+          "It mentions a meeting"
+        ],
+        "answer": 1,
+        "explanation": "'Rude' is an interpretation. A proper behavior statement describes the exact observable action: 'You spoke over Sarah while she was presenting slide 4'."
+      },
+      {
+        "question": "13. What is an 'Identity Trigger' when receiving feedback?",
+        "options": [
+          "When feedback causes you to question your self-worth, competence, or core sense of identity",
+          "When feedback is sent via SMS",
+          "When feedback comes from a customer",
+          "When feedback is printed on paper"
+        ],
+        "answer": 0,
+        "explanation": "Identity Triggers destabilize us because the feedback feels like an attack on our core story about who we are ('I am a good leader/engineer')."
+      },
+      {
+        "question": "14. How does Radical Candor differ from 'Brutal Honesty'?",
+        "options": [
+          "Brutal honesty lacks personal care and often seeks to humiliate, while Radical Candor comes from a place of deep care for the person's growth",
+          "They are identical concepts",
+          "Brutal honesty is only used in sports",
+          "Radical Candor is written only in emails"
+        ],
+        "answer": 0,
+        "explanation": "Brutal honesty is Obnoxious Aggression (lacking care). Radical Candor pairs direct challenge with explicit personal care and support."
+      },
+      {
+        "question": "15. What is 'Ruinous Empathy' in code reviews?",
+        "options": [
+          "Approving a PR with known architectural flaws or bugs because you don't want to hurt the developer's feelings",
+          "Writing detailed unit tests",
+          "Rejecting a PR with angry comments",
+          "Refactoring code automatically"
+        ],
+        "answer": 0,
+        "explanation": "Ruinous Empathy in code reviews occurs when reviewers sign off on bad code to avoid awkwardness, harming software quality and the developer's long-term growth."
+      },
+      {
+        "question": "16. In the Johari Window, what is the 'Hidden Facade'?",
+        "options": [
+          "Information known to self but intentionally hidden from others",
+          "Information known to others but unknown to self",
+          "Information unknown to everyone",
+          "Information visible to the whole team"
+        ],
+        "answer": 0,
+        "explanation": "The Hidden Facade contains thoughts, fears, or context that you keep private from others."
+      },
+      {
+        "question": "17. What is a 'Relationship Trigger' when receiving criticism?",
+        "options": [
+          "When you dismiss feedback based on WHO delivered it ('I don't respect them' or 'They have no right to tell me that')",
+          "When feedback is about database tables",
+          "When feedback comes from a vendor",
+          "When feedback is delivered on a weekend"
+        ],
+        "answer": 0,
+        "explanation": "Relationship Triggers focus on the messenger rather than the message, causing us to reject valid input because of past conflict with the speaker."
+      },
+      {
+        "question": "18. What is the 'AWE' question in Michael Bungay Stanier's coaching habit?",
+        "options": [
+          "And What Else?",
+          "Are We Done?",
+          "Always Work Hard",
+          "Ask With Energy"
+        ],
+        "answer": 0,
+        "explanation": "'And What Else?' (AWE) encourages the coachee to dig deeper, uncovering additional options and deeper insights."
+      },
+      {
+        "question": "19. Why is 'Why did you do that?' often a poor coaching question?",
+        "options": [
+          "It is too short",
+          "It triggers defensiveness by making the person feel interrogated and forced to justify their actions",
+          "It uses the word 'why'",
+          "It is only used in legal trials"
+        ],
+        "answer": 1,
+        "explanation": "'Why' questions often sound accusatory. Replacing 'Why did you do X?' with 'What led to X?' or 'How did you approach X?' reduces defensiveness."
+      },
+      {
+        "question": "20. What is the impact of Ruinous Empathy over time in a software team?",
+        "options": [
+          "High morale and zero bugs",
+          "Standards degrade, high performers get frustrated carrying underperformers, and unvoiced resentment explodes later",
+          "Faster release speed",
+          "Lower server maintenance costs"
+        ],
+        "answer": 1,
+        "explanation": "When leaders avoid difficult conversations, quality drops, high performers leave out of frustration, and silent resentment erodes culture."
+      },
+      {
+        "question": "21. How should a manager handle feedback when an employee becomes tearful or defensive?",
+        "options": [
+          "Acknowledge the emotion with empathy, pause, validate their feelings, and offer to continue when they are ready without abandoning the feedback",
+          "Yell at them to stop crying",
+          "Withdraw the feedback completely and pretend nothing happened",
+          "Fire the employee on the spot"
+        ],
+        "answer": 0,
+        "explanation": "Empathy validates the human emotion without backing down from the necessary feedback commitment."
+      },
+      {
+        "question": "22. In the SBI model, what is the 'Impact' section intended to convey?",
+        "options": [
+          "The emotional damage to your ego",
+          "The concrete, objective consequence of the behavior on the team, project, client, or workflow",
+          "The financial salary of the employee",
+          "The time of day"
+        ],
+        "answer": 1,
+        "explanation": "Impact explains the actual result of the behavior ('it delayed the QA testing cycle by 2 days'), helping the person understand why change matters."
+      },
+      {
+        "question": "23. What is the 'Advice Monster' in coaching literature?",
+        "options": [
+          "A mythical creature",
+          "The strong internal urge to jump in with advice and solutions before fully understanding the person's problem",
+          "A bad software bug",
+          "A strict manager"
+        ],
+        "answer": 1,
+        "explanation": "Taming the Advice Monster means resisting the immediate impulse to offer solutions, staying curious longer to let others solve their problems."
+      },
+      {
+        "question": "24. What does 'Clean Feedback' mean in team communication?",
+        "options": [
+          "Feedback written in polite formal English",
+          "Feedback free of personal judgments, emotional exaggeration ('always/never'), or hidden agendas",
+          "Feedback sent via automated script",
+          "Feedback approved by legal"
+        ],
+        "answer": 1,
+        "explanation": "Clean feedback sticks strictly to facts, avoids generalizations like 'you always', and focuses on constructive growth."
+      },
+      {
+        "question": "25. What is the ultimate cultural outcome of embedding Radical Candor across an organization?",
+        "options": [
+          "Constant arguing and chaos",
+          "High trust, fast psychological safety, continuous learning, rapid problem resolution, and exceptional team performance",
+          "Higher employee turnover",
+          "Slower decision making"
+        ],
+        "answer": 1,
+        "explanation": "Radical Candor builds high-trust, high-candor environments where people grow fast, solve problems transparently, and achieve extraordinary results."
+      }
+    ]
+  }
+
 ];
 
 if (typeof module !== 'undefined' && module.exports) {
