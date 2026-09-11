@@ -151,9 +151,31 @@ app.post('/api/concept/rotate', async (req, res) => {
     event: 'Manual Rotation'
   });
 
+// 3b. Vercel Cron 7:00 AM Endpoint Trigger
+app.get('/api/cron/renew', async (req, res) => {
+  activeConceptIndex = (activeConceptIndex + 1) % curriculumData.length;
+  lastRotationTimestamp = new Date().toISOString();
+  const todayConcepts = getTodayConcepts();
+  
+  const targetEmail = process.env.SUBSCRIBER_EMAIL || 'santoshadkar@gmail.com';
+  const emailResult = await emailService.sendMorningDigest(todayConcepts, targetEmail);
+
+  todayConcepts.forEach(concept => {
+    learningHistoryLog.push({
+      timestamp: lastRotationTimestamp,
+      conceptId: concept.id,
+      title: concept.title,
+      track: concept.track,
+      event: 'Vercel Cron 7:00 AM Daily Renewal',
+      emailStatus: emailResult.success ? 'Sent' : 'Failed'
+    });
+  });
+
   res.json({
-    message: "Concept rotated successfully to next concept in queue.",
-    concept: newConcept
+    success: true,
+    message: "Vercel Cron 7:00 AM Daily Renewal Completed",
+    todayConcepts,
+    emailResult
   });
 });
 
