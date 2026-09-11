@@ -125,6 +125,13 @@ Scaling by $1/\\sqrt{d_k}$ normalizes variance to 1.0, preventing gradient vanis
         url: "https://www.oreilly.com/library/view/natural-language-processing/9781098103231/",
         keyChapters: "Chapter 1: Transformer Taxonomy & Chapter 3: Fine-Tuning Encoder vs Decoder Models",
         summary: "Covers architectural divergence between Encoder-only models (BERT), Decoder-only models (GPT-4), and Encoder-Decoder models (T5)."
+      },
+      {
+        title: "Generative AI on AWS: Building Context-Aware Applications",
+        author: "Chris Fregly & Antje Barth (O'Reilly Media)",
+        url: "https://www.oreilly.com/library/view/generative-ai-on/9781098159214/",
+        keyChapters: "Chapter 4: Transformer Architecture Optimization & Chapter 6: Efficient Fine-Tuning",
+        summary: "Enterprise architectural playbook for scaling Transformer inference on AWS Trainium/Inferentia chips and implementing RoPE positional embeddings."
       }
     ],
 
@@ -140,6 +147,12 @@ Scaling by $1/\\sqrt{d_k}$ normalizes variance to 1.0, preventing gradient vanis
         source: "Jay Alammar's Visual AI Guides",
         url: "https://jalammar.github.io/illustrated-transformer/",
         takeaway: "Step-by-step visual walk-through illustrating QKV vector projections and Feed-Forward Neural Networks."
+      },
+      {
+        title: "LLM Powered Autonomous Agents",
+        source: "Lilian Weng (Head of Safety Systems at OpenAI)",
+        url: "https://lilianweng.github.io/posts/2023-06-23-agent/",
+        takeaway: "Deep architectural essay exploring how Transformer self-attention serves as core working memory inside autonomous AI agents."
       }
     ],
 
@@ -151,6 +164,22 @@ Scaling by $1/\\sqrt{d_k}$ normalizes variance to 1.0, preventing gradient vanis
         url: "https://www.youtube.com/watch?v=eMlx5fFNoYc",
         duration: "27 mins",
         keyInsight: "Geometric visualization showing how attention matrices rotate high-dimensional word vectors toward specific semantic directions."
+      },
+      {
+        type: "Full Code Walkthrough",
+        title: "Let's build GPT: from scratch, in code, spelled out",
+        channel: "Andrej Karpathy (Former Director of AI at Tesla / OpenAI)",
+        url: "https://www.youtube.com/watch?v=kCc8FmEb1nY",
+        duration: "1 hour 56 mins",
+        keyInsight: "Building a complete GPT decoder model from scratch in PyTorch, coding multi-head attention, residual connections, and token embeddings step-by-step."
+      },
+      {
+        type: "Podcast / Masterclass",
+        title: "Generative AI & LLM Architecture Masterclass",
+        channel: "Andrew Ng (DeepLearning.AI / Stanford University)",
+        url: "https://www.youtube.com/watch?v=5sLYAJKmv6I",
+        duration: "42 mins",
+        keyInsight: "Explaining scaling laws, context windows, and how self-attention transforms multi-billion parameter foundation models."
       }
     ],
 
@@ -607,31 +636,73 @@ Systemic Team Coaching combines System Dynamics (Hawkins), International Coachin
 
     books: [
       {
-        title: "Coaching Agile Teams",
-        author: "Lyssa Adkins",
+        title: "Coaching Agile Teams: A Companion for ScrumMasters, Agile Coaches, and Project Managers",
+        author: "Lyssa Adkins (Addison-Wesley Professional)",
         url: "https://www.informit.com/store/coaching-agile-teams-a-companion-for-scrummasters-9780321637703",
         keyChapters: "Chapter 4: The Coaching Stance & Chapter 7: Coaching People One-on-One",
         summary: "Defines the transition from project management to Agile Coaching, navigating conflict levels (Level 1 Problem to Solve up to Level 5 World War)."
+      },
+      {
+        title: "Systemic Team Coaching: Developing High-Performing Teams",
+        author: "Peter Hawkins (Kogan Page)",
+        url: "https://www.koganpage.com/hr-learning-development/systemic-team-coaching-9781398602267",
+        keyChapters: "Chapter 3: The 5 Disciplines Model & Chapter 8: Coaching the Team Outer System",
+        summary: "Comprehensive guide for team coaches to align internal team dynamics with external stakeholder expectations across complex enterprise ecosystems."
+      },
+      {
+        title: "The Coaching Habit: Say Less, Ask More & Change the Way You Lead Forever",
+        author: "Michael Bungay Stanier (Box of Crayons Press)",
+        url: "https://boxofcrayons.com/the-coaching-habit-book/",
+        keyChapters: "Question 2: The AWE Question & Question 5: The Lazy Question",
+        summary: "Presents 7 essential coaching questions to turn everyday interactions into high-impact, non-directive coaching conversations."
       }
     ],
 
     articles: [
       {
-        title: "The ICF Core Competency Framework",
+        title: "The ICF Core Competency Framework & Code of Ethics",
         source: "International Coaching Federation (ICF)",
         url: "https://coachingfederation.org/credentials-and-standards/core-competencies",
-        takeaway: "Official 8 core competencies defining professional coaching."
+        takeaway: "Official 8 core competencies defining professional coaching: demonstrating ethical practice, embodying a coaching mindset, evoking awareness, and facilitating growth."
+      },
+      {
+        title: "Lyssa Adkins' 5 Levels of Team Conflict Framework",
+        source: "Agile Coaching Institute & Enterprise Coaching Guide",
+        url: "https://agilecoachinginstitute.com/building-blocks-of-agile-coaching/",
+        takeaway: "Diagnostic framework for identifying team conflict intensity (Problem to Solve, Disagreements, Contest, Crusade, World War) and choosing exact coaching interventions."
+      },
+      {
+        title: "Clean Language & David Grove's Symbolic Modelling in Executive Coaching",
+        source: "Clean Change Company & Metaphor Research",
+        url: "https://cleanchange.co.uk/cleanlanguage/",
+        takeaway: "Explains how to use neutral Clean Questions to explore coachee metaphors without introducing coach bias or leading suggestions."
       }
     ],
 
     media: [
       {
         type: "Coaching Demonstration",
-        title: "Master Certified Coach (MCC) Live Session",
-        channel: "ICF",
+        title: "Master Certified Coach (MCC) Live Session & Deconstruct",
+        channel: "International Coaching Federation (ICF Channel)",
         url: "https://www.youtube.com/watch?v=gT8Y_Qy0LGY",
         duration: "45 mins",
-        keyInsight: "Demonstrates how 10 seconds of silence after a powerful question allows cognitive processing."
+        keyInsight: "Demonstrates how 10 seconds of silence after a powerful question allows cognitive processing and deep self-generated insights."
+      },
+      {
+        type: "Keynote Masterclass",
+        title: "Systemic Team Coaching & The 5 Disciplines Framework",
+        channel: "Prof. Peter Hawkins (Global Team Coaching Institute)",
+        url: "https://www.youtube.com/watch?v=Rvh8R3aKk0E",
+        duration: "38 mins",
+        keyInsight: "Walkthrough of Commissioning, Clarifying, Co-creating, Connecting, and Core Learning in large-scale agile release trains."
+      },
+      {
+        type: "Podcast / Talk",
+        title: "The Art of Asking Powerful Non-Directive Questions",
+        channel: "Michael Bungay Stanier (The Coaching Habit Series)",
+        url: "https://www.youtube.com/watch?v=E-rUeQW21u8",
+        duration: "24 mins",
+        keyInsight: "How to stay curious longer, tame your Advice Monster, and ask 'And what else?' to uncover deeper systemic obstacles."
       }
     ],
 
@@ -1076,18 +1147,25 @@ Psychological Safety combines Amy Edmondson's Safety Matrix, Timothy Clark's 4 S
 
     books: [
       {
-        title: "The Fearless Organization",
-        author: "Amy C. Edmondson",
+        title: "The Fearless Organization: Creating Psychological Safety in the Workplace for Learning, Innovation, and Growth",
+        author: "Amy C. Edmondson (Wiley Publishing)",
         url: "https://www.wiley.com/en-us/The+Fearless+Organization%3A+Creating+Psychological+Safety+in+the+Workplace+for+Learning%2C+Innovation%2C+and+Growth-p-9781119477266",
         keyChapters: "Chapter 1: The Anatomy of Psychological Safety & Chapter 7: The Leader's Toolkit",
-        summary: "Presents multi-industry case studies demonstrating how psychological safety drives enterprise innovation and saves lives."
+        summary: "Presents multi-industry case studies demonstrating how psychological safety drives enterprise innovation, blameless incident learning, and high-performance cultures."
       },
       {
-        title: "Crucial Conversations",
-        author: "Joseph Grenny et al.",
+        title: "Crucial Conversations: Tools for Talking When Stakes Are High",
+        author: "Joseph Grenny, Kerry Patterson, Ron McMillan, Al Switzler (McGraw Hill)",
         url: "https://www.mheducation.com/highered/product/crucial-conversations-tools-talking-when-stakes-high-third-edition-grenny-patterson/9781264257867.html",
         keyChapters: "Chapter 3: Start with Heart & Chapter 8: STATE My Path",
-        summary: "Step-by-step methodology for turning hostile confrontations into productive mutual problem-solving."
+        summary: "Step-by-step methodology for turning hostile confrontations into productive mutual problem-solving using the STATE dialogue model."
+      },
+      {
+        title: "Emotional Intelligence 2.0",
+        author: "Travis Bradberry & Jean Greaves (TalentSmart)",
+        url: "https://www.talentsmart.com/products/emotional-intelligence-2-0/",
+        keyChapters: "Chapter 3: Self-Awareness Strategies & Chapter 5: Relationship Management",
+        summary: "Actionable blueprint for increasing EQ across four core pillars: Self-Awareness, Self-Management, Social Awareness, and Relationship Management."
       }
     ],
 
@@ -1096,7 +1174,19 @@ Psychological Safety combines Amy Edmondson's Safety Matrix, Timothy Clark's 4 S
         title: "What Google Learned From Its Quest to Build the Perfect Team (Project Aristotle)",
         source: "The New York Times Magazine (Charles Duhigg)",
         url: "https://www.nytimes.com/2016/02/28/magazine/what-google-learned-from-its-quest-to-build-the-perfect-team.html",
-        takeaway: "Deep investigative report into Google's research proving conversational turn-taking equality drives team effectiveness."
+        takeaway: "Deep investigative report into Google's multi-year Project Aristotle research proving conversational turn-taking equality and psychological safety drive team effectiveness."
+      },
+      {
+        title: "High-Performing Teams Need Psychological Safety: Here's How to Create It",
+        source: "Harvard Business Review (Laura Delizonna)",
+        url: "https://hbr.org/2017/08/high-performing-teams-need-psychological-safety-heres-how-to-create-it",
+        takeaway: "Practical leadership guidelines on replace blame with curiosity, asking for feedback on delivery tone, and facilitating blameless post-mortems."
+      },
+      {
+        title: "The 4 Stages of Psychological Safety Framework",
+        source: "Dr. Timothy R. Clark (LeaderFactor Whitepaper)",
+        url: "https://www.leaderfactor.com/4-stages-of-psychological-safety",
+        takeaway: "Defines the 4 sequential progression stages of psychological safety: Inclusion Safety, Learner Safety, Contributor Safety, and Challenger Safety."
       }
     ],
 
@@ -1107,7 +1197,23 @@ Psychological Safety combines Amy Edmondson's Safety Matrix, Timothy Clark's 4 S
         channel: "TEDxHGSE (Dr. Amy Edmondson)",
         url: "https://www.youtube.com/watch?v=LhoLuui9gX8",
         duration: "11 mins 30 secs",
-        keyInsight: "Explains why organizational silence is catastrophic and how leaders frame work as a learning problem."
+        keyInsight: "Explains how framed expectations, acknowledging fallibility, and modeled curiosity create environments where people feel safe to take interpersonal risks."
+      },
+      {
+        type: "Keynote Talk",
+        title: "Emotional Intelligence & Self-Regulation in High-Pressure Teams",
+        channel: "Daniel Goleman (Author of Emotional Intelligence)",
+        url: "https://www.youtube.com/watch?v=Y7m9eNoB3NU",
+        duration: "35 mins",
+        keyInsight: "Walkthrough of how the amygdala hijacking mechanism operates during conflict and how 6-second breathing pauses restore executive brain function."
+      },
+      {
+        type: "Executive Podcast",
+        title: "Mastering Crucial Conversations & High-Stakes Dialogue",
+        channel: "Joseph Grenny (Crucial Learning Series)",
+        url: "https://www.youtube.com/watch?v=Pu435X_O090",
+        duration: "28 mins",
+        keyInsight: "Detailed breakdown of the STATE framework (Share facts, Tell story, Ask path, Talk tentatively, Encourage testing) during heated leadership debates."
       }
     ],
 
