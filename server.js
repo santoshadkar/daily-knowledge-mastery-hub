@@ -224,6 +224,9 @@ app.post('/api/concept/:id/notes', (req, res) => {
 
 // Serve frontend SPA fallback
 app.get('*', (req, res) => {
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ error: `API route ${req.path} not found` });
+  }
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
