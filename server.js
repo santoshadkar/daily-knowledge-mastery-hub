@@ -15,8 +15,10 @@ app.use(express.json());
 
 // URL Normalization Middleware for Vercel Serverless Function Rewrites
 app.use((req, res, next) => {
-  if (process.env.VERCEL && !req.url.startsWith('/api')) {
-    req.url = '/api' + (req.url.startsWith('/') ? req.url : '/' + req.url);
+  if (process.env.VERCEL) {
+    if (req.url.startsWith('/concept') || req.url.startsWith('/history') || req.url.startsWith('/email') || req.url.startsWith('/cron')) {
+      req.url = '/api' + (req.url.startsWith('/') ? req.url : '/' + req.url);
+    }
   }
   next();
 });
