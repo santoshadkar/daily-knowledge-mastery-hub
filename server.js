@@ -12,6 +12,15 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+
+// URL Normalization Middleware for Vercel Serverless Function Rewrites
+app.use((req, res, next) => {
+  if (process.env.VERCEL && !req.url.startsWith('/api')) {
+    req.url = '/api' + (req.url.startsWith('/') ? req.url : '/' + req.url);
+  }
+  next();
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Application State & Daily Learning History
