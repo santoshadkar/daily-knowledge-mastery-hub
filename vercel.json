@@ -13,7 +13,7 @@
   "crons": [
     {
       "path": "/api/cron/renew",
-      "schedule": "0 7 * * *"
+      "schedule": "30 1 * * *"
     }
   ]
 }
