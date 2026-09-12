@@ -181,21 +181,46 @@ function renderConceptDetails(concept) {
     }
   }, 100);
 
-  // Tab 2: Books with Direct Links
+  // Tab 2: Books & Chapter Summaries (Full In-Portal Access)
   const booksContainer = document.getElementById('books-container');
-  booksContainer.innerHTML = concept.books.map(b => `
-    <div class="book-card full-width-card">
-      <div class="card-header-flex">
-        <div>
-          <h3>📚 ${b.title}</h3>
-          <div class="book-author">by ${b.author}</div>
-        </div>
-        ${b.url ? `<a href="${b.url}" target="_blank" class="btn btn-sm btn-accent">Explore Book ↗</a>` : ''}
-      </div>
-      <div class="book-chapters">🔑 Focus Chapters: ${b.keyChapters}</div>
-      <div class="book-summary-body">${formatMarkdown(b.summary)}</div>
+  booksContainer.innerHTML = `
+    <div class="in-portal-banner">
+      <div class="banner-badge">📖 FULL IN-PORTAL CHAPTER SUMMARIES</div>
+      <div class="banner-title">No External Book Purchase or Paywall Required</div>
+      <p class="banner-text">Below are the comprehensive executive chapter breakdowns, key frameworks, and practical takeaways from top published books on this masterclass topic. Everything you need to learn is available right here inside your portal.</p>
     </div>
-  `).join('');
+    ${concept.books.map((b, idx) => `
+      <div class="book-card full-width-card">
+        <div class="card-header-flex">
+          <div>
+            <span class="book-badge-pill">BOOK ${idx + 1} EXECUTIVE BREAKDOWN</span>
+            <h3 style="margin-top: 8px; font-size: 20px; color: var(--accent-cyan);">📚 ${b.title}</h3>
+            <div class="book-author">by ${b.author}</div>
+          </div>
+          ${b.url ? `<a href="${b.url}" target="_blank" class="btn btn-sm btn-outline" style="font-size: 11px; opacity: 0.75;" title="Optional publisher link">Publisher Page ↗</a>` : ''}
+        </div>
+        
+        <div class="book-chapters-box">
+          <div class="chapters-tag">🔑 FOCUS CHAPTERS ANALYZED:</div>
+          <div class="chapters-list-text">${b.keyChapters}</div>
+        </div>
+
+        <div class="chapter-summary-content">
+          <div class="summary-section-title">💡 Executive Chapter Breakdown</div>
+          <div class="book-summary-body">${formatMarkdown(b.summary)}</div>
+        </div>
+
+        ${b.keyTakeaways && b.keyTakeaways.length ? `
+          <div class="chapter-takeaways-box">
+            <div class="summary-section-title">📌 Essential Takeaways & Mental Models from these Chapters</div>
+            <ul class="takeaways-list">
+              ${b.keyTakeaways.map(t => `<li>${formatMarkdown(t)}</li>`).join('')}
+            </ul>
+          </div>
+        ` : ''}
+      </div>
+    `).join('')}
+  `;
 
   // Tab 3: Articles & Papers with Direct Links
   const articlesContainer = document.getElementById('articles-container');

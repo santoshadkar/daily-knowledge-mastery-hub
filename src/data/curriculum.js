@@ -117,21 +117,36 @@ Scaling by $1/\\sqrt{d_k}$ normalizes variance to 1.0, preventing gradient vanis
         author: "Sebastian Raschka (Manning Publications)",
         url: "https://www.manning.com/books/build-a-large-language-model-from-scratch",
         keyChapters: "Chapter 3: Deep Dive into Multi-Head Self-Attention & Chapter 4: Coding the GPT Decoder Architecture",
-        summary: "Provides line-by-line PyTorch implementations of self-attention mechanisms, learned projection weights, causal attention masks, and MultiHeadAttention classes."
+        summary: `In Chapter 3, Sebastian Raschka deconstructs how raw input text is converted into learned Query ($Q$), Key ($K$), and Value ($V$) linear projection matrices. He demonstrates that self-attention allows every token in an input sequence to dynamically weigh its relevance against every other token simultaneously without sequential time step loops.\n\nIn Chapter 4, the author guides readers step-by-step through assembling a complete GPT decoder block in PyTorch:\n1. **Multi-Head Attention Class**: Splits embedding dimensions $d_{\\text{model}}$ into $h$ independent parallel attention heads ($d_k = d_{\\text{model}} / h$).\n2. **Causal Masking**: Utilizes PyTorch's lower triangular mask (\`torch.tril\`) to set future token positions to $-\\infty$ before Softmax, preventing information leakage during auto-regressive text generation.\n3. **Dropout & Layer Normalization**: Implements \`nn.LayerNorm\` and residual skip connections ($x + \\text{SubLayer}(x)$) to stabilize deep backpropagation gradients.`,
+        keyTakeaways: [
+          "**Parallel Vector Projection**: $Q = X W_Q, K = X W_K, V = X W_V$ linear transformations enable vector space alignment without recurrent RNN loops.",
+          "**Causal Masking Rule**: Mask upper triangular attention matrix entries with $-\\infty$ prior to Softmax calculation.",
+          "**Residual Highway**: Skip connections preserve identity gradients, allowing Transformer architectures to scale beyond 80 layers without vanishing gradients."
+        ]
       },
       {
         title: "Natural Language Processing with Transformers",
         author: "Lewis Tunstall, Leandro von Werra, Thomas Wolf (O'Reilly Media)",
         url: "https://www.oreilly.com/library/view/natural-language-processing/9781098103231/",
         keyChapters: "Chapter 1: Transformer Taxonomy & Chapter 3: Fine-Tuning Encoder vs Decoder Models",
-        summary: "Covers architectural divergence between Encoder-only models (BERT), Decoder-only models (GPT-4), and Encoder-Decoder models (T5)."
+        summary: `Chapter 1 outlines the architectural taxonomy of Transformer models into three foundational archetypes:\n1. **Encoder-Only (BERT, RoBERTa)**: Uses bi-directional self-attention to construct dense contextual embeddings. Best for classification, named entity recognition, and semantic search.\n2. **Decoder-Only (GPT-4, Claude, Llama 3)**: Uses causal masked self-attention to predict the next token. Best for generative writing, reasoning, and code synthesis.\n3. **Encoder-Decoder (T5, BART)**: Combines cross-attention between source encoder vectors and target decoder tokens. Best for language translation and text summarization.\n\nChapter 3 provides practical Hugging Face \`Trainer\` pipeline workflows for fine-tuning models on domain-specific datasets using cross-entropy loss optimization.`,
+        keyTakeaways: [
+          "**Encoder vs Decoder**: Choose Encoder-only for search/retrieval embeddings; choose Decoder-only for generative text completion.",
+          "**Cross-Attention Coupling**: In Encoder-Decoder models, Decoder Queries attend directly to Encoder output Keys and Values.",
+          "**Hugging Face Trainer Pipeline**: Standardizes gradient accumulation, mixed-precision FP16/BF16 training, and model checkpointing."
+        ]
       },
       {
         title: "Generative AI on AWS: Building Context-Aware Applications",
         author: "Chris Fregly & Antje Barth (O'Reilly Media)",
         url: "https://www.oreilly.com/library/view/generative-ai-on/9781098159214/",
         keyChapters: "Chapter 4: Transformer Architecture Optimization & Chapter 6: Efficient Fine-Tuning",
-        summary: "Enterprise architectural playbook for scaling Transformer inference on AWS Trainium/Inferentia chips and implementing RoPE positional embeddings."
+        summary: `Chapter 4 details enterprise infrastructural techniques for optimizing Transformer latency and GPU VRAM footprint:\n- **Rotary Position Embeddings (RoPE)**: Encodes relative token distance by rotating query and key vectors in complex 2D planes, preserving long-context precision up to 128k tokens.\n- **FlashAttention-2**: Re-organizes GPU SRAM tiling to compute exact attention without materializing intermediate $N \\times N$ attention matrices in HBM (High Bandwidth Memory), yielding 2x-4x speedups.\n\nChapter 6 evaluates Parameter-Efficient Fine-Tuning (PEFT) methods, focusing on LoRA (Low-Rank Adaptation), which freezes base model weights and injects low-rank trainable decomposition matrices $W = W_0 + B \\cdot A$.`,
+        keyTakeaways: [
+          "**FlashAttention Memory Reduction**: Avoids storing intermediate attention matrices in GPU VRAM, turning $O(N^2)$ memory bandwidth bottlenecks into $O(N)$ SRAM tiling.",
+          "**LoRA Efficiency**: Reduces trainable parameters by 99% ($r=8$ or $r=16$) while maintaining 99%+ of full fine-tuning performance.",
+          "**RoPE Relative Position Encoding**: Enables extrapolation to long contexts without retraining fixed absolute positional lookup tables."
+        ]
       }
     ],
 
@@ -640,21 +655,36 @@ Systemic Team Coaching combines System Dynamics (Hawkins), International Coachin
         author: "Lyssa Adkins (Addison-Wesley Professional)",
         url: "https://www.informit.com/store/coaching-agile-teams-a-companion-for-scrummasters-9780321637703",
         keyChapters: "Chapter 4: The Coaching Stance & Chapter 7: Coaching People One-on-One",
-        summary: "Defines the transition from project management to Agile Coaching, navigating conflict levels (Level 1 Problem to Solve up to Level 5 World War)."
+        summary: `Chapter 4 breaks down the fundamental Mindset Transition from command-and-control project manager to Agile Coach. Adkins outlines the 4 distinct stances an Agile Coach must dynamically inhabit:\n1. **Teaching**: Instructing teams on explicit agile frameworks (Scrum, Kanban, SAFe).\n2. **Mentoring**: Sharing personal experiences and domain expertise when appropriate.\n3. **Facilitating**: Designing neutral process structures where the team reaches its own decisions.\n4. **Professional Coaching**: Asking powerful, non-directive questions that evoke team self-awareness.\n\nChapter 7 introduces Lyssa Adkins' famous **5 Levels of Conflict Model**:\n- **Level 1 (Problem to Solve)**: Factual collaboration focused on solving objective code or product issues.\n- **Level 2 (Disagreement)**: Self-protection emerges; team members speak in guarded, defensive terms.\n- **Level 3 (Contest)**: Aiming to win; personal attacks and 'us vs them' department factions form.\n- **Level 4 (Crusade)**: Protecting sacred ideology; compromise is viewed as treason.\n- **Level 5 (World War)**: Irreparable destruction; intention is total obliteration of the opposing party.`,
+        keyTakeaways: [
+          "**Stance Awareness**: Consciously announce stance shifts (e.g., 'I am putting on my Teacher hat for 5 minutes').",
+          "**Conflict Level Diagnosis**: De-escalate Level 2/3 conflicts back to Level 1 by refocusing team conversations strictly on observable facts and shared business goals.",
+          "**Non-Directive Coaching**: Resist the urge to solve the team's problems; empower them to own the resolution."
+        ]
       },
       {
         title: "Systemic Team Coaching: Developing High-Performing Teams",
         author: "Peter Hawkins (Kogan Page)",
         url: "https://www.koganpage.com/hr-learning-development/systemic-team-coaching-9781398602267",
         keyChapters: "Chapter 3: The 5 Disciplines Model & Chapter 8: Coaching the Team Outer System",
-        summary: "Comprehensive guide for team coaches to align internal team dynamics with external stakeholder expectations across complex enterprise ecosystems."
+        summary: `Chapter 3 presents Peter Hawkins' **5 Disciplines Framework for High-Performing Teams**:\n1. **Commissioning**: Ensuring clear alignment with external sponsors, executive stakeholders, and customers on clear business targets.\n2. **Clarifying**: Co-creating internal team mission, shared values, role definitions, and operational norms.\n3. **Co-Creating**: Fostering deep interpersonal synergy, psychological safety, and creative collaboration during sprint delivery.\n4. **Connecting**: Proactively managing outward relationships with adjacent Agile Release Trains, vendor partners, and client teams.\n5. **Core Learning**: Continually standing back to reflect, conduct blameless retrospectives, and accelerate team maturity.\n\nChapter 8 details practical techniques for coaching the 'outer system', ensuring teams do not become isolated silos but remain actively connected to organizational strategy.`,
+        keyTakeaways: [
+          "**Systemic Alignment**: High-performing teams must satisfy both internal team cohesion (Clarifying & Co-creating) and external stakeholder needs (Commissioning & Connecting).",
+          "**Continuous Reflection**: Core Learning discipline ensures teams iterate on how they work, not just what they build.",
+          "**Stakeholder Feedback Loops**: Regularly validate team deliverables directly against original commissioning metrics."
+        ]
       },
       {
         title: "The Coaching Habit: Say Less, Ask More & Change the Way You Lead Forever",
         author: "Michael Bungay Stanier (Box of Crayons Press)",
         url: "https://boxofcrayons.com/the-coaching-habit-book/",
         keyChapters: "Question 2: The AWE Question & Question 5: The Lazy Question",
-        summary: "Presents 7 essential coaching questions to turn everyday interactions into high-impact, non-directive coaching conversations."
+        summary: `Michael Bungay Stanier delivers a micro-coaching framework centered on 7 essential questions to break the 'Advice Monster' habit:\n\n- **The AWE Question ("And What Else?")**: The single most powerful coaching follow-up question in the world. It forces coachees to dig deeper, uncovering 3 or 4 hidden layers of insight beyond their initial surface-level answer.\n- **The Lazy Question ("How Can I Help?")**: Forces the coachee to make an explicit, specific request rather than expecting the coach or leader to guess or immediately jump in to fix the problem.\n\nBy replacing immediate advice-giving with curious, open questions, leaders build self-reliant, resilient engineering teams.`,
+        keyTakeaways: [
+          "**Silence the Advice Monster**: Tame the knee-jerk instinct to jump in with immediate answers when someone comes to you with a problem.",
+          "**Use 'And What Else?'**: Always ask 'And What Else?' at least twice to uncover the real underlying issue.",
+          "**Force Explicit Requests**: Ask 'How can I help?' so team members own the solution and clearly articulate what support they need."
+        ]
       }
     ],
 
@@ -1151,21 +1181,36 @@ Psychological Safety combines Amy Edmondson's Safety Matrix, Timothy Clark's 4 S
         author: "Amy C. Edmondson (Wiley Publishing)",
         url: "https://www.wiley.com/en-us/The+Fearless+Organization%3A+Creating+Psychological+Safety+in+the+Workplace+for+Learning%2C+Innovation%2C+and+Growth-p-9781119477266",
         keyChapters: "Chapter 1: The Anatomy of Psychological Safety & Chapter 7: The Leader's Toolkit",
-        summary: "Presents multi-industry case studies demonstrating how psychological safety drives enterprise innovation, blameless incident learning, and high-performance cultures."
+        summary: `Chapter 1 defines **Psychological Safety** as a shared belief held by team members that the team is safe for interpersonal risk-taking. Edmondson clarifies critical misconceptions:\n- Psychological safety is **NOT** about being nice, lowering standards, or avoiding conflict.\n- It **IS** about creating an environment where people feel comfortable admitting mistakes, raising concerns, asking questions, and proposing wild ideas without fear of embarrassment or retaliation.\n\nChapter 7 provides **The Leader's 3-Part Toolkit**:\n1. **Setting the Stage**: Frame work as learning problems requiring interdependence rather than execution tasks with zero room for error.\n2. **Inviting Participation**: Demonstrate situational humility by acknowledging your own knowledge gaps ("I might be missing something here—what do you see?") and asking explicit inquiry questions.\n3. **Responding Productively**: Express genuine appreciation for bad news or error reporting, destigmatize failure, and sanction clear boundary violations while celebrating intelligent experimentation.`,
+        keyTakeaways: [
+          "**High Standards + High Safety**: High psychological safety paired with high performance standards produces the 'Learning & High Performance Zone'.",
+          "**Frame as Learning**: Explicitly frame complex projects as learning experiments to reduce fear of initial imperfection.",
+          "**Appreciate Error Reporting**: Respond to bad news with 'Thank you for bringing this up early!' to build systemic trust."
+        ]
       },
       {
         title: "Crucial Conversations: Tools for Talking When Stakes Are High",
         author: "Joseph Grenny, Kerry Patterson, Ron McMillan, Al Switzler (McGraw Hill)",
         url: "https://www.mheducation.com/highered/product/crucial-conversations-tools-talking-when-stakes-high-third-edition-grenny-patterson/9781264257867.html",
-        keyChapters: "Chapter 3: Start with Heart & Chapter 8: STATE My Path",
-        summary: "Step-by-step methodology for turning hostile confrontations into productive mutual problem-solving using the STATE dialogue model."
+        keyChapters: "Chapter 4: Learn to Look & Chapter 6: Make It Safe & Chapter 8: STATE My Path",
+        summary: `Chapter 4 teaches leaders to **Learn to Look** for warning signs that a conversation has turned crucial (defined by 3 factors: High Stakes, Opposing Opinions, and Strong Emotions). Leaders monitor behavioral signals:\n- **Silence (Withdrawing, Masking, Avoiding)**: Person stops contributing honest feedback out of fear.\n- **Violence (Controlling, Labeling, Attacking)**: Person tries to force their opinion through intimidation.\n\nChapter 6 presents actionable steps to **Make It Safe** when safety breaks down:\n1. **Step Out of Content**: Pause the debate topic and rebuild safety first.\n2. **Establish Mutual Purpose**: Find shared goals that both parties care deeply about.\n3. **Contrast Statement**: Clarify what you do NOT mean to clear up misunderstandings ("I don't mean your architecture is bad; I mean we need to check scalability under peak load").\n\nChapter 8 details the **STATE My Path** framework for expressing tough feedback:\n- **S**: Share your facts.\n- **T**: Tell your story.\n- **A**: Ask for others' paths.\n- **T**: Talk tentatively.\n- **E**: Encourage testing.`,
+        keyTakeaways: [
+          "**Spot Silence and Violence**: Recognize when colleagues withdraw into silence or lash out in anger as a signal of lost safety.",
+          "**Re-Establish Mutual Purpose**: Anchor tense discussions on shared overarching goals before debating implementation details.",
+          "**STATE Your Path**: Lead with objective facts before sharing your subjective interpretations."
+        ]
       },
       {
         title: "Emotional Intelligence 2.0",
         author: "Travis Bradberry & Jean Greaves (TalentSmart)",
         url: "https://www.talentsmart.com/products/emotional-intelligence-2-0/",
         keyChapters: "Chapter 3: Self-Awareness Strategies & Chapter 5: Relationship Management",
-        summary: "Actionable blueprint for increasing EQ across four core pillars: Self-Awareness, Self-Management, Social Awareness, and Relationship Management."
+        summary: `Chapter 3 breaks down **Self-Awareness**—the foundational EQ skill. Bradberry & Greaves explain that emotions are physiological signals generated by the limbic brain before the rational neocortex processes them. Leaders must build emotional awareness to avoid reactive emotional hijacking.\n\nChapter 5 details **Relationship Management** strategies:\n1. **Open & Honest Communication**: Build trust by being transparent about decisions and limitations.\n2. **Acknowledge Other People's Feelings**: Validate emotional reactions even when you disagree with the opinion.\n3. **Build Trust Through Consistency**: Match verbal commitments with visible operational actions.`,
+        keyTakeaways: [
+          "**Notice the Limbic Surge**: Pause 6 seconds when experiencing frustration to allow the prefrontal cortex to process the reaction.",
+          "**Validate Before Debating**: Acknowledge a colleague's emotional perspective before jumping into counter-arguments.",
+          "**Feedback Alignment**: Keep your body language and tone aligned with your message to build authentic executive trust."
+        ]
       }
     ],
 
