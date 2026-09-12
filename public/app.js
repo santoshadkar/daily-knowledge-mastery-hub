@@ -29,38 +29,88 @@ function formatMarkdown(text) {
   if (!text) return '';
   let html = text;
 
-  // Mermaid Diagrams ```mermaid ... ```
+  // Normalize escaped newlines
+  html = html.replace(/\\n/g, '\n');
+
+  // Extract & preserve Mermaid Diagrams before regex processing
+  const mermaidBlocks = [];
   html = html.replace(/```mermaid([\s\S]*?)```/g, (match, diagram) => {
-    return `<div class="mermaid">${diagram.trim()}</div>`;
+    const placeholder = `__MERMAID_BLOCK_${mermaidBlocks.length}__`;
+    mermaidBlocks.push(`<div class="mermaid">\n${diagram.trim()}\n</div>`);
+    return placeholder;
   });
 
-  // Code blocks ```python ... ```
+  // Extract & preserve Code blocks
+  const codeBlocks = [];
   html = html.replace(/```(python|js|json|bash)?([\s\S]*?)```/g, (match, lang, code) => {
-    return `<pre class="code-block"><code>${escapeHtml(code.trim())}</code></pre>`;
+    const placeholder = `__CODE_BLOCK_${codeBlocks.length}__`;
+    codeBlocks.push(`<pre class="code-block"><code>${escapeHtml(code.trim())}</code></pre>`);
+    return placeholder;
   });
 
-  // Headings
+  // Display Math equations $$...$$
+  html = html.replace(/\$\$([\s\S]*?)\$\$/g, (match, math) => {
+    return `<div class="math-block">$$\\text{${math.trim()}}$$</div>`;
+  });
+
+  // Inline Math equations $...$
+  html = html.replace(/\$([^\$\n]+)\$/g, '<span class="inline-math">$$$1$$</span>');
+
+  // Headings (#, ##, ###)
   html = html.replace(/^### (.*$)/gim, '<h3 class="md-h3">$1</h3>');
   html = html.replace(/^## (.*$)/gim, '<h2 class="md-h2">$1</h2>');
   html = html.replace(/^# (.*$)/gim, '<h1 class="md-h1">$1</h1>');
 
-  // Math equations $$\text{...}$$ or $...$
-  html = html.replace(/\$\$([\s\S]*?)\$\$/g, '<div class="math-block">$1</div>');
-  html = html.replace(/\$([^\$\n]+)\$/g, '<span class="inline-math">$1</span>');
+  // Markdown Links [Label](URL) -> <a href="URL" target="_blank" rel="noopener noreferrer" class="md-link">Label ↗</a>
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="md-link">$1 ↗</a>');
 
   // Bold & Italic
   html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
   html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
 
-  // Paragraphs
-  const paragraphs = html.split('\n\n');
-  return paragraphs.map(p => {
+  // Horizontal rules
+  html = html.replace(/^---$/gim, '<hr class="md-hr">');
+
+  // Paragraphs & Lists
+  const lines = html.split('\n\n');
+  let result = lines.map(p => {
     p = p.trim();
-    if (p.startsWith('<h') || p.startsWith('<pre') || p.startsWith('<div class="math') || p.startsWith('<div class="mermaid') || p.startsWith('<ul') || p.startsWith('<ol')) {
+    if (!p) return '';
+    if (p.startsWith('__MERMAID_BLOCK_') || p.startsWith('__CODE_BLOCK_') || p.startsWith('<h') || p.startsWith('<pre') || p.startsWith('<div class="math') || p.startsWith('<hr')) {
       return p;
+    }
+    // Handle bullet lists starting with - or *
+    if (p.startsWith('- ') || p.startsWith('* ')) {
+      const listItems = p.split('\n').map(li => {
+        const itemText = li.replace(/^[-*]\s+/, '').trim();
+        return `<li>${itemText}</li>`;
+      }).join('');
+      return `<ul class="md-ul">${listItems}</ul>`;
+    }
+    // Handle numbered lists starting with 1., 2., etc.
+    if (/^\d+\.\s+/.test(p)) {
+      const listItems = p.split('\n').map(li => {
+        const itemText = li.replace(/^\d+\.\s+/, '').trim();
+        return `<li>${itemText}</li>`;
+      }).join('');
+      return `<ol class="md-ol">${listItems}</ol>`;
     }
     return `<p class="body-p">${p.replace(/\n/g, '<br>')}</p>`;
   }).join('');
+
+  // Re-inject preserved Mermaid blocks
+  mermaidBlocks.forEach((block, idx) => {
+    result = result.replace(`__MERMAID_BLOCK_${idx}__`, block);
+    result = result.replace(`<p class="body-p">__MERMAID_BLOCK_${idx}__</p>`, block);
+  });
+
+  // Re-inject preserved Code blocks
+  codeBlocks.forEach((block, idx) => {
+    result = result.replace(`__CODE_BLOCK_${idx}__`, block);
+    result = result.replace(`<p class="body-p">__CODE_BLOCK_${idx}__</p>`, block);
+  });
+
+  return result;
 }
 
 function escapeHtml(str) {
@@ -97,14 +147,12 @@ async function loadTodayConcept() {
     currentConcept = data;
 
     // Cache active concepts for all 3 tracks
-    if (data.todayAllTracks && Array.isArray(data.todayAllTracks)) {
-      data.todayAllTracks.forEach(tc => {
+    const activeList = data.todayConcepts || data.todayAllTracks || [data];
+    if (Array.isArray(activeList)) {
+      activeList.forEach(tc => {
         todayActiveByTrack[tc.track] = tc;
         conceptsById[tc.id] = tc;
       });
-    } else {
-      todayActiveByTrack[data.track] = data;
-      conceptsById[data.id] = data;
     }
 
     renderConceptDetails(data);
@@ -276,6 +324,7 @@ function renderConceptDetails(concept) {
   setTimeout(() => {
     if (window.mermaid) {
       try {
+        document.querySelectorAll('.mermaid').forEach(el => el.removeAttribute('data-processed'));
         mermaid.run({ nodes: document.querySelectorAll('.mermaid') });
       } catch (err) {
         console.log('Mermaid render:', err);

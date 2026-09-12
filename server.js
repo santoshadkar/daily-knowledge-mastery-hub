@@ -126,6 +126,7 @@ app.get('/api/concept/today', (req, res) => {
     ...concept,
     userNotes: notes,
     todayConcepts,
+    todayAllTracks: todayConcepts,
     lastRotation: lastRotationTimestamp,
     totalConceptsCount: curriculumData.length,
     currentIndex: (curriculumData.findIndex(c => c.id === concept.id) + 1)
