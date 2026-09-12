@@ -5,17 +5,23 @@
 
 let currentConcept = null;
 let allConcepts = [];
+let conceptsById = {};
+let todayActiveByTrack = {};
 let speechSynth = window.speechSynthesis;
 let currentUtterance = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('🚀 Daily Concept Mastery App Initialized.');
+  console.log('🚀 Daily Concept Mastery App Initialized with 0ms Instant Track Caching.');
   
   initTabNavigation();
   initEventListeners();
   initCountdownTimer();
-  await loadTodayConcept();
-  await loadConceptsArchive();
+
+  // Load Archive & Today Concepts in parallel for instant memory caching
+  await Promise.all([
+    loadConceptsArchive(),
+    loadTodayConcept()
+  ]);
 });
 
 // Markdown & Code & Math & Mermaid Parser
@@ -83,15 +89,52 @@ function copyPromptToClipboard(promptText, btnElement) {
   });
 }
 
-// 1. Fetch Today's Active Concept
+// 1. Fetch Today's Active Concept & Cache Active Concepts for All Tracks
 async function loadTodayConcept() {
   try {
     const response = await fetch('/api/concept/today');
     const data = await response.json();
     currentConcept = data;
+
+    // Cache active concepts for all 3 tracks
+    if (data.todayAllTracks && Array.isArray(data.todayAllTracks)) {
+      data.todayAllTracks.forEach(tc => {
+        todayActiveByTrack[tc.track] = tc;
+        conceptsById[tc.id] = tc;
+      });
+    } else {
+      todayActiveByTrack[data.track] = data;
+      conceptsById[data.id] = data;
+    }
+
     renderConceptDetails(data);
+    renderSidebarTrackList();
   } catch (err) {
     console.error('❌ Failed to fetch today concept:', err);
+  }
+}
+
+// Instant Local Switcher (0ms Network Delay)
+function loadConceptByIdLocally(id) {
+  if (conceptsById[id]) {
+    currentConcept = conceptsById[id];
+    renderConceptDetails(currentConcept);
+    renderSidebarTrackList();
+  } else {
+    loadConceptById(id);
+  }
+}
+
+// Instant Track Switcher (0ms Network Delay)
+function selectTrack(trackName) {
+  let target = todayActiveByTrack[trackName];
+  if (!target) {
+    target = allConcepts.find(c => c.track === trackName) || allConcepts[0];
+  }
+  if (target) {
+    currentConcept = target;
+    renderConceptDetails(target);
+    renderSidebarTrackList();
   }
 }
 
@@ -101,21 +144,80 @@ async function loadConceptById(id) {
     const response = await fetch(`/api/concept/${id}`);
     const data = await response.json();
     currentConcept = data;
+    conceptsById[data.id] = data;
     renderConceptDetails(data);
+    renderSidebarTrackList();
   } catch (err) {
     console.error(`❌ Failed to fetch concept ${id}:`, err);
   }
 }
 
-// 2. Load Concept Archive
+// 2. Load Concept Archive & Pre-Cache All Concepts
 async function loadConceptsArchive() {
   try {
     const response = await fetch('/api/concepts');
     allConcepts = await response.json();
+    
+    // Build memory lookup map
+    allConcepts.forEach(c => {
+      conceptsById[c.id] = c;
+    });
+
     renderArchiveList(allConcepts);
+    renderSidebarTrackList();
   } catch (err) {
     console.error('❌ Failed to fetch archive:', err);
   }
+}
+
+// Render Left Sidebar Tracks & Sub-Topics
+function renderSidebarTrackList() {
+  const tracksContainer = document.querySelector('.tracks-card');
+  if (!tracksContainer) return;
+
+  const tracks = [
+    { name: 'Artificial Intelligence', icon: '🤖', desc: 'Transformers, RAG & LLMs' },
+    { name: 'Agile Coaching', icon: '🎯', desc: 'SAFe PI Planning & Systemic Teams' },
+    { name: 'Leadership & Soft Skills', icon: '🧠', desc: 'Psychological Safety & Radical Candor' }
+  ];
+
+  tracksContainer.innerHTML = `
+    <h3>🎓 Curriculum Tracks (0ms Switch)</h3>
+    ${tracks.map(t => {
+      const isActiveTrack = currentConcept && currentConcept.track === t.name;
+      const trackConcepts = allConcepts.filter(c => c.track === t.name);
+      const activeRotated = todayActiveByTrack[t.name] || trackConcepts[0];
+
+      return `
+        <div class="track-item ${isActiveTrack ? 'active' : ''}" onclick="selectTrack('${t.name}')">
+          <div class="track-header-flex">
+            <span class="track-icon">${t.icon}</span>
+            <div class="track-info">
+              <h4>${t.name}</h4>
+              <p>${t.desc}</p>
+            </div>
+          </div>
+          
+          ${trackConcepts.length > 0 ? `
+            <div class="track-subtopics-list">
+              ${trackConcepts.map(sc => {
+                const isCurrentDisplayed = currentConcept && currentConcept.id === sc.id;
+                const isToday7AMActive = activeRotated && activeRotated.id === sc.id;
+                const shortTitle = sc.title.split(',')[0].substring(0, 32);
+                return `
+                  <div class="subtopic-chip ${isCurrentDisplayed ? 'active-subtopic' : ''}" 
+                       onclick="event.stopPropagation(); loadConceptByIdLocally('${sc.id}')">
+                    <span>${sc.id.toUpperCase()}: ${shortTitle}</span>
+                    ${isToday7AMActive ? '<span class="today-active-pill">7 AM</span>' : ''}
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }).join('')}
+  `;
 }
 
 // 3. Render Concept Details into UI
@@ -415,18 +517,6 @@ function initTabNavigation() {
 
 // 7. Event Listeners & Buttons
 function initEventListeners() {
-  // Curriculum Track Selection in Sidebar
-  document.querySelectorAll('.track-item').forEach(trackItem => {
-    trackItem.addEventListener('click', () => {
-      const selectedTrack = trackItem.dataset.track;
-      
-      const trackConcepts = allConcepts.filter(c => c.track === selectedTrack);
-      if (trackConcepts.length > 0) {
-        loadConceptById(trackConcepts[0].id);
-      }
-    });
-  });
-
   // Rotate Concept Button
   document.getElementById('btn-rotate-concept').addEventListener('click', async () => {
     try {

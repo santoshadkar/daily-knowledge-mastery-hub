@@ -279,28 +279,81 @@ body {
 .tts-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
 .audio-controls { display: flex; gap: 8px; }
 
-/* Tracks Card */
+/* Tracks Card & Sub-Topics */
 .tracks-card h3 { font-size: 15px; margin-bottom: 16px; }
 .track-item {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 14px;
   border-radius: var(--radius-md);
-  background: rgba(15, 23, 42, 0.4);
-  border: 1px solid transparent;
-  margin-bottom: 10px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--border-color);
+  margin-bottom: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
-.track-item:hover { background: rgba(30, 41, 59, 0.6); }
+.track-item:hover { background: rgba(30, 41, 59, 0.6); border-color: rgba(99, 102, 241, 0.4); }
 .track-item.active {
-  background: rgba(99, 102, 241, 0.12);
-  border-color: rgba(99, 102, 241, 0.4);
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
 }
-.track-icon { font-size: 20px; }
-.track-info h4 { font-size: 13px; font-weight: 600; color: var(--text-main); }
-.track-info p { font-size: 11px; color: var(--text-subtle); }
+
+.track-header-flex {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.track-icon { font-size: 22px; }
+.track-info h4 { font-size: 14px; font-weight: 700; color: #ffffff; }
+.track-info p { font-size: 11px; color: var(--text-subtle); margin-top: 2px; }
+
+.track-subtopics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.subtopic-chip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  color: #cbd5e1;
+  transition: all 0.2s ease;
+}
+
+.subtopic-chip:hover {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.4);
+  color: #ffffff;
+}
+
+.subtopic-chip.active-subtopic {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.35), rgba(168, 85, 247, 0.35));
+  border-color: #a855f7;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.today-active-pill {
+  font-size: 9px;
+  font-weight: 800;
+  background: #10b981;
+  color: #ffffff;
+  padding: 2px 6px;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+}
 
 /* Mail Settings Card */
 .mail-settings-card h3 { font-size: 15px; margin-bottom: 4px; }
