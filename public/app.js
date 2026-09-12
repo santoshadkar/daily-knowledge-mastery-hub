@@ -656,36 +656,90 @@ async function selectArchivedConcept(id) {
   document.getElementById('archive-modal').classList.add('hidden');
 }
 
-// 9. Audio Text-To-Speech Reader
+// 9. Audio Text-To-Speech Reader Engine (Full Overview Read-Aloud with Sentence Chunking)
+let speechQueue = [];
+let currentSpeechIndex = 0;
+let isSpeaking = false;
+
+function cleanTextForAudio(text) {
+  if (!text) return '';
+  let clean = text;
+  // Remove Mermaid blocks ```mermaid ... ```
+  clean = clean.replace(/```mermaid[\s\S]*?```/g, '');
+  // Remove Code blocks ``` ... ```
+  clean = clean.replace(/```[\s\S]*?```/g, '');
+  // Convert markdown links [Label](URL) to Label
+  clean = clean.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+  // Remove markdown symbols (#, *, `, $, \, -, ---)
+  clean = clean.replace(/[#*`$\\\-]/g, ' ');
+  // Collapse multiple spaces into single space
+  clean = clean.replace(/\s+/g, ' ').trim();
+  return clean;
+}
+
 function playAudioSummary() {
   if (!currentConcept || !speechSynth) {
     alert('Speech synthesis is not supported in this browser environment.');
     return;
   }
-  
+
+  // Cancel any active speech
   speechSynth.cancel();
+  isSpeaking = true;
+
+  const titleHeader = `Today's Masterclass Topic: ${currentConcept.title} in the ${currentConcept.track} track.`;
+  const overviewClean = cleanTextForAudio(currentConcept.overview);
+  const fullText = `${titleHeader}. ${overviewClean}`;
+
+  // Split into natural sentence chunks to prevent browser speech synthesis timeouts
+  const sentences = fullText.match(/[^.!?]+[.!?]+/g) || [fullText];
+  speechQueue = sentences.map(s => s.trim()).filter(s => s.length > 0);
+  currentSpeechIndex = 0;
+
+  const statusEl = document.getElementById('tts-status');
+  if (statusEl) statusEl.textContent = '🔊 Reading Full Summary...';
   
-  const cleanText = currentConcept.overview.replace(/[#*`$\\]/g, '');
-  const text = `Today's Concept is ${currentConcept.title} in the ${currentConcept.track} track. ${cleanText.substring(0, 350)}`;
-  
-  currentUtterance = new SpeechSynthesisUtterance(text);
-  currentUtterance.rate = 1.0;
-  currentUtterance.pitch = 1.0;
-  
-  document.getElementById('tts-status').textContent = '🔊 Reading...';
-  
-  currentUtterance.onend = () => {
-    document.getElementById('tts-status').textContent = 'Completed';
+  speakNextSentenceChunk();
+}
+
+function speakNextSentenceChunk() {
+  if (!isSpeaking || currentSpeechIndex >= speechQueue.length) {
+    if (isSpeaking) {
+      const statusEl = document.getElementById('tts-status');
+      if (statusEl) statusEl.textContent = '✅ Completed';
+      isSpeaking = false;
+    }
+    return;
+  }
+
+  const textChunk = speechQueue[currentSpeechIndex];
+  const utterance = new SpeechSynthesisUtterance(textChunk);
+  utterance.rate = 1.0;
+  utterance.pitch = 1.0;
+
+  utterance.onend = () => {
+    currentSpeechIndex++;
+    speakNextSentenceChunk();
   };
-  
-  speechSynth.speak(currentUtterance);
+
+  utterance.onerror = (err) => {
+    console.error('Speech synthesis error:', err);
+    currentSpeechIndex++;
+    speakNextSentenceChunk();
+  };
+
+  speechSynth.speak(utterance);
 }
 
 function stopAudioSummary() {
+  isSpeaking = false;
+  speechQueue = [];
+  currentSpeechIndex = 0;
   if (speechSynth) {
     speechSynth.cancel();
-    document.getElementById('tts-status').textContent = 'Stopped';
   }
+  const statusEl = document.getElementById('tts-status');
+  if (statusEl) statusEl.textContent = '⏹️ Stopped';
 }
 
 // 10. Live Countdown Timer to Next 7:00 AM
