@@ -131,7 +131,7 @@ class EmailService {
 
           ${conceptCards}
 
-          <a href="http://localhost:3000" class="cta-btn">🚀 Open Daily Portal & Study Today's Masterclasses</a>
+          <a href="${process.env.APP_URL || 'https://daily-knowledge-mastery-hub.vercel.app'}" class="cta-btn">🚀 Open Daily Portal & Study Today's Masterclasses</a>
 
           <div class="footer">
             Sent to ${recipientEmail || process.env.SUBSCRIBER_EMAIL || 'you'} by Daily Concept Mastery Portal • Powered by Antigravity AI Architecture
