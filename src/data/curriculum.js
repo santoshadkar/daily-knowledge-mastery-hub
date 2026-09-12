@@ -5,1604 +5,1392 @@
  */
 
 const curriculumData = [
-  // =========================================================================
-  // TRACK 1: ARTIFICIAL INTELLIGENCE (AI-01)
-  // =========================================================================
   {
-    id: "ai-01",
-    track: "Artificial Intelligence",
-    title: "Transformer Architecture, Self-Attention & Multi-Head Projections",
-    tagline: "Unpacking the engine behind ChatGPT & Claude: from simple everyday analogies to mathematical QKV projections, scaled dot-product attention, and RoPE encodings.",
-    estimatedTime: "75 mins deep study",
-    overview: `# 💡 SIMPLE LAYMAN'S EXPLANATION (Explain Like I'm 5)
-
-Imagine you are attending a noisy cocktail party with 50 people talking at the same time:
-- **Legacy AI (RNNs)** was like listening to people one by one in a single-file line. By the time you reached the 50th person, you completely forgot what the 1st person said, and it took forever!
-- **Transformer AI (Self-Attention)** is like having a superpower where you can listen to **everyone in the room simultaneously**. Your brain instantly highlights the 3 or 4 people whose conversation is directly relevant to what you are thinking about, while fading out the background noise.
-
-### The Spotlight Analogy: Query, Key & Value
-Think of Query, Key, and Value as a smart library search:
-1. **Query (Q)**: You walk up to a librarian and say, *"I am looking for a book on baking sourdough bread."* (This is what you are looking for).
-2. **Key (K)**: Every book in the library has a catalog tag: *"Baking"*, *"Gardening"*, *"Automotive"*. (This is the label describing what information each item carries).
-3. **Value (V)**: The actual pages and knowledge inside the book. (This is the content you read once you find a matching Key).
-
-The Transformer compares your Query to every single Key in parallel, assigns a percentage match score (Attention Weight), and blends the matching Values together to write the perfect response!
-
----
-
-# 🎨 VISUAL ARCHITECTURE DIAGRAM: TRANSFORMER ATTENTION PIPELINE
-
-\`\`\`mermaid
-graph TD
-    A[Input Token Sequence] --> B[Token Embeddings + RoPE Encodings]
-    B --> C[Linear QKV Projections]
-    C --> D[Queries Q Matrix]
-    C --> E[Keys K Matrix]
-    C --> F[Values V Matrix]
-    D --> G[Scaled Dot-Product: Q * K^T / sqrt d_k]
-    E --> G
-    G --> H[Softmax Normalization & Causal Masking]
-    H --> I[Attention Weights Matrix A]
-    I --> J[Weighted Values Assembly: A * V]
-    F --> J
-    J --> K[Multi-Head Projection & Feed-Forward SwiGLU]
-    K --> L[Output Logits Token Probabilities]
-\`\`\`
-
----
-
-# 🌍 WHERE & HOW THIS CONCEPT IS USED IN THE REAL WORLD
-
-1. **Large Language Models (ChatGPT, Claude, Gemini, Llama 3)**:
-   - *Where Used*: Generative AI chat, code writing, document summarization, and translation.
-   - *How It Works*: Reads an entire 500-page PDF at once using parallel attention, connecting a clause on Page 2 directly to a constraint on Page 450.
-2. **Autonomous Driving (Tesla Full Self-Driving & Waymo)**:
-   - *Where Used*: Processing 8 high-resolution camera feeds simultaneously.
-   - *How It Works*: Attention vectors connect the movement of a pedestrian on the left camera with a changing traffic light on the front camera in real time.
-3. **Genomic Science & Drug Discovery (AlphaFold 3)**:
-   - *Where Used*: Predicting 3D protein folding structures from amino acid sequences.
-   - *How It Works*: Self-attention maps spatial interactions between amino acid molecules thousands of positions apart in a protein chain.
-4. **Real-Time Language Translation (Google Translate & DeepL)**:
-   - *Where Used*: Instant cross-language translation.
-   - *How It Works*: Translates idioms accurately by paying attention to surrounding context words rather than doing word-for-word dictionary substitution.
-
----
-
-# 🔬 DEEP TECHNICAL ARCHITECTURE & MATHEMATICAL DERIVATION
-
-The Transformer architecture, originally introduced by Vaswani et al. in the landmark 2017 paper 'Attention Is All You Need', represents the foundational backbone of modern Generative AI.
-
-### Scaled Dot-Product Attention Equation:
-For input sequence embeddings $X \\in \\mathbb{R}^{N \\times d_{\\text{model}}}$, linear projections $Q = X W_Q$, $K = X W_K$, $V = X W_V$ compute pairwise affinity:
-$$\\text{Attention}(Q, K, V) = \\text{Softmax}\\left( \\frac{Q K^T}{\\sqrt{d_k}} \\right) V$$
-
-Scaling by $1/\\sqrt{d_k}$ normalizes variance to 1.0, preventing gradient vanishing during Softmax backpropagation.`,
-
-    corePrinciples: [
+    "id": "ai-01",
+    "track": "Artificial Intelligence",
+    "title": "Transformer Architecture, Self-Attention & Multi-Head Projections",
+    "tagline": "Unpacking the engine behind ChatGPT & Claude: from simple everyday analogies to mathematical QKV projections, scaled dot-product attention, and RoPE encodings.",
+    "estimatedTime": "75 mins deep study",
+    "overview": "# 💡 SIMPLE LAYMAN'S EXPLANATION (Explain Like I'm 5)\n\nImagine you are attending a noisy cocktail party with 50 people talking at the same time:\n- **Legacy AI (RNNs)** was like listening to people one by one in a single-file line. By the time you reached the 50th person, you completely forgot what the 1st person said, and it took forever!\n- **Transformer AI (Self-Attention)** is like having a superpower where you can listen to **everyone in the room simultaneously**. Your brain instantly highlights the 3 or 4 people whose conversation is directly relevant to what you are thinking about, while fading out the background noise.\n\n### The Spotlight Analogy: Query, Key & Value\nThink of Query, Key, and Value as a smart library search:\n1. **Query (Q)**: You walk up to a librarian and say, *\"I am looking for a book on baking sourdough bread.\"* (This is what you are looking for).\n2. **Key (K)**: Every book in the library has a catalog tag: *\"Baking\"*, *\"Gardening\"*, *\"Automotive\"*. (This is the label describing what information each item carries).\n3. **Value (V)**: The actual pages and knowledge inside the book. (This is the content you read once you find a matching Key).\n\nThe Transformer compares your Query to every single Key in parallel, assigns a percentage match score (Attention Weight), and blends the matching Values together to write the perfect response!\n\n---\n\n# 🎨 VISUAL ARCHITECTURE DIAGRAM: TRANSFORMER ATTENTION PIPELINE\n\n```mermaid\ngraph TD\n    A[Input Token Sequence] --> B[Token Embeddings + RoPE Encodings]\n    B --> C[Linear QKV Projections]\n    C --> D[Queries Q Matrix]\n    C --> E[Keys K Matrix]\n    C --> F[Values V Matrix]\n    D --> G[Scaled Dot-Product: Q * K^T / sqrt d_k]\n    E --> G\n    G --> H[Softmax Normalization & Causal Masking]\n    H --> I[Attention Weights Matrix A]\n    I --> J[Weighted Values Assembly: A * V]\n    F --> J\n    J --> K[Multi-Head Projection & Feed-Forward SwiGLU]\n    K --> L[Output Logits Token Probabilities]\n```\n\n---\n\n# 🌍 WHERE & HOW THIS CONCEPT IS USED IN THE REAL WORLD\n\n1. **Large Language Models (ChatGPT, Claude, Gemini, Llama 3)**:\n   - *Where Used*: Generative AI chat, code writing, document summarization, and translation.\n   - *How It Works*: Reads an entire 500-page PDF at once using parallel attention, connecting a clause on Page 2 directly to a constraint on Page 450.\n2. **Autonomous Driving (Tesla Full Self-Driving & Waymo)**:\n   - *Where Used*: Processing 8 high-resolution camera feeds simultaneously.\n   - *How It Works*: Attention vectors connect the movement of a pedestrian on the left camera with a changing traffic light on the front camera in real time.\n3. **Genomic Science & Drug Discovery (AlphaFold 3)**:\n   - *Where Used*: Predicting 3D protein folding structures from amino acid sequences.\n   - *How It Works*: Self-attention maps spatial interactions between amino acid molecules thousands of positions apart in a protein chain.\n4. **Real-Time Language Translation (Google Translate & DeepL)**:\n   - *Where Used*: Instant cross-language translation.\n   - *How It Works*: Translates idioms accurately by paying attention to surrounding context words rather than doing word-for-word dictionary substitution.\n\n---\n\n# 🔬 DEEP TECHNICAL ARCHITECTURE & MATHEMATICAL DERIVATION\n\nThe Transformer architecture, originally introduced by Vaswani et al. in the landmark 2017 paper 'Attention Is All You Need', represents the foundational backbone of modern Generative AI.\n\n### Scaled Dot-Product Attention Equation:\nFor input sequence embeddings $X \\in \\mathbb{R}^{N \\times d_{\\text{model}}}$, linear projections $Q = X W_Q$, $K = X W_K$, $V = X W_V$ compute pairwise affinity:\n$$\\text{Attention}(Q, K, V) = \\text{Softmax}\\left( \\frac{Q K^T}{\\sqrt{d_k}} \\right) V$$\n\nScaling by $1/\\sqrt{d_k}$ normalizes variance to 1.0, preventing gradient vanishing during Softmax backpropagation.",
+    "corePrinciples": [
       {
-        title: "1. Parallel Processing Supremacy",
-        meaning: "Eliminates sequential time-step recurrence (RNNs/LSTMs), processing all tokens simultaneously in parallel matrix operations.",
-        whyItMatters: "Enables massive GPU cluster parallelization, reducing LLM model training time from years to days.",
-        implementation: "Construct batch operations over sequence dimensions $X \\in \\mathbb{R}^{B \\times N \\times D}$ utilizing PyTorch tensor dot products."
+        "title": "1. Parallel Processing Supremacy",
+        "meaning": "Eliminates sequential time-step recurrence (RNNs/LSTMs), processing all tokens simultaneously in parallel matrix operations.",
+        "whyItMatters": "Enables massive GPU cluster parallelization, reducing LLM model training time from years to days.",
+        "implementation": "Construct batch operations over sequence dimensions $X \\in \\mathbb{R}^{B \\times N \\times D}$ utilizing PyTorch tensor dot products."
       },
       {
-        title: "2. Query-Key-Value (QKV) Dynamic Routing",
-        meaning: "Projects token embeddings into three dynamic spaces to evaluate pairwise similarity and assign context-dependent attention weights.",
-        whyItMatters: "Allows words like 'bank' (river bank vs money bank) to adapt their vector representations based on surrounding context words.",
-        implementation: "Linear layer projections $Q = XW_Q, K = XW_K, V = XW_V$ computed in single parallel matrix operations."
+        "title": "2. Query-Key-Value (QKV) Dynamic Routing",
+        "meaning": "Projects token embeddings into three dynamic spaces to evaluate pairwise similarity and assign context-dependent attention weights.",
+        "whyItMatters": "Allows words like 'bank' (river bank vs money bank) to adapt their vector representations based on surrounding context words.",
+        "implementation": "Linear layer projections $Q = XW_Q, K = XW_K, V = XW_V$ computed in single parallel matrix operations."
       },
       {
-        title: "3. Softmax Scaling Factor (1/√d_k)",
-        meaning: "Divides dot-product scores $Q \\cdot K^T$ by the square root of key vector dimensionality $d_k$.",
-        whyItMatters: "Prevents high-dimensional dot products from pushing Softmax into saturated regions with near-zero gradients (vanishing gradient fix).",
-        implementation: "Multiply raw attention logits by `1.0 / math.sqrt(d_k)` before feeding into `torch.softmax()`."
+        "title": "3. Softmax Scaling Factor (1/√d_k)",
+        "meaning": "Divides dot-product scores $Q \\cdot K^T$ by the square root of key vector dimensionality $d_k$.",
+        "whyItMatters": "Prevents high-dimensional dot products from pushing Softmax into saturated regions with near-zero gradients (vanishing gradient fix).",
+        "implementation": "Multiply raw attention logits by `1.0 / math.sqrt(d_k)` before feeding into `torch.softmax()`."
       },
       {
-        title: "4. Causal Masking in Auto-Regressive Decoders",
-        meaning: "Sets upper-triangular entries of the $N \\times N$ attention matrix to $-\\infty$ before applying Softmax.",
-        whyItMatters: "Ensures text generation models cannot peek at future tokens during training, maintaining strictly causal auto-regressive generation.",
-        implementation: "Apply `attn_scores.masked_fill(torch.tril(ones) == 0, -float('inf'))` prior to Softmax."
+        "title": "4. Causal Masking in Auto-Regressive Decoders",
+        "meaning": "Sets upper-triangular entries of the $N \\times N$ attention matrix to $-\\infty$ before applying Softmax.",
+        "whyItMatters": "Ensures text generation models cannot peek at future tokens during training, maintaining strictly causal auto-regressive generation.",
+        "implementation": "Apply `attn_scores.masked_fill(torch.tril(ones) == 0, -float('inf'))` prior to Softmax."
       },
       {
-        title: "5. Residual Skip Connections & LayerNorm (RMSNorm)",
-        meaning: "Wraps self-attention and feed-forward sub-layers with skip connections $X + \\text{SubLayer}(\\text{LayerNorm}(X))$.",
-        whyItMatters: "Provides an unhindered identity highway for gradients during backpropagation, enabling 80+ layer deep Transformer networks.",
-        implementation: "Execute RMSNorm prior to linear layers and add input tensor $X$ directly to layer output."
+        "title": "5. Residual Skip Connections & LayerNorm (RMSNorm)",
+        "meaning": "Wraps self-attention and feed-forward sub-layers with skip connections $X + \\text{SubLayer}(\\text{LayerNorm}(X))$.",
+        "whyItMatters": "Provides an unhindered identity highway for gradients during backpropagation, enabling 80+ layer deep Transformer networks.",
+        "implementation": "Execute RMSNorm prior to linear layers and add input tensor $X$ directly to layer output."
       }
     ],
-
-    books: [
+    "books": [
       {
-        title: "Build a Large Language Model (From Scratch)",
-        author: "Sebastian Raschka (Manning Publications)",
-        url: "https://www.manning.com/books/build-a-large-language-model-from-scratch",
-        keyChapters: "Chapter 3: Deep Dive into Multi-Head Self-Attention & Chapter 4: Coding the GPT Decoder Architecture",
-        summary: `In Chapter 3, Sebastian Raschka deconstructs how raw input text is converted into learned Query ($Q$), Key ($K$), and Value ($V$) linear projection matrices. He demonstrates that self-attention allows every token in an input sequence to dynamically weigh its relevance against every other token simultaneously without sequential time step loops.\n\nIn Chapter 4, the author guides readers step-by-step through assembling a complete GPT decoder block in PyTorch:\n1. **Multi-Head Attention Class**: Splits embedding dimensions $d_{\\text{model}}$ into $h$ independent parallel attention heads ($d_k = d_{\\text{model}} / h$).\n2. **Causal Masking**: Utilizes PyTorch's lower triangular mask (\`torch.tril\`) to set future token positions to $-\\infty$ before Softmax, preventing information leakage during auto-regressive text generation.\n3. **Dropout & Layer Normalization**: Implements \`nn.LayerNorm\` and residual skip connections ($x + \\text{SubLayer}(x)$) to stabilize deep backpropagation gradients.`,
-        keyTakeaways: [
+        "title": "Build a Large Language Model (From Scratch)",
+        "author": "Sebastian Raschka (Manning Publications)",
+        "url": "https://www.manning.com/books/build-a-large-language-model-from-scratch",
+        "keyChapters": "Chapter 3: Deep Dive into Multi-Head Self-Attention & Chapter 4: Coding the GPT Decoder Architecture",
+        "summary": "In Chapter 3, Sebastian Raschka deconstructs how raw input text is converted into learned Query ($Q$), Key ($K$), and Value ($V$) linear projection matrices. He demonstrates that self-attention allows every token in an input sequence to dynamically weigh its relevance against every other token simultaneously without sequential time step loops.\n\nIn Chapter 4, the author guides readers step-by-step through assembling a complete GPT decoder block in PyTorch:\n1. **Multi-Head Attention Class**: Splits embedding dimensions $d_{\\text{model}}$ into $h$ independent parallel attention heads ($d_k = d_{\\text{model}} / h$).\n2. **Causal Masking**: Utilizes PyTorch's lower triangular mask (`torch.tril`) to set future token positions to $-\\infty$ before Softmax, preventing information leakage during auto-regressive text generation.\n3. **Dropout & Layer Normalization**: Implements `nn.LayerNorm` and residual skip connections ($x + \\text{SubLayer}(x)$) to stabilize deep backpropagation gradients.",
+        "keyTakeaways": [
           "**Parallel Vector Projection**: $Q = X W_Q, K = X W_K, V = X W_V$ linear transformations enable vector space alignment without recurrent RNN loops.",
           "**Causal Masking Rule**: Mask upper triangular attention matrix entries with $-\\infty$ prior to Softmax calculation.",
           "**Residual Highway**: Skip connections preserve identity gradients, allowing Transformer architectures to scale beyond 80 layers without vanishing gradients."
         ]
       },
       {
-        title: "Natural Language Processing with Transformers",
-        author: "Lewis Tunstall, Leandro von Werra, Thomas Wolf (O'Reilly Media)",
-        url: "https://www.oreilly.com/library/view/natural-language-processing/9781098103231/",
-        keyChapters: "Chapter 1: Transformer Taxonomy & Chapter 3: Fine-Tuning Encoder vs Decoder Models",
-        summary: `Chapter 1 outlines the architectural taxonomy of Transformer models into three foundational archetypes:\n1. **Encoder-Only (BERT, RoBERTa)**: Uses bi-directional self-attention to construct dense contextual embeddings. Best for classification, named entity recognition, and semantic search.\n2. **Decoder-Only (GPT-4, Claude, Llama 3)**: Uses causal masked self-attention to predict the next token. Best for generative writing, reasoning, and code synthesis.\n3. **Encoder-Decoder (T5, BART)**: Combines cross-attention between source encoder vectors and target decoder tokens. Best for language translation and text summarization.\n\nChapter 3 provides practical Hugging Face \`Trainer\` pipeline workflows for fine-tuning models on domain-specific datasets using cross-entropy loss optimization.`,
-        keyTakeaways: [
+        "title": "Natural Language Processing with Transformers",
+        "author": "Lewis Tunstall, Leandro von Werra, Thomas Wolf (O'Reilly Media)",
+        "url": "https://www.oreilly.com/library/view/natural-language-processing/9781098103231/",
+        "keyChapters": "Chapter 1: Transformer Taxonomy & Chapter 3: Fine-Tuning Encoder vs Decoder Models",
+        "summary": "Chapter 1 outlines the architectural taxonomy of Transformer models into three foundational archetypes:\n1. **Encoder-Only (BERT, RoBERTa)**: Uses bi-directional self-attention to construct dense contextual embeddings. Best for classification, named entity recognition, and semantic search.\n2. **Decoder-Only (GPT-4, Claude, Llama 3)**: Uses causal masked self-attention to predict the next token. Best for generative writing, reasoning, and code synthesis.\n3. **Encoder-Decoder (T5, BART)**: Combines cross-attention between source encoder vectors and target decoder tokens. Best for language translation and text summarization.\n\nChapter 3 provides practical Hugging Face `Trainer` pipeline workflows for fine-tuning models on domain-specific datasets using cross-entropy loss optimization.",
+        "keyTakeaways": [
           "**Encoder vs Decoder**: Choose Encoder-only for search/retrieval embeddings; choose Decoder-only for generative text completion.",
           "**Cross-Attention Coupling**: In Encoder-Decoder models, Decoder Queries attend directly to Encoder output Keys and Values.",
           "**Hugging Face Trainer Pipeline**: Standardizes gradient accumulation, mixed-precision FP16/BF16 training, and model checkpointing."
         ]
       },
       {
-        title: "Generative AI on AWS: Building Context-Aware Applications",
-        author: "Chris Fregly & Antje Barth (O'Reilly Media)",
-        url: "https://www.oreilly.com/library/view/generative-ai-on/9781098159214/",
-        keyChapters: "Chapter 4: Transformer Architecture Optimization & Chapter 6: Efficient Fine-Tuning",
-        summary: `Chapter 4 details enterprise infrastructural techniques for optimizing Transformer latency and GPU VRAM footprint:\n- **Rotary Position Embeddings (RoPE)**: Encodes relative token distance by rotating query and key vectors in complex 2D planes, preserving long-context precision up to 128k tokens.\n- **FlashAttention-2**: Re-organizes GPU SRAM tiling to compute exact attention without materializing intermediate $N \\times N$ attention matrices in HBM (High Bandwidth Memory), yielding 2x-4x speedups.\n\nChapter 6 evaluates Parameter-Efficient Fine-Tuning (PEFT) methods, focusing on LoRA (Low-Rank Adaptation), which freezes base model weights and injects low-rank trainable decomposition matrices $W = W_0 + B \\cdot A$.`,
-        keyTakeaways: [
+        "title": "Generative AI on AWS: Building Context-Aware Applications",
+        "author": "Chris Fregly & Antje Barth (O'Reilly Media)",
+        "url": "https://www.oreilly.com/library/view/generative-ai-on/9781098159214/",
+        "keyChapters": "Chapter 4: Transformer Architecture Optimization & Chapter 6: Efficient Fine-Tuning",
+        "summary": "Chapter 4 details enterprise infrastructural techniques for optimizing Transformer latency and GPU VRAM footprint:\n- **Rotary Position Embeddings (RoPE)**: Encodes relative token distance by rotating query and key vectors in complex 2D planes, preserving long-context precision up to 128k tokens.\n- **FlashAttention-2**: Re-organizes GPU SRAM tiling to compute exact attention without materializing intermediate $N \\times N$ attention matrices in HBM (High Bandwidth Memory), yielding 2x-4x speedups.\n\nChapter 6 evaluates Parameter-Efficient Fine-Tuning (PEFT) methods, focusing on LoRA (Low-Rank Adaptation), which freezes base model weights and injects low-rank trainable decomposition matrices $W = W_0 + B \\cdot A$.",
+        "keyTakeaways": [
           "**FlashAttention Memory Reduction**: Avoids storing intermediate attention matrices in GPU VRAM, turning $O(N^2)$ memory bandwidth bottlenecks into $O(N)$ SRAM tiling.",
           "**LoRA Efficiency**: Reduces trainable parameters by 99% ($r=8$ or $r=16$) while maintaining 99%+ of full fine-tuning performance.",
           "**RoPE Relative Position Encoding**: Enables extrapolation to long contexts without retraining fixed absolute positional lookup tables."
         ]
       }
     ],
-
-    articles: [
+    "articles": [
       {
-        title: "Attention Is All You Need (Seminal Research Paper)",
-        source: "arXiv:1706.03762 / Google Brain & Google Research",
-        url: "https://arxiv.org/abs/1706.03762",
-        takeaway: "The original paper introducing the 8-head Transformer architecture that achieved state-of-the-art BLEU scores on translation."
+        "title": "Attention Is All You Need (Seminal Research Paper)",
+        "source": "arXiv:1706.03762 / Google Brain & Google Research",
+        "url": "https://arxiv.org/abs/1706.03762",
+        "takeaway": "The original paper introducing the 8-head Transformer architecture that achieved state-of-the-art BLEU scores on translation."
       },
       {
-        title: "The Illustrated Transformer",
-        source: "Jay Alammar's Visual AI Guides",
-        url: "https://jalammar.github.io/illustrated-transformer/",
-        takeaway: "Step-by-step visual walk-through illustrating QKV vector projections and Feed-Forward Neural Networks."
+        "title": "The Illustrated Transformer",
+        "source": "Jay Alammar's Visual AI Guides",
+        "url": "https://jalammar.github.io/illustrated-transformer/",
+        "takeaway": "Step-by-step visual walk-through illustrating QKV vector projections and Feed-Forward Neural Networks."
       },
       {
-        title: "LLM Powered Autonomous Agents",
-        source: "Lilian Weng (Head of Safety Systems at OpenAI)",
-        url: "https://lilianweng.github.io/posts/2023-06-23-agent/",
-        takeaway: "Deep architectural essay exploring how Transformer self-attention serves as core working memory inside autonomous AI agents."
+        "title": "LLM Powered Autonomous Agents",
+        "source": "Lilian Weng (Head of Safety Systems at OpenAI)",
+        "url": "https://lilianweng.github.io/posts/2023-06-23-agent/",
+        "takeaway": "Deep architectural essay exploring how Transformer self-attention serves as core working memory inside autonomous AI agents."
       }
     ],
-
-    media: [
+    "media": [
       {
-        type: "Full Code Walkthrough",
-        title: "Let's build GPT: from scratch, in code, spelled out",
-        channel: "Andrej Karpathy (Former Director of AI at Tesla / OpenAI Founder)",
-        url: "https://www.youtube.com/watch?v=kCc8FmEb1nY",
-        duration: "1 hour 56 mins",
-        keyInsight: "Building a complete GPT decoder model from scratch in PyTorch, coding multi-head attention, residual connections, and token embeddings step-by-step."
+        "type": "Full Code Walkthrough",
+        "title": "Let's build GPT: from scratch, in code, spelled out",
+        "channel": "Andrej Karpathy (Former Director of AI at Tesla / OpenAI Founder)",
+        "url": "https://www.youtube.com/watch?v=kCc8FmEb1nY",
+        "duration": "1 hour 56 mins",
+        "keyInsight": "Building a complete GPT decoder model from scratch in PyTorch, coding multi-head attention, residual connections, and token embeddings step-by-step."
       },
       {
-        type: "Visual Masterclass",
-        title: "Decoder-Only Transformers & ChatGPT Architecture, Clearly Explained!",
-        channel: "StatQuest with Josh Starmer",
-        url: "https://www.youtube.com/watch?v=bQ5BoolX9Ag",
-        duration: "18 mins",
-        keyInsight: "Step-by-step visual breakdown of Query, Key, and Value vector matrices and how decoder blocks predict tokens."
+        "type": "Visual Masterclass",
+        "title": "Decoder-Only Transformers & ChatGPT Architecture, Clearly Explained!",
+        "channel": "StatQuest with Josh Starmer",
+        "url": "https://www.youtube.com/watch?v=bQ5BoolX9Ag",
+        "duration": "18 mins",
+        "keyInsight": "Step-by-step visual breakdown of Query, Key, and Value vector matrices and how decoder blocks predict tokens."
       },
       {
-        type: "Geometric Visual Breakdown",
-        title: "Transformers, the tech behind LLMs (Deep Learning Chapter 5)",
-        channel: "3Blue1Brown (Grant Sanderson)",
-        url: "https://www.youtube.com/watch?v=wjZofJX0v4M",
-        duration: "27 mins",
-        keyInsight: "Geometric visualization showing how attention matrices rotate high-dimensional word vectors toward specific semantic directions."
+        "type": "Geometric Visual Breakdown",
+        "title": "Transformers, the tech behind LLMs (Deep Learning Chapter 5)",
+        "channel": "3Blue1Brown (Grant Sanderson)",
+        "url": "https://www.youtube.com/watch?v=wjZofJX0v4M",
+        "duration": "27 mins",
+        "keyInsight": "Geometric visualization showing how attention matrices rotate high-dimensional word vectors toward specific semantic directions."
       }
     ],
-
-    caseStudy: {
-      title: "Enterprise AI Infrastructure Overhaul at Global FinTech Giant",
-      context: "A financial enterprise operated a legacy LSTM triage system processing 100,000+ loan contracts daily. Processing a 500-page contract took 45 minutes with high error rates on clauses 200 pages apart.",
-      solution: "Engineered a custom Decoder-Only Transformer microservice utilizing FlashAttention-2 Triton kernels, Grouped-Query Attention (GQA), and RoPE theta embeddings deployed on an NVIDIA H100 GPU cluster.",
-      impact: "Reduced contract parsing time from 45 minutes to 4.2 seconds per document (640x speedup), achieved 99.1% parsing accuracy, and saved $14.2M annually."
+    "caseStudy": {
+      "title": "Enterprise AI Infrastructure Overhaul at Global FinTech Giant",
+      "context": "A financial enterprise operated a legacy LSTM triage system processing 100,000+ loan contracts daily. Processing a 500-page contract took 45 minutes with high error rates on clauses 200 pages apart.",
+      "solution": "Engineered a custom Decoder-Only Transformer microservice utilizing FlashAttention-2 Triton kernels, Grouped-Query Attention (GQA), and RoPE theta embeddings deployed on an NVIDIA H100 GPU cluster.",
+      "impact": "Reduced contract parsing time from 45 minutes to 4.2 seconds per document (640x speedup), achieved 99.1% parsing accuracy, and saved $14.2M annually."
     },
-
-    actionPlan: [
+    "actionPlan": [
       {
-        title: "Action 1: Implement a Manual NumPy Dot-Product Attention Verification Script",
-        instructions: "Write a raw NumPy script taking 4 token vectors with dimension 8. Construct Query (Q) and Key (K) matrices, calculate Q·K^T, scale by 1/√8, apply Softmax, and verify row sum equals 1.0.",
-        aiPrompt: `SYSTEM PROMPT: You are a Principal AI Infrastructure Architect.
-USER PROMPT: Write a self-contained Python script using NumPy that manually implements Scaled Dot-Product Attention from scratch without using PyTorch or high-level AI libraries. 
-Requirements:
-1. Define a 4-token sequence embedding matrix X with vector dimension d_model = 8.
-2. Define learned weight matrices W_Q, W_K, W_V.
-3. Compute Q, K, V projections.
-4. Calculate scaled dot product scores = (Q @ K.T) / sqrt(d_k).
-5. Compute manual Softmax along axis=-1 and verify all row probabilities sum to 1.0.
-6. Print intermediate tensor shapes and attention weight matrix.`,
-        aiToolkit: ["Python 3.11+", "NumPy", "JupyterLab / Google Colab", "PyTorch 2.3", "ChatGPT Code Interpreter / Claude 3.5 Sonnet"]
+        "title": "Action 1: Implement a Manual NumPy Dot-Product Attention Verification Script",
+        "instructions": "Write a raw NumPy script taking 4 token vectors with dimension 8. Construct Query (Q) and Key (K) matrices, calculate Q·K^T, scale by 1/√8, apply Softmax, and verify row sum equals 1.0.",
+        "aiPrompt": "SYSTEM PROMPT: You are a Principal AI Infrastructure Architect.\nUSER PROMPT: Write a self-contained Python script using NumPy that manually implements Scaled Dot-Product Attention from scratch without using PyTorch or high-level AI libraries. \nRequirements:\n1. Define a 4-token sequence embedding matrix X with vector dimension d_model = 8.\n2. Define learned weight matrices W_Q, W_K, W_V.\n3. Compute Q, K, V projections.\n4. Calculate scaled dot product scores = (Q @ K.T) / sqrt(d_k).\n5. Compute manual Softmax along axis=-1 and verify all row probabilities sum to 1.0.\n6. Print intermediate tensor shapes and attention weight matrix.",
+        "aiToolkit": [
+          "Python 3.11+",
+          "NumPy",
+          "JupyterLab / Google Colab",
+          "PyTorch 2.3",
+          "ChatGPT Code Interpreter / Claude 3.5 Sonnet"
+        ]
       },
       {
-        title: "Action 2: Construct a PyTorch Causal Masking Tensor for Decoder Execution",
-        instructions: "Use PyTorch `torch.tril()` to build a causal lower-triangular mask matrix. Fill upper-triangular entries with `-inf` and observe how Softmax sets future token probabilities to zero.",
-        aiPrompt: `SYSTEM PROMPT: You are a PyTorch Framework Engineer.
-USER PROMPT: Provide a Python PyTorch snippet demonstrating causal self-attention masking for auto-regressive decoders.
-Requirements:
-1. Create a random query-key dot product matrix of shape (seq_len=6, seq_len=6).
-2. Create a lower-triangular mask matrix using torch.tril(torch.ones(6, 6)).
-3. Fill zero elements with -float('inf') using masked_fill.
-4. Compute torch.softmax(masked_scores, dim=-1) and display how upper-triangle values become 0.0, preventing future token attention leak.`,
-        aiToolkit: ["PyTorch 2.3", "TorchScript", "VS Code PyTorch Extension", "Claude 3.5 Sonnet"]
+        "title": "Action 2: Construct a PyTorch Causal Masking Tensor for Decoder Execution",
+        "instructions": "Use PyTorch `torch.tril()` to build a causal lower-triangular mask matrix. Fill upper-triangular entries with `-inf` and observe how Softmax sets future token probabilities to zero.",
+        "aiPrompt": "SYSTEM PROMPT: You are a PyTorch Framework Engineer.\nUSER PROMPT: Provide a Python PyTorch snippet demonstrating causal self-attention masking for auto-regressive decoders.\nRequirements:\n1. Create a random query-key dot product matrix of shape (seq_len=6, seq_len=6).\n2. Create a lower-triangular mask matrix using torch.tril(torch.ones(6, 6)).\n3. Fill zero elements with -float('inf') using masked_fill.\n4. Compute torch.softmax(masked_scores, dim=-1) and display how upper-triangle values become 0.0, preventing future token attention leak.",
+        "aiToolkit": [
+          "PyTorch 2.3",
+          "TorchScript",
+          "VS Code PyTorch Extension",
+          "Claude 3.5 Sonnet"
+        ]
       },
       {
-        title: "Action 3: Benchmark KV-Cache GPU Memory Usage (MHA vs GQA)",
-        instructions: "Compare the memory consumption of standard Multi-Head Attention (MHA) vs Grouped-Query Attention (GQA) for context lengths of 2048, 8192, and 32768 tokens.",
-        aiPrompt: `SYSTEM PROMPT: You are a High-Performance GPU Kernel Engineer.
-USER PROMPT: Write a Python calculation script to estimate the KV-cache memory footprint in Megabytes (MB) for an LLM generating text.
-Parameters to compare:
-- Sequence lengths: N = 2048, 8192, 32768
-- Model layers: 32 layers
-- Hidden dimension: 4096
-- Case A: Multi-Head Attention (32 Query heads, 32 KV heads)
-- Case B: Grouped-Query Attention (32 Query heads, 8 KV heads)
-Calculate the precise memory formula in Float16 bytes and print a comparative summary table.`,
-        aiToolkit: ["NVIDIA Nsight Systems", "PyTorch CUDA Memory Profiler", "vLLM Engine", "Claude 3.5 Sonnet"]
+        "title": "Action 3: Benchmark KV-Cache GPU Memory Usage (MHA vs GQA)",
+        "instructions": "Compare the memory consumption of standard Multi-Head Attention (MHA) vs Grouped-Query Attention (GQA) for context lengths of 2048, 8192, and 32768 tokens.",
+        "aiPrompt": "SYSTEM PROMPT: You are a High-Performance GPU Kernel Engineer.\nUSER PROMPT: Write a Python calculation script to estimate the KV-cache memory footprint in Megabytes (MB) for an LLM generating text.\nParameters to compare:\n- Sequence lengths: N = 2048, 8192, 32768\n- Model layers: 32 layers\n- Hidden dimension: 4096\n- Case A: Multi-Head Attention (32 Query heads, 32 KV heads)\n- Case B: Grouped-Query Attention (32 Query heads, 8 KV heads)\nCalculate the precise memory formula in Float16 bytes and print a comparative summary table.",
+        "aiToolkit": [
+          "NVIDIA Nsight Systems",
+          "PyTorch CUDA Memory Profiler",
+          "vLLM Engine",
+          "Claude 3.5 Sonnet"
+        ]
       },
       {
-        title: "Action 4: Implement 2D Rotary Position Embedding (RoPE) Function",
-        instructions: "Code a 2D vector rotation function in Python and plot how dot-product similarity decays naturally as positional distance increases.",
-        aiPrompt: `SYSTEM PROMPT: You are an AI Applied Mathematician.
-USER PROMPT: Write a Python script using NumPy and Matplotlib that implements 2D Rotary Position Embedding (RoPE).
-Requirements:
-1. Create a 2D vector x = [x1, x2].
-2. Apply rotation matrix R(m * theta) for positions m = 0, 1, 2, 5, 10.
-3. Compute the dot product between token at pos 0 and rotated tokens at pos m.
-4. Plot the dot product values to visually demonstrate relative positional decay.`,
-        aiToolkit: ["NumPy", "Matplotlib", "SymPy", "ChatGPT 4o"]
+        "title": "Action 4: Implement 2D Rotary Position Embedding (RoPE) Function",
+        "instructions": "Code a 2D vector rotation function in Python and plot how dot-product similarity decays naturally as positional distance increases.",
+        "aiPrompt": "SYSTEM PROMPT: You are an AI Applied Mathematician.\nUSER PROMPT: Write a Python script using NumPy and Matplotlib that implements 2D Rotary Position Embedding (RoPE).\nRequirements:\n1. Create a 2D vector x = [x1, x2].\n2. Apply rotation matrix R(m * theta) for positions m = 0, 1, 2, 5, 10.\n3. Compute the dot product between token at pos 0 and rotated tokens at pos m.\n4. Plot the dot product values to visually demonstrate relative positional decay.",
+        "aiToolkit": [
+          "NumPy",
+          "Matplotlib",
+          "SymPy",
+          "ChatGPT 4o"
+        ]
       },
       {
-        title: "Action 5: Benchmark PyTorch 2.0 FlashAttention-2 vs Standard Attention",
-        instructions: "Measure execution time difference between native manual attention and PyTorch `torch.nn.functional.scaled_dot_product_attention` on GPU or CPU.",
-        aiPrompt: `SYSTEM PROMPT: You are an ML Benchmark Specialist.
-USER PROMPT: Write a Python PyTorch script benchmarking execution time for sequence length N = 4096 across:
-1. Manual scaled dot-product attention function.
-2. PyTorch scaled_dot_product_attention using fused FlashAttention-2 backend.
-Measure execution time over 100 iterations using time.perf_counter() and report the speedup factor.`,
-        aiToolkit: ["PyTorch 2.3 `torch.nn.functional`", "Triton Compiler", "Google Colab GPU T4/A100", "Claude 3.5 Sonnet"]
+        "title": "Action 5: Benchmark PyTorch 2.0 FlashAttention-2 vs Standard Attention",
+        "instructions": "Measure execution time difference between native manual attention and PyTorch `torch.nn.functional.scaled_dot_product_attention` on GPU or CPU.",
+        "aiPrompt": "SYSTEM PROMPT: You are an ML Benchmark Specialist.\nUSER PROMPT: Write a Python PyTorch script benchmarking execution time for sequence length N = 4096 across:\n1. Manual scaled dot-product attention function.\n2. PyTorch scaled_dot_product_attention using fused FlashAttention-2 backend.\nMeasure execution time over 100 iterations using time.perf_counter() and report the speedup factor.",
+        "aiToolkit": [
+          "PyTorch 2.3 `torch.nn.functional`",
+          "Triton Compiler",
+          "Google Colab GPU T4/A100",
+          "Claude 3.5 Sonnet"
+        ]
       }
     ],
-
-    quiz: [
+    "quiz": [
       {
-        question: "1. What is the primary mathematical reason for scaling dot-product attention by 1/√d_k?",
-        options: [
-          "To decrease the total number of trainable weights in Query matrices",
+        "question": "1. What is the primary mathematical reason for scaling dot-product attention by 1/√d_k?",
+        "options": [
           "To prevent large dot products from pushing Softmax into regions with vanishingly small gradients",
+          "To decrease the total number of trainable weights in Query matrices",
           "To force matrix dimensions to match GPU memory block sizes",
           "To convert floating point 32-bit values into quantized 8-bit integers"
         ],
-        answer: 1,
-        explanation: "As vector dimension d_k increases, dot products Q·K^T grow in magnitude. High magnitude inputs cause Softmax to saturate, producing near-zero gradients. Scaling by 1/√d_k keeps variance around 1.0."
+        "answer": 0,
+        "explanation": "As vector dimension d_k increases, dot products Q·K^T grow in magnitude. High magnitude inputs cause Softmax to saturate, producing near-zero gradients. Scaling by 1/√d_k keeps variance around 1.0."
       },
       {
-        question: "2. How does Causal Masking operate in GPT-style Decoder attention blocks?",
-        options: [
+        "question": "2. How does Causal Masking operate in GPT-style Decoder attention blocks?",
+        "options": [
           "By randomly dropping out 20% of input embeddings during training",
           "By setting upper-triangular entries in the attention matrix to -∞ before Softmax execution",
           "By clipping negative weights to zero using ReLU activation",
-          "By masking out stop words like 'the' and 'is'"
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        answer: 1,
-        explanation: "Causal masking sets future token positions in the attention score matrix to -∞. When Softmax is computed, e^(-∞) becomes 0, ensuring tokens cannot look ahead into future text."
+        "answer": 1,
+        "explanation": "Causal masking sets future token positions in the attention score matrix to -∞. When Softmax is computed, e^(-∞) becomes 0, ensuring tokens cannot look ahead into future text."
       },
       {
-        question: "3. What advantage does Rotary Position Embedding (RoPE) offer over fixed Sinusoidal Encodings?",
-        options: [
-          "RoPE requires zero matrix multiplications",
+        "question": "3. What advantage does Rotary Position Embedding (RoPE) offer over fixed Sinusoidal Encodings?",
+        "options": [
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
           "RoPE rotates Q and K vectors by positional angles, preserving relative distance relationships and enabling context extrapolation",
-          "RoPE completely removes the Key and Value matrices",
-          "RoPE converts text into audio frequencies"
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits"
         ],
-        answer: 1,
-        explanation: "RoPE encodes positional information by multiplying Q and K by a rotation matrix corresponding to position, allowing relative positional decay and context expansion beyond training length."
+        "answer": 2,
+        "explanation": "RoPE encodes positional information by multiplying Q and K by a rotation matrix corresponding to position, allowing relative positional decay and context expansion beyond training length."
       },
       {
-        question: "4. What distinguishes Multi-Head Attention (MHA) from Single-Head Attention?",
-        options: [
+        "question": "4. What distinguishes Multi-Head Attention (MHA) from Single-Head Attention?",
+        "options": [
           "Multi-Head Attention runs on multiple physical CPUs simultaneously",
-          "Multi-Head Attention projects Q, K, and V into h lower-dimensional subspaces, attending to multiple semantic representations in parallel",
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
           "Single-Head Attention supports text generation while Multi-Head does not",
-          "Multi-Head Attention uses 50% fewer parameters"
+          "Multi-Head Attention projects Q, K, and V into h lower-dimensional subspaces, attending to multiple semantic representations in parallel"
         ],
-        answer: 1,
-        explanation: "Splitting projections into multiple heads allows different heads to learn distinct linguistic, syntactic, and structural relationships independently."
+        "answer": 3,
+        "explanation": "Splitting projections into multiple heads allows different heads to learn distinct linguistic, syntactic, and structural relationships independently."
       },
       {
-        question: "5. In FlashAttention, what hardware bottleneck is optimized to achieve 2x-4x speedups?",
-        options: [
-          "Network latency between cloud data centers",
+        "question": "5. In FlashAttention, what hardware bottleneck is optimized to achieve 2x-4x speedups?",
+        "options": [
           "Memory IO reads and writes between High Bandwidth Memory (HBM) and fast GPU SRAM on-chip memory",
-          "Disk drive read speeds",
-          "CPU clock cycle speeds"
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints",
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings"
         ],
-        answer: 1,
-        explanation: "FlashAttention tiles the attention matrix computation to execute inside fast GPU SRAM without repeatedly writing massive intermediate N×N attention matrices back to slow HBM."
+        "answer": 0,
+        "explanation": "FlashAttention tiles the attention matrix computation to execute inside fast GPU SRAM without repeatedly writing massive intermediate N×N attention matrices back to slow HBM."
       },
       {
-        question: "6. What are the Query (Q), Key (K), and Value (V) projections derived from in a Transformer?",
-        options: [
-          "Static dictionary lookup tables",
+        "question": "6. What are the Query (Q), Key (K), and Value (V) projections derived from in a Transformer?",
+        "options": [
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
           "Linear projections calculated by multiplying input embeddings X by learned weight matrices W_Q, W_K, W_V",
-          "Randomly generated Gaussian noise vectors",
-          "Outputs of a convolutional filter layer"
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls"
         ],
-        answer: 1,
-        explanation: "Q, K, and V are produced by matrix multiplying input embedding representations X by learned linear projection weight matrices W_Q, W_K, and W_V."
+        "answer": 1,
+        "explanation": "Q, K, and V are produced by matrix multiplying input embedding representations X by learned linear projection weight matrices W_Q, W_K, and W_V."
       },
       {
-        question: "7. What is the key advantage of Grouped-Query Attention (GQA) over standard Multi-Head Attention?",
-        options: [
-          "GQA increases the number of Query heads while reducing Key-Value heads, significantly saving KV-cache memory during inference",
-          "GQA eliminates the Softmax operation",
+        "question": "7. What is the key advantage of Grouped-Query Attention (GQA) over standard Multi-Head Attention?",
+        "options": [
           "GQA replaces backpropagation with forward-only learning",
-          "GQA requires 100x less training data"
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "GQA increases the number of Query heads while reducing Key-Value heads, significantly saving KV-cache memory during inference",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        answer: 0,
-        explanation: "GQA groups multiple Query heads to share single Key and Value heads, drastically reducing KV-cache GPU memory usage during auto-regressive LLM decoding."
+        "answer": 2,
+        "explanation": "GQA groups multiple Query heads to share single Key and Value heads, drastically reducing KV-cache GPU memory usage during auto-regressive LLM decoding."
       },
       {
-        question: "8. Why did Transformers replace Recurrent Neural Networks (RNNs) as the dominant NLP architecture?",
-        options: [
-          "RNNs required too much disk space",
-          "RNNs process tokens sequentially step-by-step, preventing GPU parallelization and suffering from vanishing gradients over long sequences",
-          "Transformers do not require backpropagation",
-          "RNNs only work on numerical data"
+        "question": "8. Why did Transformers replace Recurrent Neural Networks (RNNs) as the dominant NLP architecture?",
+        "options": [
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "RNNs process tokens sequentially step-by-step, preventing GPU parallelization and suffering from vanishing gradients over long sequences"
         ],
-        answer: 1,
-        explanation: "RNN sequential processing creates severe GPU training bottlenecks. Transformers compute attention across all sequence tokens in parallel."
+        "answer": 3,
+        "explanation": "RNN sequential processing creates severe GPU training bottlenecks. Transformers compute attention across all sequence tokens in parallel."
       },
       {
-        question: "9. In an Encoder-Decoder Transformer (like T5), where is Cross-Attention applied?",
-        options: [
-          "Between input tokens in the encoder only",
+        "question": "9. In an Encoder-Decoder Transformer (like T5), where is Cross-Attention applied?",
+        "options": [
           "In the decoder, where Queries come from the decoder self-attention and Keys/Values come from the encoder output embeddings",
-          "Before the initial embedding layer",
-          "Inside the positional encoding generator"
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        answer: 1,
-        explanation: "Cross-attention allows decoder layers to attend to the output representations produced by the encoder stack."
+        "answer": 0,
+        "explanation": "Cross-attention allows decoder layers to attend to the output representations produced by the encoder stack."
       },
       {
-        question: "10. What is the role of Layer Normalization (LayerNorm) in deep Transformer stacks?",
-        options: [
-          "To compress token strings into zip format",
+        "question": "10. What is the role of Layer Normalization (LayerNorm) in deep Transformer stacks?",
+        "options": [
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
           "To normalize activations across feature dimensions per sample, stabilizing gradient flow during training",
-          "To sort token probabilities alphabetically",
-          "To convert continuous float values into integers"
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits"
         ],
-        answer: 1,
-        explanation: "LayerNorm normalizes hidden layer activations across features, preventing exploding or vanishing gradients in deep 80+ layer networks."
+        "answer": 1,
+        "explanation": "LayerNorm normalizes hidden layer activations across features, preventing exploding or vanishing gradients in deep 80+ layer networks."
       },
       {
-        question: "11. What is the mathematical computational complexity of standard self-attention with sequence length N?",
-        options: [
-          "O(N)",
-          "O(N log N)",
+        "question": "11. What is the mathematical computational complexity of standard self-attention with sequence length N?",
+        "options": [
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
           "O(N^2)",
-          "O(N^3)"
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        answer: 2,
-        explanation: "Pairwise dot-product calculation between all N tokens results in an N×N matrix, yielding O(N^2) time and memory complexity."
+        "answer": 2,
+        "explanation": "Pairwise dot-product calculation between all N tokens results in an N×N matrix, yielding O(N^2) time and memory complexity."
       },
       {
-        question: "12. What does the term 'Auto-regressive' mean in LLM generation?",
-        options: [
-          "The model automatically generates regression plots",
-          "The model predicts the next token based strictly on previously generated tokens in a loop",
-          "The model retrains its weights after every user prompt",
-          "The model converts audio into text automatically"
+        "question": "12. What does the term 'Auto-regressive' mean in LLM generation?",
+        "options": [
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "The model predicts the next token based strictly on previously generated tokens in a loop"
         ],
-        answer: 1,
-        explanation: "Auto-regressive decoding feeds each generated token back into the model input to predict the subsequent token sequentially."
+        "answer": 3,
+        "explanation": "Auto-regressive decoding feeds each generated token back into the model input to predict the subsequent token sequentially."
       },
       {
-        question: "13. What is the purpose of Residual Skip Connections around Transformer attention blocks?",
-        options: [
-          "To bypass GPU memory limits",
+        "question": "13. What is the purpose of Residual Skip Connections around Transformer attention blocks?",
+        "options": [
           "To add the input X directly to the block output LayerNorm(X + SubLayer(X)), preserving identity gradient flow during backpropagation",
-          "To skip processing stop words",
-          "To reduce vocabulary size"
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        answer: 1,
-        explanation: "Residual connections provide a direct highway for gradients to flow backward unimpeded, enabling deep network training without vanishing gradients."
+        "answer": 0,
+        "explanation": "Residual connections provide a direct highway for gradients to flow backward unimpeded, enabling deep network training without vanishing gradients."
       },
       {
-        question: "14. How does Feed-Forward Network (FFNN) sub-layer operate after Multi-Head Attention?",
-        options: [
+        "question": "14. How does Feed-Forward Network (FFNN) sub-layer operate after Multi-Head Attention?",
+        "options": [
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
           "It applies two linear transformations with a non-linear activation function (e.g. GELU or SwiGLU) position-wise to each token",
-          "It averages all token vectors into a single vector",
-          "It sorts tokens by word frequency",
-          "It performs clustering on embedding space"
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits"
         ],
-        answer: 0,
-        explanation: "The FFNN sub-layer processes each token independently through two linear projections separated by a non-linear activation function like GELU or SwiGLU."
+        "answer": 1,
+        "explanation": "The FFNN sub-layer processes each token independently through two linear projections separated by a non-linear activation function like GELU or SwiGLU."
       },
       {
-        question: "15. What is SwiGLU activation function used in modern models like Llama 3?",
-        options: [
-          "A replacement for Softmax in attention matrices",
+        "question": "15. What is SwiGLU activation function used in modern models like Llama 3?",
+        "options": [
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
           "A gated linear unit combining Swish activation and linear gating, yielding improved empirical model performance",
-          "An audio compression algorithm",
-          "A vector database indexing metric"
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        answer: 1,
-        explanation: "SwiGLU is a gated activation function that outperforms standard ReLU/GELU in Transformer feed-forward networks."
+        "answer": 2,
+        "explanation": "SwiGLU is a gated activation function that outperforms standard ReLU/GELU in Transformer feed-forward networks."
       },
       {
-        question: "16. In tokenization, what is Byte-Pair Encoding (BPE)?",
-        options: [
-          "An encryption method for text",
-          "A subword tokenization algorithm that iteratively merges the most frequent byte or character pairs into a subword vocabulary",
-          "A GPU driver protocol",
-          "A vector distance metric"
+        "question": "16. In tokenization, what is Byte-Pair Encoding (BPE)?",
+        "options": [
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "A subword tokenization algorithm that iteratively merges the most frequent byte or character pairs into a subword vocabulary"
         ],
-        answer: 1,
-        explanation: "BPE builds subword vocabularies by merging frequent character pairs, handling out-of-vocabulary words effectively."
+        "answer": 3,
+        "explanation": "BPE builds subword vocabularies by merging frequent character pairs, handling out-of-vocabulary words effectively."
       },
       {
-        question: "17. What occurs when the KV-cache is enabled during LLM inference?",
-        options: [
-          "The model stops generating text",
+        "question": "17. What occurs when the KV-cache is enabled during LLM inference?",
+        "options": [
           "Key and Value vectors of past tokens are stored in GPU memory, avoiding redundant re-computation at each decoding step",
-          "The model fine-tunes itself on user input",
-          "The model uses 10x more computation"
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        answer: 1,
-        explanation: "KV-caching stores calculated Key and Value matrices for prior tokens, reducing per-token decoding complexity from O(N^2) to O(N)."
+        "answer": 0,
+        "explanation": "KV-caching stores calculated Key and Value matrices for prior tokens, reducing per-token decoding complexity from O(N^2) to O(N)."
       },
       {
-        question: "18. What is the difference between Encoder-Only models (BERT) and Decoder-Only models (GPT)?",
-        options: [
+        "question": "18. What is the difference between Encoder-Only models (BERT) and Decoder-Only models (GPT)?",
+        "options": [
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
           "Encoder-only models use bidirectional attention without causal masking; Decoder-only models use causal masking for generation",
-          "Decoder-only models cannot process text",
-          "Encoder-only models do not use positional encodings",
-          "Decoder-only models only work on images"
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits"
         ],
-        answer: 0,
-        explanation: "BERT encoders allow tokens to attend bidirectionally across the entire context, whereas GPT decoders enforce causal masking."
+        "answer": 1,
+        "explanation": "BERT encoders allow tokens to attend bidirectionally across the entire context, whereas GPT decoders enforce causal masking."
       },
       {
-        question: "19. What does Temperature parameter control in LLM text sampling?",
-        options: [
-          "GPU processor heat",
+        "question": "19. What does Temperature parameter control in LLM text sampling?",
+        "options": [
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
           "The sharpness of the Softmax probability distribution over logits before sampling next tokens",
-          "The speed of network transmission",
-          "The size of context window"
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        answer: 1,
-        explanation: "Dividing logits by temperature T modifies probability variance: low T makes output deterministic, high T increases randomness."
+        "answer": 2,
+        "explanation": "Dividing logits by temperature T modifies probability variance: low T makes output deterministic, high T increases randomness."
       },
       {
-        question: "20. What is Top-p (Nucleus) Sampling?",
-        options: [
-          "Selecting tokens whose cumulative probability reaches threshold p, truncating tail low-probability tokens",
-          "Sampling the top 5 longest words",
-          "Sampling tokens from the beginning of the dictionary",
-          "Picking tokens with highest character count"
+        "question": "20. What is Top-p (Nucleus) Sampling?",
+        "options": [
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Selecting tokens whose cumulative probability reaches threshold p, truncating tail low-probability tokens"
         ],
-        answer: 0,
-        explanation: "Nucleus sampling dynamically selects from the smallest set of tokens whose cumulative probability exceeds p."
+        "answer": 3,
+        "explanation": "Nucleus sampling dynamically selects from the smallest set of tokens whose cumulative probability exceeds p."
       },
       {
-        question: "21. What is Top-k Sampling?",
-        options: [
+        "question": "21. What is Top-k Sampling?",
+        "options": [
           "Restricting next-token sampling to the k highest-probability candidates",
-          "Selecting k random tokens from the entire vocabulary",
-          "Splitting the sequence into k chunks",
-          "Using k GPUs for inference"
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        answer: 0,
-        explanation: "Top-k sampling filters the Softmax distribution to keep only the k most likely token options."
+        "answer": 0,
+        "explanation": "Top-k sampling filters the Softmax distribution to keep only the k most likely token options."
       },
       {
-        question: "22. What is Context Window length in a Transformer model?",
-        options: [
-          "The height of the browser screen",
+        "question": "22. What is Context Window length in a Transformer model?",
+        "options": [
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
           "The maximum number of input tokens a model can process in a single attention computation pass",
-          "The total number of parameters in the model",
-          "The speed of GPU memory transfer"
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits"
         ],
-        answer: 1,
-        explanation: "Context window defines the maximum sequence length (in tokens) the attention matrix can accommodate simultaneously."
+        "answer": 1,
+        "explanation": "Context window defines the maximum sequence length (in tokens) the attention matrix can accommodate simultaneously."
       },
       {
-        question: "23. Why does standard attention scale quadratically with sequence length?",
-        options: [
+        "question": "23. Why does standard attention scale quadratically with sequence length?",
+        "options": [
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
           "Because every token must compute an attention score with every other token in the sequence (N×N pairwise comparison)",
-          "Because GPU clock speed drops by half",
-          "Because vocabulary size doubles",
-          "Because of linear layer expansion"
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        answer: 0,
-        explanation: "Calculating Q·K^T requires evaluating all pairwise token relationships, creating an N×N attention matrix."
+        "answer": 2,
+        "explanation": "Calculating Q·K^T requires evaluating all pairwise token relationships, creating an N×N attention matrix."
       },
       {
-        question: "24. What is Low-Rank Adaptation (LoRA) used for in Transformer models?",
-        options: [
-          "To compress audio files",
-          "To fine-tune models efficiently by training small low-rank decomposition matrices while freezing base model weights",
-          "To replace positional encodings",
-          "To double the number of layers during inference"
+        "question": "24. What is Low-Rank Adaptation (LoRA) used for in Transformer models?",
+        "options": [
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "To fine-tune models efficiently by training small low-rank decomposition matrices while freezing base model weights"
         ],
-        answer: 1,
-        explanation: "LoRA injects rank-decomposition matrices into linear layers, allowing parameter-efficient fine-tuning with <1% of parameters."
+        "answer": 3,
+        "explanation": "LoRA injects rank-decomposition matrices into linear layers, allowing parameter-efficient fine-tuning with <1% of parameters."
       },
       {
-        question: "25. What is the role of the Logits layer at the output of a Transformer Decoder?",
-        options: [
-          "To output compressed zip data",
+        "question": "25. What is the role of the Logits layer at the output of a Transformer Decoder?",
+        "options": [
           "To project final hidden state representations into unnormalized log-probability scores across the entire vocabulary size",
-          "To clear GPU memory",
-          "To calculate gradient descent rates"
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        answer: 1,
-        explanation: "The final linear projection maps hidden dimension vectors to vocabulary-sized logit arrays, which are then Softmaxed into token probabilities."
+        "answer": 0,
+        "explanation": "The final linear projection maps hidden dimension vectors to vocabulary-sized logit arrays, which are then Softmaxed into token probabilities."
       }
     ]
   },
-
-  // =========================================================================
-  // TRACK 2: AGILE COACHING (AGILE-01)
-  // =========================================================================
   {
-    id: "agile-01",
-    track: "Agile Coaching",
-    title: "Systemic Team Coaching, ICF Competencies & Clean Language",
-    tagline: "Unpacking Systemic Coaching in plain simple terms: moving from micro-management to team self-organization, GROW conversations, and Clean Inquiry.",
-    estimatedTime: "75 mins deep study",
-    overview: `# 💡 SIMPLE LAYMAN'S EXPLANATION (Explain Like I'm 5)
-
-Imagine a high school soccer team that keeps losing matches:
-- **Traditional Management** is like a pushy coach standing on the sidelines shouting, *"Pass to Johnny! Run faster! Move left!"* The players become robots. If the coach stops shouting, the team falls apart!
-- **Systemic Agile Coaching** is like a smart mentor who sits down with the whole team at halftime and asks: *"What is happening out on the field right now? What gaps do you see in our defense, and what 2 plays do you want to test in the second half?"*
-
-The players realize their own mistakes, create their own game plan, and win the match **on their own**. The coach doesn't fix the problem; the coach helps the team see the system and fix it themselves!
-
-### The GROW Analogy: Planning a Road Trip
-Coaching conversations follow the simple **GROW** roadmap:
-1. **G (Goal)**: Where do you want to drive? *(e.g., "We want to reach the beach by 5:00 PM.")*
-2. **R (Reality)**: Where are we right now, and how much fuel is in the car? *(e.g., "We are in heavy traffic on Highway 101.")*
-3. **O (Options)**: What alternate routes could we take? *(e.g., "Take backroads, wait out traffic, or take the train.")*
-4. **W (Will)**: Which specific route will you commit to driving right now? *(e.g., "We will take backroad exit 4B starting in 2 minutes.")*
-
----
-
-# 🎨 VISUAL ARCHITECTURE DIAGRAM: SYSTEMIC TEAM COACHING FLOW
-
-\`\`\`mermaid
-graph TD
-    S[Systemic Business Stakeholders] -->|1. Commissioning Objectives| T[Agile Team System]
-    T -->|2. Clarifying Shared Norms| N[Internal Team Agreements]
-    N -->|3. Co-Creating Execution| C[Synergistic Team Output]
-    C -->|4. Connecting Dependencies| E[External ART Ecosystem]
-    E -->|5. Core Learning & Retrospectives| S
-\`\`\`
-
----
-
-# 🌍 WHERE & HOW THIS CONCEPT IS USED IN THE REAL WORLD
-
-1. **Enterprise Scaled Transformations (SAFe / LeSS Agile Release Trains)**:
-   - *Where Used*: Large tech organizations transitioning 500+ engineers from waterfall to agile.
-   - *How It Works*: Coaches align cross-team dependencies without telling developers how to write code.
-2. **Executive Leadership & Boardroom Alignment**:
-   - *Where Used*: CEO, VP, and Director strategic alignment retreats.
-   - *How It Works*: Uses Hawkins' 5 Disciplines (Commissioning & Clarifying) to align business strategy with engineering execution.
-3. **Resolving Inter-Departmental Conflict (Product vs Engineering)**:
-   - *Where Used*: Product Owners fighting with Principal Architects over tech debt vs new features.
-   - *How It Works*: Uses Lyssa Adkins' Conflict Model to de-escalate emotional warfare into factual problem-solving.
-4. **Startup Scaling & Self-Organizing Culture Setup**:
-   - *Where Used*: Fast-growing startups scaling from 10 to 100 developers.
-   - *How It Works*: Establishes clear coaching agreements and clean feedback loops so teams scale without bureaucratic red tape.
-
----
-
-# 🔬 DEEP TECHNICAL ARCHITECTURE & FRAMEWORK DERIVATION
-
-Systemic Team Coaching combines System Dynamics (Hawkins), International Coaching Federation (ICF) Core Competencies, and Clean Inquiry (Grove).
-
-### Hawkins 5 Disciplines Model:
-1. **Commissioning**: External stakeholder alignment on business outcomes.
-2. **Clarifying**: Co-creating internal team agreements and roles.
-3. **Co-Creating**: Fostering synergistic dynamic collaboration.
-4. **Connecting**: Inter-team and enterprise alignment.
-5. **Core Learning**: Reflection, retrospective safety, and continuous adaptation.`,
-
-    corePrinciples: [
+    "id": "agile-01",
+    "track": "Agile Coaching",
+    "title": "Systemic Team Coaching, ICF Competencies & Clean Language",
+    "tagline": "Unpacking Systemic Coaching in plain simple terms: moving from micro-management to team self-organization, GROW conversations, and Clean Inquiry.",
+    "estimatedTime": "75 mins deep study",
+    "overview": "# 💡 SIMPLE LAYMAN'S EXPLANATION (Explain Like I'm 5)\n\nImagine a high school soccer team that keeps losing matches:\n- **Traditional Management** is like a pushy coach standing on the sidelines shouting, *\"Pass to Johnny! Run faster! Move left!\"* The players become robots. If the coach stops shouting, the team falls apart!\n- **Systemic Agile Coaching** is like a smart mentor who sits down with the whole team at halftime and asks: *\"What is happening out on the field right now? What gaps do you see in our defense, and what 2 plays do you want to test in the second half?\"*\n\nThe players realize their own mistakes, create their own game plan, and win the match **on their own**. The coach doesn't fix the problem; the coach helps the team see the system and fix it themselves!\n\n### The GROW Analogy: Planning a Road Trip\nCoaching conversations follow the simple **GROW** roadmap:\n1. **G (Goal)**: Where do you want to drive? *(e.g., \"We want to reach the beach by 5:00 PM.\")*\n2. **R (Reality)**: Where are we right now, and how much fuel is in the car? *(e.g., \"We are in heavy traffic on Highway 101.\")*\n3. **O (Options)**: What alternate routes could we take? *(e.g., \"Take backroads, wait out traffic, or take the train.\")*\n4. **W (Will)**: Which specific route will you commit to driving right now? *(e.g., \"We will take backroad exit 4B starting in 2 minutes.\")*\n\n---\n\n# 🎨 VISUAL ARCHITECTURE DIAGRAM: SYSTEMIC TEAM COACHING FLOW\n\n```mermaid\ngraph TD\n    S[Systemic Business Stakeholders] -->|1. Commissioning Objectives| T[Agile Team System]\n    T -->|2. Clarifying Shared Norms| N[Internal Team Agreements]\n    N -->|3. Co-Creating Execution| C[Synergistic Team Output]\n    C -->|4. Connecting Dependencies| E[External ART Ecosystem]\n    E -->|5. Core Learning & Retrospectives| S\n```\n\n---\n\n# 🌍 WHERE & HOW THIS CONCEPT IS USED IN THE REAL WORLD\n\n1. **Enterprise Scaled Transformations (SAFe / LeSS Agile Release Trains)**:\n   - *Where Used*: Large tech organizations transitioning 500+ engineers from waterfall to agile.\n   - *How It Works*: Coaches align cross-team dependencies without telling developers how to write code.\n2. **Executive Leadership & Boardroom Alignment**:\n   - *Where Used*: CEO, VP, and Director strategic alignment retreats.\n   - *How It Works*: Uses Hawkins' 5 Disciplines (Commissioning & Clarifying) to align business strategy with engineering execution.\n3. **Resolving Inter-Departmental Conflict (Product vs Engineering)**:\n   - *Where Used*: Product Owners fighting with Principal Architects over tech debt vs new features.\n   - *How It Works*: Uses Lyssa Adkins' Conflict Model to de-escalate emotional warfare into factual problem-solving.\n4. **Startup Scaling & Self-Organizing Culture Setup**:\n   - *Where Used*: Fast-growing startups scaling from 10 to 100 developers.\n   - *How It Works*: Establishes clear coaching agreements and clean feedback loops so teams scale without bureaucratic red tape.\n\n---\n\n# 🔬 DEEP TECHNICAL ARCHITECTURE & FRAMEWORK DERIVATION\n\nSystemic Team Coaching combines System Dynamics (Hawkins), International Coaching Federation (ICF) Core Competencies, and Clean Inquiry (Grove).\n\n### Hawkins 5 Disciplines Model:\n1. **Commissioning**: External stakeholder alignment on business outcomes.\n2. **Clarifying**: Co-creating internal team agreements and roles.\n3. **Co-Creating**: Fostering synergistic dynamic collaboration.\n4. **Connecting**: Inter-team and enterprise alignment.\n5. **Core Learning**: Reflection, retrospective safety, and continuous adaptation.",
+    "corePrinciples": [
       {
-        title: "1. Systemic Neutrality & Detachment",
-        meaning: "The coach holds unconditional positive regard for the team while remaining unattached to specific technical solutions or personal biases.",
-        whyItMatters: "Prevents the coach from becoming a 'Hero Coach' single point of failure, empowering genuine team self-organization.",
-        implementation: "Replace directive advice ('You should use GraphQL') with open inquiry ('What architectural trade-offs do you see?')."
+        "title": "1. Systemic Neutrality & Detachment",
+        "meaning": "The coach holds unconditional positive regard for the team while remaining unattached to specific technical solutions or personal biases.",
+        "whyItMatters": "Prevents the coach from becoming a 'Hero Coach' single point of failure, empowering genuine team self-organization.",
+        "implementation": "Replace directive advice ('You should use GraphQL') with open inquiry ('What architectural trade-offs do you see?')."
       },
       {
-        title: "2. Evoking Awareness (ICF Competency 7)",
-        meaning: "Asking open-ended, powerful questions that challenge assumptions and illuminate underlying systemic patterns.",
-        whyItMatters: "Unlocks self-generated coachee insights which lead to 10x higher commitment than manager-assigned tasks.",
-        implementation: "Formulate inquiry prompts starting with 'What' or 'How' followed by 10 seconds of intentional silence."
+        "title": "2. Evoking Awareness (ICF Competency 7)",
+        "meaning": "Asking open-ended, powerful questions that challenge assumptions and illuminate underlying systemic patterns.",
+        "whyItMatters": "Unlocks self-generated coachee insights which lead to 10x higher commitment than manager-assigned tasks.",
+        "implementation": "Formulate inquiry prompts starting with 'What' or 'How' followed by 10 seconds of intentional silence."
       },
       {
-        title: "3. Active Listening at Level 3 (Co-Active)",
-        meaning: "Listening beyond verbal text to vocal tone, body language, emotional energy shifts, and unsaid organizational dynamics.",
-        whyItMatters: "Detects hidden systemic conflict, fear, or unvoiced resistance before it manifests as missed sprint commitments.",
-        implementation: "Reflect back observed non-verbal energy: 'I noticed the team fell silent when we brought up release dates—what is happening right now?'"
+        "title": "3. Active Listening at Level 3 (Co-Active)",
+        "meaning": "Listening beyond verbal text to vocal tone, body language, emotional energy shifts, and unsaid organizational dynamics.",
+        "whyItMatters": "Detects hidden systemic conflict, fear, or unvoiced resistance before it manifests as missed sprint commitments.",
+        "implementation": "Reflect back observed non-verbal energy: 'I noticed the team fell silent when we brought up release dates—what is happening right now?'"
       },
       {
-        title: "4. The Coaching Stance Matrix Flexibility",
-        meaning: "Consciously navigating between Facilitator, Teacher, Mentor, and Professional Coach stances based on team maturity.",
-        whyItMatters: "Prevents misapplying pure non-directive coaching when a novice team needs explicit skill instruction.",
-        implementation: "Explicitly state your stance shift: 'Switching to Teacher mode for 5 minutes to explain SAFe WSJF prioritization...'"
+        "title": "4. The Coaching Stance Matrix Flexibility",
+        "meaning": "Consciously navigating between Facilitator, Teacher, Mentor, and Professional Coach stances based on team maturity.",
+        "whyItMatters": "Prevents misapplying pure non-directive coaching when a novice team needs explicit skill instruction.",
+        "implementation": "Explicitly state your stance shift: 'Switching to Teacher mode for 5 minutes to explain SAFe WSJF prioritization...'"
       },
       {
-        title: "5. Psychological Safety Container Establishment",
-        meaning: "Creating a secure emotional space with explicit agreements where vulnerability, error reporting, and candor flourish.",
-        whyItMatters: "Transforms retrospectives from finger-pointing blame sessions into blameless systemic improvement engines.",
-        implementation: "Establish container ground rules at meeting launch: 'What happens in retro stays in retro; we attack system flaws, not people.'"
+        "title": "5. Psychological Safety Container Establishment",
+        "meaning": "Creating a secure emotional space with explicit agreements where vulnerability, error reporting, and candor flourish.",
+        "whyItMatters": "Transforms retrospectives from finger-pointing blame sessions into blameless systemic improvement engines.",
+        "implementation": "Establish container ground rules at meeting launch: 'What happens in retro stays in retro; we attack system flaws, not people.'"
       }
     ],
-
-    books: [
+    "books": [
       {
-        title: "Coaching Agile Teams: A Companion for ScrumMasters, Agile Coaches, and Project Managers",
-        author: "Lyssa Adkins (Addison-Wesley Professional)",
-        url: "https://www.informit.com/store/coaching-agile-teams-a-companion-for-scrummasters-9780321637703",
-        keyChapters: "Chapter 4: The Coaching Stance & Chapter 7: Coaching People One-on-One",
-        summary: `Chapter 4 breaks down the fundamental Mindset Transition from command-and-control project manager to Agile Coach. Adkins outlines the 4 distinct stances an Agile Coach must dynamically inhabit:\n1. **Teaching**: Instructing teams on explicit agile frameworks (Scrum, Kanban, SAFe).\n2. **Mentoring**: Sharing personal experiences and domain expertise when appropriate.\n3. **Facilitating**: Designing neutral process structures where the team reaches its own decisions.\n4. **Professional Coaching**: Asking powerful, non-directive questions that evoke team self-awareness.\n\nChapter 7 introduces Lyssa Adkins' famous **5 Levels of Conflict Model**:\n- **Level 1 (Problem to Solve)**: Factual collaboration focused on solving objective code or product issues.\n- **Level 2 (Disagreement)**: Self-protection emerges; team members speak in guarded, defensive terms.\n- **Level 3 (Contest)**: Aiming to win; personal attacks and 'us vs them' department factions form.\n- **Level 4 (Crusade)**: Protecting sacred ideology; compromise is viewed as treason.\n- **Level 5 (World War)**: Irreparable destruction; intention is total obliteration of the opposing party.`,
-        keyTakeaways: [
+        "title": "Coaching Agile Teams: A Companion for ScrumMasters, Agile Coaches, and Project Managers",
+        "author": "Lyssa Adkins (Addison-Wesley Professional)",
+        "url": "https://www.informit.com/store/coaching-agile-teams-a-companion-for-scrummasters-9780321637703",
+        "keyChapters": "Chapter 4: The Coaching Stance & Chapter 7: Coaching People One-on-One",
+        "summary": "Chapter 4 breaks down the fundamental Mindset Transition from command-and-control project manager to Agile Coach. Adkins outlines the 4 distinct stances an Agile Coach must dynamically inhabit:\n1. **Teaching**: Instructing teams on explicit agile frameworks (Scrum, Kanban, SAFe).\n2. **Mentoring**: Sharing personal experiences and domain expertise when appropriate.\n3. **Facilitating**: Designing neutral process structures where the team reaches its own decisions.\n4. **Professional Coaching**: Asking powerful, non-directive questions that evoke team self-awareness.\n\nChapter 7 introduces Lyssa Adkins' famous **5 Levels of Conflict Model**:\n- **Level 1 (Problem to Solve)**: Factual collaboration focused on solving objective code or product issues.\n- **Level 2 (Disagreement)**: Self-protection emerges; team members speak in guarded, defensive terms.\n- **Level 3 (Contest)**: Aiming to win; personal attacks and 'us vs them' department factions form.\n- **Level 4 (Crusade)**: Protecting sacred ideology; compromise is viewed as treason.\n- **Level 5 (World War)**: Irreparable destruction; intention is total obliteration of the opposing party.",
+        "keyTakeaways": [
           "**Stance Awareness**: Consciously announce stance shifts (e.g., 'I am putting on my Teacher hat for 5 minutes').",
           "**Conflict Level Diagnosis**: De-escalate Level 2/3 conflicts back to Level 1 by refocusing team conversations strictly on observable facts and shared business goals.",
           "**Non-Directive Coaching**: Resist the urge to solve the team's problems; empower them to own the resolution."
         ]
       },
       {
-        title: "Systemic Team Coaching: Developing High-Performing Teams",
-        author: "Peter Hawkins (Kogan Page)",
-        url: "https://www.koganpage.com/hr-learning-development/systemic-team-coaching-9781398602267",
-        keyChapters: "Chapter 3: The 5 Disciplines Model & Chapter 8: Coaching the Team Outer System",
-        summary: `Chapter 3 presents Peter Hawkins' **5 Disciplines Framework for High-Performing Teams**:\n1. **Commissioning**: Ensuring clear alignment with external sponsors, executive stakeholders, and customers on clear business targets.\n2. **Clarifying**: Co-creating internal team mission, shared values, role definitions, and operational norms.\n3. **Co-Creating**: Fostering deep interpersonal synergy, psychological safety, and creative collaboration during sprint delivery.\n4. **Connecting**: Proactively managing outward relationships with adjacent Agile Release Trains, vendor partners, and client teams.\n5. **Core Learning**: Continually standing back to reflect, conduct blameless retrospectives, and accelerate team maturity.\n\nChapter 8 details practical techniques for coaching the 'outer system', ensuring teams do not become isolated silos but remain actively connected to organizational strategy.`,
-        keyTakeaways: [
+        "title": "Systemic Team Coaching: Developing High-Performing Teams",
+        "author": "Peter Hawkins (Kogan Page)",
+        "url": "https://www.koganpage.com/hr-learning-development/systemic-team-coaching-9781398602267",
+        "keyChapters": "Chapter 3: The 5 Disciplines Model & Chapter 8: Coaching the Team Outer System",
+        "summary": "Chapter 3 presents Peter Hawkins' **5 Disciplines Framework for High-Performing Teams**:\n1. **Commissioning**: Ensuring clear alignment with external sponsors, executive stakeholders, and customers on clear business targets.\n2. **Clarifying**: Co-creating internal team mission, shared values, role definitions, and operational norms.\n3. **Co-Creating**: Fostering deep interpersonal synergy, psychological safety, and creative collaboration during sprint delivery.\n4. **Connecting**: Proactively managing outward relationships with adjacent Agile Release Trains, vendor partners, and client teams.\n5. **Core Learning**: Continually standing back to reflect, conduct blameless retrospectives, and accelerate team maturity.\n\nChapter 8 details practical techniques for coaching the 'outer system', ensuring teams do not become isolated silos but remain actively connected to organizational strategy.",
+        "keyTakeaways": [
           "**Systemic Alignment**: High-performing teams must satisfy both internal team cohesion (Clarifying & Co-creating) and external stakeholder needs (Commissioning & Connecting).",
           "**Continuous Reflection**: Core Learning discipline ensures teams iterate on how they work, not just what they build.",
           "**Stakeholder Feedback Loops**: Regularly validate team deliverables directly against original commissioning metrics."
         ]
       },
       {
-        title: "The Coaching Habit: Say Less, Ask More & Change the Way You Lead Forever",
-        author: "Michael Bungay Stanier (Box of Crayons Press)",
-        url: "https://boxofcrayons.com/the-coaching-habit-book/",
-        keyChapters: "Question 2: The AWE Question & Question 5: The Lazy Question",
-        summary: `Michael Bungay Stanier delivers a micro-coaching framework centered on 7 essential questions to break the 'Advice Monster' habit:\n\n- **The AWE Question ("And What Else?")**: The single most powerful coaching follow-up question in the world. It forces coachees to dig deeper, uncovering 3 or 4 hidden layers of insight beyond their initial surface-level answer.\n- **The Lazy Question ("How Can I Help?")**: Forces the coachee to make an explicit, specific request rather than expecting the coach or leader to guess or immediately jump in to fix the problem.\n\nBy replacing immediate advice-giving with curious, open questions, leaders build self-reliant, resilient engineering teams.`,
-        keyTakeaways: [
+        "title": "The Coaching Habit: Say Less, Ask More & Change the Way You Lead Forever",
+        "author": "Michael Bungay Stanier (Box of Crayons Press)",
+        "url": "https://boxofcrayons.com/the-coaching-habit-book/",
+        "keyChapters": "Question 2: The AWE Question & Question 5: The Lazy Question",
+        "summary": "Michael Bungay Stanier delivers a micro-coaching framework centered on 7 essential questions to break the 'Advice Monster' habit:\n\n- **The AWE Question (\"And What Else?\")**: The single most powerful coaching follow-up question in the world. It forces coachees to dig deeper, uncovering 3 or 4 hidden layers of insight beyond their initial surface-level answer.\n- **The Lazy Question (\"How Can I Help?\")**: Forces the coachee to make an explicit, specific request rather than expecting the coach or leader to guess or immediately jump in to fix the problem.\n\nBy replacing immediate advice-giving with curious, open questions, leaders build self-reliant, resilient engineering teams.",
+        "keyTakeaways": [
           "**Silence the Advice Monster**: Tame the knee-jerk instinct to jump in with immediate answers when someone comes to you with a problem.",
           "**Use 'And What Else?'**: Always ask 'And What Else?' at least twice to uncover the real underlying issue.",
           "**Force Explicit Requests**: Ask 'How can I help?' so team members own the solution and clearly articulate what support they need."
         ]
       }
     ],
-
-    articles: [
+    "articles": [
       {
-        title: "The ICF Core Competency Framework & Code of Ethics",
-        source: "International Coaching Federation (ICF)",
-        url: "https://coachingfederation.org/credentials-and-standards/core-competencies",
-        takeaway: "Official 8 core competencies defining professional coaching: demonstrating ethical practice, embodying a coaching mindset, evoking awareness, and facilitating growth."
+        "title": "The ICF Core Competency Framework & Code of Ethics",
+        "source": "International Coaching Federation (ICF)",
+        "url": "https://coachingfederation.org/credentials-and-standards/core-competencies",
+        "takeaway": "Official 8 core competencies defining professional coaching: demonstrating ethical practice, embodying a coaching mindset, evoking awareness, and facilitating growth."
       },
       {
-        title: "Lyssa Adkins' 5 Levels of Team Conflict Framework",
-        source: "Agile Coaching Institute & Enterprise Coaching Guide",
-        url: "https://agilecoachinginstitute.com/building-blocks-of-agile-coaching/",
-        takeaway: "Diagnostic framework for identifying team conflict intensity (Problem to Solve, Disagreements, Contest, Crusade, World War) and choosing exact coaching interventions."
+        "title": "Lyssa Adkins' 5 Levels of Team Conflict Framework",
+        "source": "Agile Coaching Institute & Enterprise Coaching Guide",
+        "url": "https://agilecoachinginstitute.com/building-blocks-of-agile-coaching/",
+        "takeaway": "Diagnostic framework for identifying team conflict intensity (Problem to Solve, Disagreements, Contest, Crusade, World War) and choosing exact coaching interventions."
       },
       {
-        title: "Clean Language & David Grove's Symbolic Modelling in Executive Coaching",
-        source: "Clean Change Company & Metaphor Research",
-        url: "https://cleanchange.co.uk/cleanlanguage/",
-        takeaway: "Explains how to use neutral Clean Questions to explore coachee metaphors without introducing coach bias or leading suggestions."
+        "title": "Clean Language & David Grove's Symbolic Modelling in Executive Coaching",
+        "source": "Clean Change Company & Metaphor Research",
+        "url": "https://cleanchange.co.uk/cleanlanguage/",
+        "takeaway": "Explains how to use neutral Clean Questions to explore coachee metaphors without introducing coach bias or leading suggestions."
       }
     ],
-
-    media: [
+    "media": [
       {
-        type: "Agile Culture Masterclass",
-        title: "Spotify Engineering Culture (Autonomous Squads, Tribes & Guilds)",
-        channel: "Henrik Kniberg (Agile Coach & Author)",
-        url: "https://www.youtube.com/watch?v=4GK1NDTWbkY",
-        duration: "13 mins",
-        keyInsight: "Demonstrates how autonomous squads align internal team ownership with enterprise architecture goals without bureaucratic red tape."
+        "type": "Agile Culture Masterclass",
+        "title": "Spotify Engineering Culture (Autonomous Squads, Tribes & Guilds)",
+        "channel": "Henrik Kniberg (Agile Coach & Author)",
+        "url": "https://www.youtube.com/watch?v=4GK1NDTWbkY",
+        "duration": "13 mins",
+        "keyInsight": "Demonstrates how autonomous squads align internal team ownership with enterprise architecture goals without bureaucratic red tape."
       },
       {
-        type: "RSA Animate Keynote",
-        title: "Drive: The Surprising Truth About What Motivates Us",
-        channel: "Daniel H. Pink (Royal Society of Arts)",
-        url: "https://www.youtube.com/watch?v=u6XAPnuFjJc",
-        duration: "11 mins",
-        keyInsight: "Visual breakdown showing how Autonomy, Mastery, and Purpose outperform financial bonuses for knowledge workers."
+        "type": "RSA Animate Keynote",
+        "title": "Drive: The Surprising Truth About What Motivates Us",
+        "channel": "Daniel H. Pink (Royal Society of Arts)",
+        "url": "https://www.youtube.com/watch?v=u6XAPnuFjJc",
+        "duration": "11 mins",
+        "keyInsight": "Visual breakdown showing how Autonomy, Mastery, and Purpose outperform financial bonuses for knowledge workers."
       },
       {
-        type: "TED Masterclass",
-        title: "How Great Leaders Inspire Action (The Golden Circle)",
-        channel: "Simon Sinek (TED Talks)",
-        url: "https://www.youtube.com/watch?v=qp0HIF3SfI4",
-        duration: "18 mins",
-        keyInsight: "Explains how starting with 'Why' creates deep systemic commitment across engineering teams and executive stakeholders."
+        "type": "TED Masterclass",
+        "title": "How Great Leaders Inspire Action (The Golden Circle)",
+        "channel": "Simon Sinek (TED Talks)",
+        "url": "https://www.youtube.com/watch?v=qp0HIF3SfI4",
+        "duration": "18 mins",
+        "keyInsight": "Explains how starting with 'Why' creates deep systemic commitment across engineering teams and executive stakeholders."
       }
     ],
-
-    caseStudy: {
-      title: "Enterprise Agile Transformation at Fortune 100 Insurance Provider",
-      context: "45 engineering teams missed 65% of release commitments due to conflict between Product Management and Engineering.",
-      solution: "Embedded an ICF Agile Coach who instituted Systemic Alignment, Clean Language Retrospectives, and GROW executive cadences.",
-      impact: "Predictability rose from 35% to 91%, turnover dropped from 28% to 4%, and velocity increased by 3.2x over 3 PIs."
+    "caseStudy": {
+      "title": "Enterprise Agile Transformation at Fortune 100 Insurance Provider",
+      "context": "45 engineering teams missed 65% of release commitments due to conflict between Product Management and Engineering.",
+      "solution": "Embedded an ICF Agile Coach who instituted Systemic Alignment, Clean Language Retrospectives, and GROW executive cadences.",
+      "impact": "Predictability rose from 35% to 91%, turnover dropped from 28% to 4%, and velocity increased by 3.2x over 3 PIs."
     },
-
-    actionPlan: [
+    "actionPlan": [
       {
-        title: "Action 1: Perform a Personal Non-Directive Coaching Conversation Audit",
-        instructions: "Audit your coaching conversations over the past week. Identify directive statements vs non-directive inquiry prompts, aiming for 80% powerful questions.",
-        aiPrompt: `SYSTEM PROMPT: You are a Master Certified Coach (MCC) accredited by the ICF.
-USER PROMPT: Analyze the following meeting dialogue transcript between an Agile Coach and a Tech Lead.
-Transcript:
-Coach: "You should really stop interrupting the Product Owner during refinement. Why don't you use pair programming instead?"
-Tech Lead: "We don't have time for pair programming."
-
-Task:
-1. Identify 3 directive/leading flaws in the coach's approach.
-2. Rewrite the dialogue using ICF Core Competency 7 (Evoking Awareness) and powerful non-directive questions starting with 'What' or 'How'.`,
-        aiToolkit: ["Otter.ai / Fireflies.ai (Meeting Transcript Generator)", "ICF Core Competency Rubric", "ChatGPT Custom GPT: Agile Coach Mentor", "Claude 3.5 Sonnet"]
+        "title": "Action 1: Perform a Personal Non-Directive Coaching Conversation Audit",
+        "instructions": "Audit your coaching conversations over the past week. Identify directive statements vs non-directive inquiry prompts, aiming for 80% powerful questions.",
+        "aiPrompt": "SYSTEM PROMPT: You are a Master Certified Coach (MCC) accredited by the ICF.\nUSER PROMPT: Analyze the following meeting dialogue transcript between an Agile Coach and a Tech Lead.\nTranscript:\nCoach: \"You should really stop interrupting the Product Owner during refinement. Why don't you use pair programming instead?\"\nTech Lead: \"We don't have time for pair programming.\"\n\nTask:\n1. Identify 3 directive/leading flaws in the coach's approach.\n2. Rewrite the dialogue using ICF Core Competency 7 (Evoking Awareness) and powerful non-directive questions starting with 'What' or 'How'.",
+        "aiToolkit": [
+          "Otter.ai / Fireflies.ai (Meeting Transcript Generator)",
+          "ICF Core Competency Rubric",
+          "ChatGPT Custom GPT: Agile Coach Mentor",
+          "Claude 3.5 Sonnet"
+        ]
       },
       {
-        title: "Action 2: Facilitate a Clean Language Retrospective using David Grove's Framework",
-        instructions: "In your next retrospective, implement Clean Language questions: 'And what kind of [team's exact word] is that?' when a team member uses a metaphor.",
-        aiPrompt: `SYSTEM PROMPT: You are an Expert Clean Language Practitioner.
-USER PROMPT: A developer during a retrospective states: "Working on this legacy codebase feels like wading through thick mud."
-Generate 5 David Grove Clean Language questions that I can ask as a coach to explore this metaphor deeply without introducing any coach bias or leading suggestions.`,
-        aiToolkit: ["Clean Language Facilitation Cards", "Miro / Mural Whiteboard", "Notion AI", "Claude 3.5 Sonnet"]
+        "title": "Action 2: Facilitate a Clean Language Retrospective using David Grove's Framework",
+        "instructions": "In your next retrospective, implement Clean Language questions: 'And what kind of [team's exact word] is that?' when a team member uses a metaphor.",
+        "aiPrompt": "SYSTEM PROMPT: You are an Expert Clean Language Practitioner.\nUSER PROMPT: A developer during a retrospective states: \"Working on this legacy codebase feels like wading through thick mud.\"\nGenerate 5 David Grove Clean Language questions that I can ask as a coach to explore this metaphor deeply without introducing any coach bias or leading suggestions.",
+        "aiToolkit": [
+          "Clean Language Facilitation Cards",
+          "Miro / Mural Whiteboard",
+          "Notion AI",
+          "Claude 3.5 Sonnet"
+        ]
       },
       {
-        title: "Action 3: Diagnose Team Conflict Level using Lyssa Adkins' 5 Levels Model",
-        instructions: "Evaluate a current team dispute against Lyssa Adkins' Conflict Model (Level 1 Problem to Solve → Level 5 World War) and choose a matching coaching intervention.",
-        aiPrompt: `SYSTEM PROMPT: You are an Agile Team Conflict Resolution Specialist.
-USER PROMPT: Analyze the following team situation: Two senior engineers are arguing over using REST APIs vs GraphQL. Engineer A says 'Engineer B always chooses overly complex frameworks just to flex', while Engineer B says 'Engineer A never understands modern frontend architecture'.
-Tasks:
-1. Identify the exact Lyssa Adkins Conflict Level (Level 1 to Level 5).
-2. Explain the language indicators.
-3. Provide a step-by-step facilitation guide for the coach to de-escalate this conflict back to Level 1 (Problem to Solve).`,
-        aiToolkit: ["Lyssa Adkins Conflict Matrix Guide", "ChatGPT 4o", "Claude 3.5 Sonnet"]
+        "title": "Action 3: Diagnose Team Conflict Level using Lyssa Adkins' 5 Levels Model",
+        "instructions": "Evaluate a current team dispute against Lyssa Adkins' Conflict Model (Level 1 Problem to Solve → Level 5 World War) and choose a matching coaching intervention.",
+        "aiPrompt": "SYSTEM PROMPT: You are an Agile Team Conflict Resolution Specialist.\nUSER PROMPT: Analyze the following team situation: Two senior engineers are arguing over using REST APIs vs GraphQL. Engineer A says 'Engineer B always chooses overly complex frameworks just to flex', while Engineer B says 'Engineer A never understands modern frontend architecture'.\nTasks:\n1. Identify the exact Lyssa Adkins Conflict Level (Level 1 to Level 5).\n2. Explain the language indicators.\n3. Provide a step-by-step facilitation guide for the coach to de-escalate this conflict back to Level 1 (Problem to Solve).",
+        "aiToolkit": [
+          "Lyssa Adkins Conflict Matrix Guide",
+          "ChatGPT 4o",
+          "Claude 3.5 Sonnet"
+        ]
       },
       {
-        title: "Action 4: Conduct a 20-Minute GROW Coaching Session with a Peer",
-        instructions: "Structure a 20-minute dialogue using the GROW framework (Goal, Reality, Options, Will). Maintain Level 3 Active Listening throughout.",
-        aiPrompt: `SYSTEM PROMPT: You are an ICF Executive Coaching Assessor.
-USER PROMPT: Provide a structured conversational script template for a 20-minute GROW coaching session with an Engineering Director facing team burnout.
-Include specific questions for:
-- Goal (0-5 mins)
-- Reality (5-10 mins)
-- Options (10-15 mins)
-- Will / Way Forward (15-20 mins)`,
-        aiToolkit: ["GROW Coaching Canvas", "Loom Video Recorder", "ChatGPT 4o"]
+        "title": "Action 4: Conduct a 20-Minute GROW Coaching Session with a Peer",
+        "instructions": "Structure a 20-minute dialogue using the GROW framework (Goal, Reality, Options, Will). Maintain Level 3 Active Listening throughout.",
+        "aiPrompt": "SYSTEM PROMPT: You are an ICF Executive Coaching Assessor.\nUSER PROMPT: Provide a structured conversational script template for a 20-minute GROW coaching session with an Engineering Director facing team burnout.\nInclude specific questions for:\n- Goal (0-5 mins)\n- Reality (5-10 mins)\n- Options (10-15 mins)\n- Will / Way Forward (15-20 mins)",
+        "aiToolkit": [
+          "GROW Coaching Canvas",
+          "Loom Video Recorder",
+          "ChatGPT 4o"
+        ]
       },
       {
-        title: "Action 5: Assess Team Systemic Maturity against Peter Hawkins' 5 Disciplines",
-        instructions: "Evaluate your team system against Hawkins' 5 Disciplines (Commissioning, Clarifying, Co-creating, Connecting, Core Learning) and implement 1 targeted intervention.",
-        aiPrompt: `SYSTEM PROMPT: You are an Enterprise Systemic Team Coach.
-USER PROMPT: Generate a 10-question self-assessment survey designed for an Agile Release Train (ART) team to evaluate their systemic performance across Peter Hawkins' 5 Disciplines: Commissioning, Clarifying, Co-creating, Connecting, and Core Learning. Include a scoring rubric (1 to 5 scale).`,
-        aiToolkit: ["Google Forms / Typeform", "Miro Systemic Mapping Canvas", "Claude 3.5 Sonnet"]
+        "title": "Action 5: Assess Team Systemic Maturity against Peter Hawkins' 5 Disciplines",
+        "instructions": "Evaluate your team system against Hawkins' 5 Disciplines (Commissioning, Clarifying, Co-creating, Connecting, Core Learning) and implement 1 targeted intervention.",
+        "aiPrompt": "SYSTEM PROMPT: You are an Enterprise Systemic Team Coach.\nUSER PROMPT: Generate a 10-question self-assessment survey designed for an Agile Release Train (ART) team to evaluate their systemic performance across Peter Hawkins' 5 Disciplines: Commissioning, Clarifying, Co-creating, Connecting, and Core Learning. Include a scoring rubric (1 to 5 scale).",
+        "aiToolkit": [
+          "Google Forms / Typeform",
+          "Miro Systemic Mapping Canvas",
+          "Claude 3.5 Sonnet"
+        ]
       }
     ],
-
-    quiz: [
+    "quiz": [
       {
-        question: "1. Which question represents a non-directive, powerful coaching inquiry?",
-        options: [
-          "Don't you think pair programming would fix your bug count?",
-          "Why didn't the Scrum Master enforce the sprint goal?",
+        "question": "1. Which question represents a non-directive, powerful coaching inquiry?",
+        "options": [
           "What options do you see for navigating this technical impediment?",
-          "Should we escalate this issue to the VP immediately?"
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Don't you think pair programming would fix your bug count?",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability"
         ],
-        answer: 2,
-        explanation: "'What options do you see...?' is open-ended, non-judgmental, and invites the team to explore their own internal wisdom and accountability."
+        "answer": 0,
+        "explanation": "'What options do you see...?' is open-ended, non-judgmental, and invites the team to explore their own internal wisdom and accountability."
       },
       {
-        question: "2. In Lyssa Adkins' 5 Levels of Conflict Model, what characterizes Level 1 conflict?",
-        options: [
-          "Crusade - protecting the group ideology",
+        "question": "2. In Lyssa Adkins' 5 Levels of Conflict Model, what characterizes Level 1 conflict?",
+        "options": [
+          "Isolated departmental siloing without cross-functional release train dependency mapping",
           "Problem to Solve - language is clear, open, specific, and focused on facts",
-          "World War - intractable destruction",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
           "Contest - winning becomes more important than solving the issue"
         ],
-        answer: 1,
-        explanation: "Level 1 is 'Problem to Solve'. Team members communicate using clear, fact-based language and collaborate constructively to find solutions."
+        "answer": 1,
+        "explanation": "Level 1 is 'Problem to Solve'. Team members communicate using clear, fact-based language and collaborate constructively to find solutions."
       },
       {
-        question: "3. What is the primary objective of Clean Language in coaching?",
-        options: [
-          "To eliminate profanity from team chat channels",
+        "question": "3. What is the primary objective of Clean Language in coaching?",
+        "options": [
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done",
           "To minimize coach bias and assumptions by using neutral, non-leading questions that reflect the coachee's exact words",
-          "To enforce strict grammatical rules in user stories",
-          "To speed up daily standup meetings to under 5 minutes"
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements"
         ],
-        answer: 1,
-        explanation: "Clean Language uses clean questions and mirrors the coachee's exact words, preventing the coach from injecting personal biases or leading metaphors into the coachee's reflection."
+        "answer": 2,
+        "explanation": "Clean Language uses clean questions and mirrors the coachee's exact words, preventing the coach from injecting personal biases or leading metaphors into the coachee's reflection."
       },
       {
-        question: "4. What does the 'R' stand for in the GROW coaching model?",
-        options: [
-          "Refactoring",
-          "Reality",
-          "Risk Assessment",
-          "Requirements"
+        "question": "4. What does the 'R' stand for in the GROW coaching model?",
+        "options": [
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
+          "Isolated departmental siloing without cross-functional release train dependency mapping",
+          "Reality"
         ],
-        answer: 1,
-        explanation: "GROW stands for Goal (desired outcome), Reality (current situation exploration), Options (possibility generation), and Will/Way forward (action commitment)."
+        "answer": 3,
+        "explanation": "GROW stands for Goal (desired outcome), Reality (current situation exploration), Options (possibility generation), and Will/Way forward (action commitment)."
       },
       {
-        question: "5. According to Peter Hawkins' 5 Disciplines of Systemic Team Coaching, what does 'Commissioning' involve?",
-        options: [
-          "Writing automated unit tests",
+        "question": "5. According to Peter Hawkins' 5 Disciplines of Systemic Team Coaching, what does 'Commissioning' involve?",
+        "options": [
           "Aligning clearly with external stakeholders and sponsors on why the team exists and what business value it must deliver",
-          "Paying financial bonuses to top developers",
-          "Hosting social team building events"
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done",
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements"
         ],
-        answer: 1,
-        explanation: "Commissioning is the first discipline, ensuring the team has clear alignment with external organizational sponsors regarding its core purpose and success metrics."
+        "answer": 0,
+        "explanation": "Commissioning is the first discipline, ensuring the team has clear alignment with external organizational sponsors regarding its core purpose and success metrics."
       },
       {
-        question: "6. What is ICF Core Competency 7: 'Evokes Awareness' primarily about?",
-        options: [
-          "Giving the coachee a detailed step-by-step checklist",
+        "question": "6. What is ICF Core Competency 7: 'Evokes Awareness' primarily about?",
+        "options": [
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
           "Facilitating client insight and discovery by using tools like powerful questioning, silence, metaphor, or reframing",
-          "Auditing Jira velocity charts",
-          "Writing performance review reviews"
+          "Isolated departmental siloing without cross-functional release train dependency mapping",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring"
         ],
-        answer: 1,
-        explanation: "Evoking Awareness involves asking powerful open questions, using silence, and offering observations that generate deep coachee realizations."
+        "answer": 1,
+        "explanation": "Evoking Awareness involves asking powerful open questions, using silence, and offering observations that generate deep coachee realizations."
       },
       {
-        question: "7. In Co-Active Coaching, what characterizes Level 3 Active Listening?",
-        options: [
+        "question": "7. In Co-Active Coaching, what characterizes Level 3 Active Listening?",
+        "options": [
           "Listening only to the words spoken while preparing your response",
-          "Listening to internal self-talk",
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
           "Listening to the entire environment, sensing tone, body language, energy, atmosphere, and unsaid dynamics",
-          "Listening while reading emails"
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done"
         ],
-        answer: 2,
-        explanation: "Level 3 listening encompasses awareness of the entire energetic and systemic environment, including non-verbal cues and organizational atmosphere."
+        "answer": 2,
+        "explanation": "Level 3 listening encompasses awareness of the entire energetic and systemic environment, including non-verbal cues and organizational atmosphere."
       },
       {
-        question: "8. What is the 'Hero Coach Trap' in Agile Coaching?",
-        options: [
-          "When the coach solves all team problems personally, creating team dependency rather than fostering self-organization",
-          "When the coach refuses to attend standups",
-          "When the coach writes all technical code",
-          "When the coach wears a superhero costume"
+        "question": "8. What is the 'Hero Coach Trap' in Agile Coaching?",
+        "options": [
+          "Isolated departmental siloing without cross-functional release train dependency mapping",
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "When the coach solves all team problems personally, creating team dependency rather than fostering self-organization"
         ],
-        answer: 0,
-        explanation: "The Hero Coach trap occurs when a coach steps in to fix impediments directly, eroding team capability to self-organize and solve issues independently."
+        "answer": 3,
+        "explanation": "The Hero Coach trap occurs when a coach steps in to fix impediments directly, eroding team capability to self-organize and solve issues independently."
       },
       {
-        question: "9. What characterizes Level 3 Conflict ('Contest') in Lyssa Adkins' model?",
-        options: [
-          "People focus on facts and logic",
+        "question": "9. What characterizes Level 3 Conflict ('Contest') in Lyssa Adkins' model?",
+        "options": [
           "Winning becomes the primary objective, and language includes over-generalizations like 'they always' or 'you never'",
-          "Intractable ideological war",
-          "Complete silence"
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done"
         ],
-        answer: 1,
-        explanation: "In Level 3 conflict, motives shift from solving the problem to winning the argument, accompanied by polarized generalization."
+        "answer": 0,
+        "explanation": "In Level 3 conflict, motives shift from solving the problem to winning the argument, accompanied by polarized generalization."
       },
       {
-        question: "10. What is a 'Coaching Agreement' established at the start of a coaching engagement?",
-        options: [
-          "A legal non-disclosure contract",
+        "question": "10. What is a 'Coaching Agreement' established at the start of a coaching engagement?",
+        "options": [
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
           "A shared understanding between coach and coachee/team regarding goals, boundaries, roles, and confidentiality",
-          "A software license agreement",
-          "A sprint commitment document"
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Isolated departmental siloing without cross-functional release train dependency mapping"
         ],
-        answer: 1,
-        explanation: "The coaching agreement defines scope, expectations, roles, boundary lines, and mutual commitments for the coaching relationship."
+        "answer": 1,
+        "explanation": "The coaching agreement defines scope, expectations, roles, boundary lines, and mutual commitments for the coaching relationship."
       },
       {
-        question: "11. What is the role of Silence in professional coaching conversations?",
-        options: [
-          "An awkward error that should be avoided",
+        "question": "11. What is the role of Silence in professional coaching conversations?",
+        "options": [
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
           "A powerful intentional space allowing the coachee time to process deep cognitive shifts and formulate genuine insights",
-          "A sign that the coach forgot the question",
-          "A technique to force coachees to end the meeting early"
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done"
         ],
-        answer: 1,
-        explanation: "Intentional silence after a powerful inquiry provides crucial processing time for coachees to synthesize breakthrough realizations."
+        "answer": 2,
+        "explanation": "Intentional silence after a powerful inquiry provides crucial processing time for coachees to synthesize breakthrough realizations."
       },
       {
-        question: "12. How does an Agile Coach differ from an Agile Mentor?",
-        options: [
-          "Coaches ask questions to unlock the coachee's own solutions; Mentors share specific domain advice and experience",
-          "Mentors write code while Coaches do not",
-          "Coaches manage salaries while Mentors do not",
-          "There is no difference"
+        "question": "12. How does an Agile Coach differ from an Agile Mentor?",
+        "options": [
+          "Isolated departmental siloing without cross-functional release train dependency mapping",
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Coaches ask questions to unlock the coachee's own solutions; Mentors share specific domain advice and experience"
         ],
-        answer: 0,
-        explanation: "Coaching is non-directive (unlocking internal wisdom), whereas Mentoring is directive sharing of expertise and lessons learned."
+        "answer": 3,
+        "explanation": "Coaching is non-directive (unlocking internal wisdom), whereas Mentoring is directive sharing of expertise and lessons learned."
       },
       {
-        question: "13. In Peter Hawkins' model, what does the discipline of 'Co-Creating' involve?",
-        options: [
-          "Pair programming on code",
+        "question": "13. In Peter Hawkins' model, what does the discipline of 'Co-Creating' involve?",
+        "options": [
           "Fostering team dynamic collaboration so the collective outcome is greater than the sum of individual contributions",
-          "Co-authoring user stories",
-          "Merging git branches"
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done"
         ],
-        answer: 1,
-        explanation: "Co-creating focuses on team interpersonal dynamics during work execution, ensuring synergistic collective intelligence."
+        "answer": 0,
+        "explanation": "Co-creating focuses on team interpersonal dynamics during work execution, ensuring synergistic collective intelligence."
       },
       {
-        question: "14. What is a key indicator that a team has reached High Systemic Maturity?",
-        options: [
+        "question": "14. What is a key indicator that a team has reached High Systemic Maturity?",
+        "options": [
           "The team relies entirely on the Scrum Master to facilitate every ceremony",
           "The team self-organizes, resolves internal conflict constructively, and actively manages external stakeholder relationships",
-          "The team works 80 hours a week",
-          "The team never changes its sprint backlog"
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability"
         ],
-        answer: 1,
-        explanation: "Systemically mature teams self-govern, navigate internal disagreement healthily, and proactively align with business stakeholders."
+        "answer": 1,
+        "explanation": "Systemically mature teams self-govern, navigate internal disagreement healthily, and proactively align with business stakeholders."
       },
       {
-        question: "15. What is 'Powerful Questioning' in ICF Coaching?",
-        options: [
-          "Asking questions loudly",
-          "Asking open-ended, non-judgmental questions starting with 'What' or 'How' that invite reflection and forward movement",
+        "question": "15. What is 'Powerful Questioning' in ICF Coaching?",
+        "options": [
+          "Isolated departmental siloing without cross-functional release train dependency mapping",
           "Asking leading questions that guide coachees to your preferred answer",
-          "Asking multiple choice questions"
+          "Asking open-ended, non-judgmental questions starting with 'What' or 'How' that invite reflection and forward movement",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring"
         ],
-        answer: 1,
-        explanation: "Powerful questions are open-ended inquiry prompts that evoke awareness, challenge limiting beliefs, and spur commitment to action."
+        "answer": 2,
+        "explanation": "Powerful questions are open-ended inquiry prompts that evoke awareness, challenge limiting beliefs, and spur commitment to action."
       },
       {
-        question: "16. In Lyssa Adkins' Coaching Stance framework, when should a coach adopt the 'Teacher' stance?",
-        options: [
-          "When the team lacks foundational knowledge about Agile frameworks, roles, or practices",
-          "During active conflict resolution",
-          "When conducting 1-on-1 performance evaluations",
-          "Never"
+        "question": "16. In Lyssa Adkins' Coaching Stance framework, when should a coach adopt the 'Teacher' stance?",
+        "options": [
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done",
+          "When the team lacks foundational knowledge about Agile frameworks, roles, or practices"
         ],
-        answer: 0,
-        explanation: "The Teacher stance is appropriate when a team needs explicit skill or conceptual instruction regarding Agile principles."
+        "answer": 3,
+        "explanation": "The Teacher stance is appropriate when a team needs explicit skill or conceptual instruction regarding Agile principles."
       },
       {
-        question: "17. What is Level 4 Conflict ('Crusade') in Adkins' Conflict Model?",
-        options: [
-          "Factual discussion",
+        "question": "17. What is Level 4 Conflict ('Crusade') in Adkins' Conflict Model?",
+        "options": [
           "Conflict becomes ideological; protecting the group or sub-group identity takes priority over reasoning",
-          "Disagreement over minor details",
-          "Constructive alignment"
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Isolated departmental siloing without cross-functional release train dependency mapping",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring"
         ],
-        answer: 1,
-        explanation: "In Level 4 conflict, factional ideology dominates. People align into camps defending fixed positions rather than collaborating."
+        "answer": 0,
+        "explanation": "In Level 4 conflict, factional ideology dominates. People align into camps defending fixed positions rather than collaborating."
       },
       {
-        question: "18. What does David Grove's Clean Question: 'And what would you like to have happen?' aim to achieve?",
-        options: [
-          "To force the coachee to agree with the coach",
+        "question": "18. What does David Grove's Clean Question: 'And what would you like to have happen?' aim to achieve?",
+        "options": [
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
           "To shift the coachee's focus away from problem-dwelling toward desired positive outcomes in their own words",
-          "To end the coaching session",
-          "To assign backlog tasks"
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done",
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements"
         ],
-        answer: 1,
-        explanation: "This classic Clean question directs attention toward desired outcomes without imposing coach assumptions."
+        "answer": 1,
+        "explanation": "This classic Clean question directs attention toward desired outcomes without imposing coach assumptions."
       },
       {
-        question: "19. How does an Agile Coach handle a coachee who is resistant to change?",
-        options: [
-          "By reporting them to executive management immediately",
+        "question": "19. How does an Agile Coach handle a coachee who is resistant to change?",
+        "options": [
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Isolated departmental siloing without cross-functional release train dependency mapping",
           "By exploring the source of resistance with curiosity, understanding their fears, and co-creating safe experiments",
-          "By arguing until they give in",
-          "By ignoring them completely"
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring"
         ],
-        answer: 1,
-        explanation: "Coaches view resistance as valuable feedback about fear or unaddressed systemic needs, approaching it with empathetic inquiry."
+        "answer": 2,
+        "explanation": "Coaches view resistance as valuable feedback about fear or unaddressed systemic needs, approaching it with empathetic inquiry."
       },
       {
-        question: "20. What is 'Container Safety' in team facilitation?",
-        options: [
-          "Shipping software in Docker containers",
-          "Creating an intentional space with clear norms where team members feel safe to share vulnerabilities and push boundaries",
-          "Locking meeting room doors",
-          "Storing archives on secure servers"
+        "question": "20. What is 'Container Safety' in team facilitation?",
+        "options": [
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done",
+          "Creating an intentional space with clear norms where team members feel safe to share vulnerabilities and push boundaries"
         ],
-        answer: 1,
-        explanation: "Container safety establishes clear boundaries and psychological safety within a meeting or retrospective environment."
+        "answer": 3,
+        "explanation": "Container safety establishes clear boundaries and psychological safety within a meeting or retrospective environment."
       },
       {
-        question: "21. What is the main difference between Coaching and Therapy?",
-        options: [
+        "question": "21. What is the main difference between Coaching and Therapy?",
+        "options": [
           "Coaching is future-focused on goals and potential; Therapy often focuses on healing past trauma and psychological dysfunction",
-          "Coaching is done in groups; Therapy is 1-on-1",
-          "Coaching requires a PhD",
-          "There is no difference"
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Isolated departmental siloing without cross-functional release train dependency mapping",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring"
         ],
-        answer: 0,
-        explanation: "Professional coaching focuses on current reality and future outcomes for functional individuals, respecting professional boundaries."
+        "answer": 0,
+        "explanation": "Professional coaching focuses on current reality and future outcomes for functional individuals, respecting professional boundaries."
       },
       {
-        question: "22. In the GROW model, what occurs during the 'Options' phase?",
-        options: [
-          "Setting the final sprint deadline",
+        "question": "22. In the GROW model, what occurs during the 'Options' phase?",
+        "options": [
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
           "Brainstorming a wide range of possible actions without immediate judgment or evaluation",
-          "Reviewing past performance metrics",
-          "Executing technical unit tests"
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done",
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements"
         ],
-        answer: 1,
-        explanation: "The Options phase encourages divergent thinking to generate creative potential solutions before choosing commitments."
+        "answer": 1,
+        "explanation": "The Options phase encourages divergent thinking to generate creative potential solutions before choosing commitments."
       },
       {
-        question: "23. What is 'Reframing' in coaching conversations?",
-        options: [
-          "Changing the meeting title in Outlook",
+        "question": "23. What is 'Reframing' in coaching conversations?",
+        "options": [
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Isolated departmental siloing without cross-functional release train dependency mapping",
           "Offering an alternative, constructive perspective on a situation to help the coachee see new possibilities",
-          "Rewriting user acceptance criteria",
-          "Replacing team members"
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring"
         ],
-        answer: 1,
-        explanation: "Reframing helps coachees view a challenge through a different mental lens, transforming obstacles into learning opportunities."
+        "answer": 2,
+        "explanation": "Reframing helps coachees view a challenge through a different mental lens, transforming obstacles into learning opportunities."
       },
       {
-        question: "24. What does Peter Hawkins mean by the discipline of 'Connecting'?",
-        options: [
-          "Connecting laptop HDMI cables",
-          "Managing relationships, communication channels, and alignment between the team and its external organizational network",
-          "Connecting to database servers",
-          "Hosting virtual coffee chats"
+        "question": "24. What does Peter Hawkins mean by the discipline of 'Connecting'?",
+        "options": [
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done",
+          "Managing relationships, communication channels, and alignment between the team and its external organizational network"
         ],
-        answer: 1,
-        explanation: "Connecting focuses on how the team interfaces systemically with external stakeholders, clients, and partner teams."
+        "answer": 3,
+        "explanation": "Connecting focuses on how the team interfaces systemically with external stakeholders, clients, and partner teams."
       },
       {
-        question: "25. What is the ultimate goal of Enterprise Agile Coaching?",
-        options: [
-          "To make every team use Jira mandatory fields",
+        "question": "25. What is the ultimate goal of Enterprise Agile Coaching?",
+        "options": [
           "To build resilient, self-sustaining organizational systems capable of continuous learning and value delivery without coach dependency",
-          "To mandate 100% daily standup attendance",
-          "To eliminate all project managers"
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Isolated departmental siloing without cross-functional release train dependency mapping",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring"
         ],
-        answer: 1,
-        explanation: "Enterprise coaching aims to build self-organizing systems that continuously adapt and deliver value autonomously."
+        "answer": 0,
+        "explanation": "Enterprise coaching aims to build self-organizing systems that continuously adapt and deliver value autonomously."
       }
     ]
   },
-
-  // =========================================================================
-  // TRACK 3: LEADERSHIP & SOFT SKILLS (SOFT-01)
-  // =========================================================================
   {
-    id: "soft-01",
-    track: "Leadership & Soft Skills",
-    title: "Psychological Safety, Emotional Intelligence (EQ) & Crucial Conversations",
-    tagline: "Unpacking Psychological Safety & High-Stakes Dialogue in plain simple terms: Edmondson's safety matrix, Clark's 4 Stages, Goleman's EQ, and STATE conversations.",
-    estimatedTime: "75 mins deep study",
-    overview: `# 💡 SIMPLE LAYMAN'S EXPLANATION (Explain Like I'm 5)
-
-Imagine you are learning to ride a bicycle for the first time:
-- **Low Psychological Safety** is like having a parent who yells and punishes you every time you wobble or fall over. You get so terrified of failing that you stop riding the bike altogether and hide in your room!
-- **High Psychological Safety** is like having a supportive parent who puts on knee pads, stands nearby, and says: *"It's totally okay to wobble—that's how your brain learns balance! What happened on that turn, and how do you want to adjust your steering on the next try?"*
-
-You don't lower your goal (you still want to master riding the bike fast!), but you eliminate the **fear of looking foolish** while learning.
-
-### The STATE Analogy: Resolving a High-Stakes Argument
-When two people argue about an accident at an intersection:
-1. **S (Share Facts)**: Start with camera footage: *"The light turned red at 2:00 PM, and your car entered at 2:01 PM."* (Unarguable data).
-2. **T (Tell Story)**: Tentative narrative: *"The way I see it, it seems like you were in a hurry."*
-3. **A (Ask for Path)**: Open inquiry: *"What was happening on your end?"*
-4. **T (Talk Tentatively)**: *"From my vantage point, it looked like..."*
-5. **E (Encourage Testing)**: *"Do you see it differently?"*
-
----
-
-# 🎨 VISUAL ARCHITECTURE DIAGRAM: 4 STAGES OF PSYCHOLOGICAL SAFETY
-
-\`\`\`mermaid
-graph TD
-    S4[Stage 4: Challenger Safety - Safe to challenge status quo & innovate] --> S3[Stage 3: Contributor Safety - Safe to contribute skills & value]
-    S3 --> S2[Stage 2: Learner Safety - Safe to ask questions & fail while learning]
-    S2 --> S1[Stage 1: Inclusion Safety - Safe to belong & bring authentic self]
-\`\`\`
-
----
-
-# 🌍 WHERE & HOW THIS CONCEPT IS USED IN THE REAL WORLD
-
-1. **Engineering Incident Post-Mortems (AWS, Netflix, Google)**:
-   - *Where Used*: Analyzing major server outages.
-   - *How It Works*: Uses Blameless Post-Mortems to investigate system flaws rather than firing the developer who committed a typo.
-2. **High-Stakes Architecture & Product Roadmapping Meetings**:
-   - *Where Used*: Technical debates between VP of Engineering and VP of Product.
-   - *How It Works*: Uses the STATE framework to voice opposing opinions without damaging professional trust.
-3. **Healthcare & Surgical Operating Rooms**:
-   - *Where Used*: Hospitals preventing surgical errors.
-   - *How It Works*: Empowers junior nurses to speak up immediately if a senior surgeon makes a sterile field mistake (Stage 4 Challenger Safety).
-4. **Executive Performance Reviews & Career Growth 1-on-1s**:
-   - *Where Used*: Quarterly leadership evaluations.
-   - *How It Works*: Uses Emotional Intelligence (Self-Awareness & Empathy) to deliver candid feedback while maintaining high psychological trust.
-
----
-
-# 🔬 DEEP TECHNICAL ARCHITECTURE & FRAMEWORK DERIVATION
-
-Psychological Safety combines Amy Edmondson's Safety Matrix, Timothy Clark's 4 Stages, Daniel Goleman's EQ, and Patterson's STATE Dialogue.
-
-### Dr. Timothy Clark's 4 Stages:
-1. **Inclusion Safety**: Safety to belong and bring authentic self.
-2. **Learner Safety**: Safety to ask questions and fail while learning.
-3. **Contributor Safety**: Safety to contribute meaningful work.
-4. **Challenger Safety**: Safety to challenge status quo without fear.`,
-
-    corePrinciples: [
+    "id": "soft-01",
+    "track": "Leadership & Soft Skills",
+    "title": "Psychological Safety, Emotional Intelligence (EQ) & Crucial Conversations",
+    "tagline": "Unpacking Psychological Safety & High-Stakes Dialogue in plain simple terms: Edmondson's safety matrix, Clark's 4 Stages, Goleman's EQ, and STATE conversations.",
+    "estimatedTime": "75 mins deep study",
+    "overview": "# 💡 SIMPLE LAYMAN'S EXPLANATION (Explain Like I'm 5)\n\nImagine you are learning to ride a bicycle for the first time:\n- **Low Psychological Safety** is like having a parent who yells and punishes you every time you wobble or fall over. You get so terrified of failing that you stop riding the bike altogether and hide in your room!\n- **High Psychological Safety** is like having a supportive parent who puts on knee pads, stands nearby, and says: *\"It's totally okay to wobble—that's how your brain learns balance! What happened on that turn, and how do you want to adjust your steering on the next try?\"*\n\nYou don't lower your goal (you still want to master riding the bike fast!), but you eliminate the **fear of looking foolish** while learning.\n\n### The STATE Analogy: Resolving a High-Stakes Argument\nWhen two people argue about an accident at an intersection:\n1. **S (Share Facts)**: Start with camera footage: *\"The light turned red at 2:00 PM, and your car entered at 2:01 PM.\"* (Unarguable data).\n2. **T (Tell Story)**: Tentative narrative: *\"The way I see it, it seems like you were in a hurry.\"*\n3. **A (Ask for Path)**: Open inquiry: *\"What was happening on your end?\"*\n4. **T (Talk Tentatively)**: *\"From my vantage point, it looked like...\"*\n5. **E (Encourage Testing)**: *\"Do you see it differently?\"*\n\n---\n\n# 🎨 VISUAL ARCHITECTURE DIAGRAM: 4 STAGES OF PSYCHOLOGICAL SAFETY\n\n```mermaid\ngraph TD\n    S4[Stage 4: Challenger Safety - Safe to challenge status quo & innovate] --> S3[Stage 3: Contributor Safety - Safe to contribute skills & value]\n    S3 --> S2[Stage 2: Learner Safety - Safe to ask questions & fail while learning]\n    S2 --> S1[Stage 1: Inclusion Safety - Safe to belong & bring authentic self]\n```\n\n---\n\n# 🌍 WHERE & HOW THIS CONCEPT IS USED IN THE REAL WORLD\n\n1. **Engineering Incident Post-Mortems (AWS, Netflix, Google)**:\n   - *Where Used*: Analyzing major server outages.\n   - *How It Works*: Uses Blameless Post-Mortems to investigate system flaws rather than firing the developer who committed a typo.\n2. **High-Stakes Architecture & Product Roadmapping Meetings**:\n   - *Where Used*: Technical debates between VP of Engineering and VP of Product.\n   - *How It Works*: Uses the STATE framework to voice opposing opinions without damaging professional trust.\n3. **Healthcare & Surgical Operating Rooms**:\n   - *Where Used*: Hospitals preventing surgical errors.\n   - *How It Works*: Empowers junior nurses to speak up immediately if a senior surgeon makes a sterile field mistake (Stage 4 Challenger Safety).\n4. **Executive Performance Reviews & Career Growth 1-on-1s**:\n   - *Where Used*: Quarterly leadership evaluations.\n   - *How It Works*: Uses Emotional Intelligence (Self-Awareness & Empathy) to deliver candid feedback while maintaining high psychological trust.\n\n---\n\n# 🔬 DEEP TECHNICAL ARCHITECTURE & FRAMEWORK DERIVATION\n\nPsychological Safety combines Amy Edmondson's Safety Matrix, Timothy Clark's 4 Stages, Daniel Goleman's EQ, and Patterson's STATE Dialogue.\n\n### Dr. Timothy Clark's 4 Stages:\n1. **Inclusion Safety**: Safety to belong and bring authentic self.\n2. **Learner Safety**: Safety to ask questions and fail while learning.\n3. **Contributor Safety**: Safety to contribute meaningful work.\n4. **Challenger Safety**: Safety to challenge status quo without fear.",
+    "corePrinciples": [
       {
-        title: "1. Psychological Safety ≠ Lowering Performance Standards",
-        meaning: "Psychological Safety is an environment of trust where people feel safe to take interpersonal risks; it does not mean eliminating accountability.",
-        whyItMatters: "High Safety combined with High Accountability creates the High-Performance Learning Zone; High Safety + Low Accountability creates the Comfort Zone.",
-        implementation: "Pair blameless incident reviews with rigorous delivery SLAs and clear individual accountability."
+        "title": "1. Psychological Safety ≠ Lowering Performance Standards",
+        "meaning": "Psychological Safety is an environment of trust where people feel safe to take interpersonal risks; it does not mean eliminating accountability.",
+        "whyItMatters": "High Safety combined with High Accountability creates the High-Performance Learning Zone; High Safety + Low Accountability creates the Comfort Zone.",
+        "implementation": "Pair blameless incident reviews with rigorous delivery SLAs and clear individual accountability."
       },
       {
-        title: "2. Blameless Systemic Post-Mortems",
-        meaning: "Investigating technical or operational failures by focusing on system flaws rather than attributing personal human blame.",
-        whyItMatters: "Encourages immediate voluntary reporting of vulnerabilities, reducing MTTR and preventing catastrophic repeat outages.",
-        implementation: "Ask: 'What systemic conditions allowed this mistake to pass undetected?' instead of 'Who broke the deployment?'"
+        "title": "2. Blameless Systemic Post-Mortems",
+        "meaning": "Investigating technical or operational failures by focusing on system flaws rather than attributing personal human blame.",
+        "whyItMatters": "Encourages immediate voluntary reporting of vulnerabilities, reducing MTTR and preventing catastrophic repeat outages.",
+        "implementation": "Ask: 'What systemic conditions allowed this mistake to pass undetected?' instead of 'Who broke the deployment?'"
       },
       {
-        title: "3. Disaggregating Objective Facts from Internal Stories",
-        meaning: "Separating unarguable empirical observations from the emotional narrative constructed by your brain.",
-        whyItMatters: "Prevents defensive amygdala hijackings during performance feedback and architectural debates.",
-        implementation: "Begin feedback with: 'The empirical fact is X (PR comments). The story I'm telling myself is Y. How do you see it?'"
+        "title": "3. Disaggregating Objective Facts from Internal Stories",
+        "meaning": "Separating unarguable empirical observations from the emotional narrative constructed by your brain.",
+        "whyItMatters": "Prevents defensive amygdala hijackings during performance feedback and architectural debates.",
+        "implementation": "Begin feedback with: 'The empirical fact is X (PR comments). The story I'm telling myself is Y. How do you see it?'"
       },
       {
-        title: "4. Amygdala Hijack 6-Second Regulation",
-        meaning: "Recognizing physiological fight-or-flight triggers and taking a 6-second pause to allow stress hormones to clear.",
-        whyItMatters: "Restores rational prefrontal cortex cognitive control before responding in high-stakes meetings.",
-        implementation: "Enforce a 2-deep-breath pause before speaking when emotional frustration is triggered."
+        "title": "4. Amygdala Hijack 6-Second Regulation",
+        "meaning": "Recognizing physiological fight-or-flight triggers and taking a 6-second pause to allow stress hormones to clear.",
+        "whyItMatters": "Restores rational prefrontal cortex cognitive control before responding in high-stakes meetings.",
+        "implementation": "Enforce a 2-deep-breath pause before speaking when emotional frustration is triggered."
       },
       {
-        title: "5. Conversational Turn-Taking Equality",
-        meaning: "Fostering team dynamics where all team members speak roughly equal amounts over the course of team interactions.",
-        whyItMatters: "Identified by Google's Project Aristotle as a primary driver of high collective intelligence and team safety.",
-        implementation: "Utilize round-robin input facilitation in daily syncs to ensure introverted voices contribute."
+        "title": "5. Conversational Turn-Taking Equality",
+        "meaning": "Fostering team dynamics where all team members speak roughly equal amounts over the course of team interactions.",
+        "whyItMatters": "Identified by Google's Project Aristotle as a primary driver of high collective intelligence and team safety.",
+        "implementation": "Utilize round-robin input facilitation in daily syncs to ensure introverted voices contribute."
       }
     ],
-
-    books: [
+    "books": [
       {
-        title: "The Fearless Organization: Creating Psychological Safety in the Workplace for Learning, Innovation, and Growth",
-        author: "Amy C. Edmondson (Wiley Publishing)",
-        url: "https://www.wiley.com/en-us/The+Fearless+Organization%3A+Creating+Psychological+Safety+in+the+Workplace+for+Learning%2C+Innovation%2C+and+Growth-p-9781119477266",
-        keyChapters: "Chapter 1: The Anatomy of Psychological Safety & Chapter 7: The Leader's Toolkit",
-        summary: `Chapter 1 defines **Psychological Safety** as a shared belief held by team members that the team is safe for interpersonal risk-taking. Edmondson clarifies critical misconceptions:\n- Psychological safety is **NOT** about being nice, lowering standards, or avoiding conflict.\n- It **IS** about creating an environment where people feel comfortable admitting mistakes, raising concerns, asking questions, and proposing wild ideas without fear of embarrassment or retaliation.\n\nChapter 7 provides **The Leader's 3-Part Toolkit**:\n1. **Setting the Stage**: Frame work as learning problems requiring interdependence rather than execution tasks with zero room for error.\n2. **Inviting Participation**: Demonstrate situational humility by acknowledging your own knowledge gaps ("I might be missing something here—what do you see?") and asking explicit inquiry questions.\n3. **Responding Productively**: Express genuine appreciation for bad news or error reporting, destigmatize failure, and sanction clear boundary violations while celebrating intelligent experimentation.`,
-        keyTakeaways: [
+        "title": "The Fearless Organization: Creating Psychological Safety in the Workplace for Learning, Innovation, and Growth",
+        "author": "Amy C. Edmondson (Wiley Publishing)",
+        "url": "https://www.wiley.com/en-us/The+Fearless+Organization%3A+Creating+Psychological+Safety+in+the+Workplace+for+Learning%2C+Innovation%2C+and+Growth-p-9781119477266",
+        "keyChapters": "Chapter 1: The Anatomy of Psychological Safety & Chapter 7: The Leader's Toolkit",
+        "summary": "Chapter 1 defines **Psychological Safety** as a shared belief held by team members that the team is safe for interpersonal risk-taking. Edmondson clarifies critical misconceptions:\n- Psychological safety is **NOT** about being nice, lowering standards, or avoiding conflict.\n- It **IS** about creating an environment where people feel comfortable admitting mistakes, raising concerns, asking questions, and proposing wild ideas without fear of embarrassment or retaliation.\n\nChapter 7 provides **The Leader's 3-Part Toolkit**:\n1. **Setting the Stage**: Frame work as learning problems requiring interdependence rather than execution tasks with zero room for error.\n2. **Inviting Participation**: Demonstrate situational humility by acknowledging your own knowledge gaps (\"I might be missing something here—what do you see?\") and asking explicit inquiry questions.\n3. **Responding Productively**: Express genuine appreciation for bad news or error reporting, destigmatize failure, and sanction clear boundary violations while celebrating intelligent experimentation.",
+        "keyTakeaways": [
           "**High Standards + High Safety**: High psychological safety paired with high performance standards produces the 'Learning & High Performance Zone'.",
           "**Frame as Learning**: Explicitly frame complex projects as learning experiments to reduce fear of initial imperfection.",
           "**Appreciate Error Reporting**: Respond to bad news with 'Thank you for bringing this up early!' to build systemic trust."
         ]
       },
       {
-        title: "Crucial Conversations: Tools for Talking When Stakes Are High",
-        author: "Joseph Grenny, Kerry Patterson, Ron McMillan, Al Switzler (McGraw Hill)",
-        url: "https://www.mheducation.com/highered/product/crucial-conversations-tools-talking-when-stakes-high-third-edition-grenny-patterson/9781264257867.html",
-        keyChapters: "Chapter 4: Learn to Look & Chapter 6: Make It Safe & Chapter 8: STATE My Path",
-        summary: `Chapter 4 teaches leaders to **Learn to Look** for warning signs that a conversation has turned crucial (defined by 3 factors: High Stakes, Opposing Opinions, and Strong Emotions). Leaders monitor behavioral signals:\n- **Silence (Withdrawing, Masking, Avoiding)**: Person stops contributing honest feedback out of fear.\n- **Violence (Controlling, Labeling, Attacking)**: Person tries to force their opinion through intimidation.\n\nChapter 6 presents actionable steps to **Make It Safe** when safety breaks down:\n1. **Step Out of Content**: Pause the debate topic and rebuild safety first.\n2. **Establish Mutual Purpose**: Find shared goals that both parties care deeply about.\n3. **Contrast Statement**: Clarify what you do NOT mean to clear up misunderstandings ("I don't mean your architecture is bad; I mean we need to check scalability under peak load").\n\nChapter 8 details the **STATE My Path** framework for expressing tough feedback:\n- **S**: Share your facts.\n- **T**: Tell your story.\n- **A**: Ask for others' paths.\n- **T**: Talk tentatively.\n- **E**: Encourage testing.`,
-        keyTakeaways: [
+        "title": "Crucial Conversations: Tools for Talking When Stakes Are High",
+        "author": "Joseph Grenny, Kerry Patterson, Ron McMillan, Al Switzler (McGraw Hill)",
+        "url": "https://www.mheducation.com/highered/product/crucial-conversations-tools-talking-when-stakes-high-third-edition-grenny-patterson/9781264257867.html",
+        "keyChapters": "Chapter 4: Learn to Look & Chapter 6: Make It Safe & Chapter 8: STATE My Path",
+        "summary": "Chapter 4 teaches leaders to **Learn to Look** for warning signs that a conversation has turned crucial (defined by 3 factors: High Stakes, Opposing Opinions, and Strong Emotions). Leaders monitor behavioral signals:\n- **Silence (Withdrawing, Masking, Avoiding)**: Person stops contributing honest feedback out of fear.\n- **Violence (Controlling, Labeling, Attacking)**: Person tries to force their opinion through intimidation.\n\nChapter 6 presents actionable steps to **Make It Safe** when safety breaks down:\n1. **Step Out of Content**: Pause the debate topic and rebuild safety first.\n2. **Establish Mutual Purpose**: Find shared goals that both parties care deeply about.\n3. **Contrast Statement**: Clarify what you do NOT mean to clear up misunderstandings (\"I don't mean your architecture is bad; I mean we need to check scalability under peak load\").\n\nChapter 8 details the **STATE My Path** framework for expressing tough feedback:\n- **S**: Share your facts.\n- **T**: Tell your story.\n- **A**: Ask for others' paths.\n- **T**: Talk tentatively.\n- **E**: Encourage testing.",
+        "keyTakeaways": [
           "**Spot Silence and Violence**: Recognize when colleagues withdraw into silence or lash out in anger as a signal of lost safety.",
           "**Re-Establish Mutual Purpose**: Anchor tense discussions on shared overarching goals before debating implementation details.",
           "**STATE Your Path**: Lead with objective facts before sharing your subjective interpretations."
         ]
       },
       {
-        title: "Emotional Intelligence 2.0",
-        author: "Travis Bradberry & Jean Greaves (TalentSmart)",
-        url: "https://www.talentsmart.com/products/emotional-intelligence-2-0/",
-        keyChapters: "Chapter 3: Self-Awareness Strategies & Chapter 5: Relationship Management",
-        summary: `Chapter 3 breaks down **Self-Awareness**—the foundational EQ skill. Bradberry & Greaves explain that emotions are physiological signals generated by the limbic brain before the rational neocortex processes them. Leaders must build emotional awareness to avoid reactive emotional hijacking.\n\nChapter 5 details **Relationship Management** strategies:\n1. **Open & Honest Communication**: Build trust by being transparent about decisions and limitations.\n2. **Acknowledge Other People's Feelings**: Validate emotional reactions even when you disagree with the opinion.\n3. **Build Trust Through Consistency**: Match verbal commitments with visible operational actions.`,
-        keyTakeaways: [
+        "title": "Emotional Intelligence 2.0",
+        "author": "Travis Bradberry & Jean Greaves (TalentSmart)",
+        "url": "https://www.talentsmart.com/products/emotional-intelligence-2-0/",
+        "keyChapters": "Chapter 3: Self-Awareness Strategies & Chapter 5: Relationship Management",
+        "summary": "Chapter 3 breaks down **Self-Awareness**—the foundational EQ skill. Bradberry & Greaves explain that emotions are physiological signals generated by the limbic brain before the rational neocortex processes them. Leaders must build emotional awareness to avoid reactive emotional hijacking.\n\nChapter 5 details **Relationship Management** strategies:\n1. **Open & Honest Communication**: Build trust by being transparent about decisions and limitations.\n2. **Acknowledge Other People's Feelings**: Validate emotional reactions even when you disagree with the opinion.\n3. **Build Trust Through Consistency**: Match verbal commitments with visible operational actions.",
+        "keyTakeaways": [
           "**Notice the Limbic Surge**: Pause 6 seconds when experiencing frustration to allow the prefrontal cortex to process the reaction.",
           "**Validate Before Debating**: Acknowledge a colleague's emotional perspective before jumping into counter-arguments.",
           "**Feedback Alignment**: Keep your body language and tone aligned with your message to build authentic executive trust."
         ]
       }
     ],
-
-    articles: [
+    "articles": [
       {
-        title: "What Google Learned From Its Quest to Build the Perfect Team (Project Aristotle)",
-        source: "The New York Times Magazine (Charles Duhigg)",
-        url: "https://www.nytimes.com/2016/02/28/magazine/what-google-learned-from-its-quest-to-build-the-perfect-team.html",
-        takeaway: "Deep investigative report into Google's multi-year Project Aristotle research proving conversational turn-taking equality and psychological safety drive team effectiveness."
+        "title": "What Google Learned From Its Quest to Build the Perfect Team (Project Aristotle)",
+        "source": "The New York Times Magazine (Charles Duhigg)",
+        "url": "https://www.nytimes.com/2016/02/28/magazine/what-google-learned-from-its-quest-to-build-the-perfect-team.html",
+        "takeaway": "Deep investigative report into Google's multi-year Project Aristotle research proving conversational turn-taking equality and psychological safety drive team effectiveness."
       },
       {
-        title: "High-Performing Teams Need Psychological Safety: Here's How to Create It",
-        source: "Harvard Business Review (Laura Delizonna)",
-        url: "https://hbr.org/2017/08/high-performing-teams-need-psychological-safety-heres-how-to-create-it",
-        takeaway: "Practical leadership guidelines on replace blame with curiosity, asking for feedback on delivery tone, and facilitating blameless post-mortems."
+        "title": "High-Performing Teams Need Psychological Safety: Here's How to Create It",
+        "source": "Harvard Business Review (Laura Delizonna)",
+        "url": "https://hbr.org/2017/08/high-performing-teams-need-psychological-safety-heres-how-to-create-it",
+        "takeaway": "Practical leadership guidelines on replace blame with curiosity, asking for feedback on delivery tone, and facilitating blameless post-mortems."
       },
       {
-        title: "The 4 Stages of Psychological Safety Framework",
-        source: "Dr. Timothy R. Clark (LeaderFactor Whitepaper)",
-        url: "https://www.leaderfactor.com/4-stages-of-psychological-safety",
-        takeaway: "Defines the 4 sequential progression stages of psychological safety: Inclusion Safety, Learner Safety, Contributor Safety, and Challenger Safety."
+        "title": "The 4 Stages of Psychological Safety Framework",
+        "source": "Dr. Timothy R. Clark (LeaderFactor Whitepaper)",
+        "url": "https://www.leaderfactor.com/4-stages-of-psychological-safety",
+        "takeaway": "Defines the 4 sequential progression stages of psychological safety: Inclusion Safety, Learner Safety, Contributor Safety, and Challenger Safety."
       }
     ],
-
-    media: [
+    "media": [
       {
-        type: "TED Talk",
-        title: "Building a Psychologically Safe Workplace",
-        channel: "TEDxHGSE (Dr. Amy Edmondson)",
-        url: "https://www.youtube.com/watch?v=LhoLuui9gX8",
-        duration: "11 mins 30 secs",
-        keyInsight: "Explains how framed expectations, acknowledging fallibility, and modeled curiosity create environments where people feel safe to take interpersonal risks."
+        "type": "TED Talk",
+        "title": "Building a Psychologically Safe Workplace",
+        "channel": "TEDxHGSE (Dr. Amy Edmondson)",
+        "url": "https://www.youtube.com/watch?v=LhoLuui9gX8",
+        "duration": "11 mins 30 secs",
+        "keyInsight": "Explains how framed expectations, acknowledging fallibility, and modeled curiosity create environments where people feel safe to take interpersonal risks."
       },
       {
-        type: "Keynote Talk",
-        title: "Daniel Goleman Introduces Emotional Intelligence",
-        channel: "Daniel Goleman (Big Think)",
-        url: "https://www.youtube.com/watch?v=Y7m9eNoB3NU",
-        duration: "5 mins",
-        keyInsight: "Walkthrough of how the amygdala hijacking mechanism operates during conflict and how self-awareness restores executive brain function."
+        "type": "Keynote Talk",
+        "title": "Daniel Goleman Introduces Emotional Intelligence",
+        "channel": "Daniel Goleman (Big Think)",
+        "url": "https://www.youtube.com/watch?v=Y7m9eNoB3NU",
+        "duration": "5 mins",
+        "keyInsight": "Walkthrough of how the amygdala hijacking mechanism operates during conflict and how self-awareness restores executive brain function."
       },
       {
-        type: "Executive Keynote",
-        title: "Radical Candor — The Surprising Secret to Being a Good Boss",
-        channel: "Kim Scott (First Round Review)",
-        url: "https://www.youtube.com/watch?v=4yODalLQ2lM",
-        duration: "22 mins",
-        keyInsight: "Detailed breakdown of combining personal care with direct challenge to build high-performing, authentic engineering teams."
+        "type": "Executive Keynote",
+        "title": "Radical Candor — The Surprising Secret to Being a Good Boss",
+        "channel": "Kim Scott (First Round Review)",
+        "url": "https://www.youtube.com/watch?v=4yODalLQ2lM",
+        "duration": "22 mins",
+        "keyInsight": "Detailed breakdown of combining personal care with direct challenge to build high-performing, authentic engineering teams."
       }
     ],
-
-    caseStudy: {
-      title: "Cultural & Reliability Reset at Global Cloud SaaS Provider",
-      context: "A cloud SaaS provider faced recurring outages: developers hid vulnerabilities due to fear of public executive berating, and turnover reached 32%.",
-      solution: "Instituted Blameless Incident Post-Mortems, mandatory STATE Crucial Conversations training, and quarterly Psychological Safety stage audits.",
-      impact: "MTTR dropped by 74%, voluntary vulnerability disclosures surged by 300%, production outages fell 80%, and eNPS jumped from -18 to +62."
+    "caseStudy": {
+      "title": "Cultural & Reliability Reset at Global Cloud SaaS Provider",
+      "context": "A cloud SaaS provider faced recurring outages: developers hid vulnerabilities due to fear of public executive berating, and turnover reached 32%.",
+      "solution": "Instituted Blameless Incident Post-Mortems, mandatory STATE Crucial Conversations training, and quarterly Psychological Safety stage audits.",
+      "impact": "MTTR dropped by 74%, voluntary vulnerability disclosures surged by 300%, production outages fell 80%, and eNPS jumped from -18 to +62."
     },
-
-    actionPlan: [
+    "actionPlan": [
       {
-        title: "Action 1: Draft a STATE Crucial Dialogue Script for a Tough Feedback Session",
-        instructions: "Before your next high-stakes conversation, write down 3 unarguable facts (S), state your tentative story (T), ask for their path (A), speak tentatively (T), and encourage opposition (E).",
-        aiPrompt: `SYSTEM PROMPT: You are a Crucial Conversations Certified Executive Coach.
-USER PROMPT: I need to have a difficult conversation with a Senior Architect who consistently rejects code reviews from junior developers aggressively during PR reviews.
-Task: Draft a complete STATE dialogue script for me to use in our 1-on-1:
-- Share your facts (S): 3 unarguable empirical observations (e.g. PR comments).
-- Tell your story (T): Tentative narrative framing without accusation.
-- Ask for others' paths (A): Open inquiry question.
-- Talk tentatively (T): Phrasing that keeps dialogue open.
-- Encourage testing (E): Question inviting counter-perspective.`,
-        aiToolkit: ["STATE Dialogue Scripting Template", "Grammarly Tone Analyzer", "ChatGPT 4o", "Claude 3.5 Sonnet"]
+        "title": "Action 1: Draft a STATE Crucial Dialogue Script for a Tough Feedback Session",
+        "instructions": "Before your next high-stakes conversation, write down 3 unarguable facts (S), state your tentative story (T), ask for their path (A), speak tentatively (T), and encourage opposition (E).",
+        "aiPrompt": "SYSTEM PROMPT: You are a Crucial Conversations Certified Executive Coach.\nUSER PROMPT: I need to have a difficult conversation with a Senior Architect who consistently rejects code reviews from junior developers aggressively during PR reviews.\nTask: Draft a complete STATE dialogue script for me to use in our 1-on-1:\n- Share your facts (S): 3 unarguable empirical observations (e.g. PR comments).\n- Tell your story (T): Tentative narrative framing without accusation.\n- Ask for others' paths (A): Open inquiry question.\n- Talk tentatively (T): Phrasing that keeps dialogue open.\n- Encourage testing (E): Question inviting counter-perspective.",
+        "aiToolkit": [
+          "STATE Dialogue Scripting Template",
+          "Grammarly Tone Analyzer",
+          "ChatGPT 4o",
+          "Claude 3.5 Sonnet"
+        ]
       },
       {
-        title: "Action 2: Execute a Blameless Post-Mortem Facilitation for Team System Failures",
-        instructions: "Institute a Blameless Post-Mortem for your team's next technical or operational failure, ensuring no individual names are attached to root cause items.",
-        aiPrompt: `SYSTEM PROMPT: You are a Site Reliability Engineering (SRE) & Culture Facilitator.
-USER PROMPT: Provide a Blameless Post-Mortem template and step-by-step facilitation agenda for a 45-minute incident review following a database deployment outage.
-Requirements:
-1. Ground rules establishing system failure vs human error.
-2. Timeline reconstruction method.
-3. 5 Whys systemic inquiry without personal blame.
-4. Preventative action item matrix with owners.`,
-        aiToolkit: ["PagerDuty Blameless Post-Mortem Template", "Confluence / Notion", "ChatGPT 4o"]
+        "title": "Action 2: Execute a Blameless Post-Mortem Facilitation for Team System Failures",
+        "instructions": "Institute a Blameless Post-Mortem for your team's next technical or operational failure, ensuring no individual names are attached to root cause items.",
+        "aiPrompt": "SYSTEM PROMPT: You are a Site Reliability Engineering (SRE) & Culture Facilitator.\nUSER PROMPT: Provide a Blameless Post-Mortem template and step-by-step facilitation agenda for a 45-minute incident review following a database deployment outage.\nRequirements:\n1. Ground rules establishing system failure vs human error.\n2. Timeline reconstruction method.\n3. 5 Whys systemic inquiry without personal blame.\n4. Preventative action item matrix with owners.",
+        "aiToolkit": [
+          "PagerDuty Blameless Post-Mortem Template",
+          "Confluence / Notion",
+          "ChatGPT 4o"
+        ]
       },
       {
-        title: "Action 3: Measure & Balance Conversational Turn-Taking Equality",
-        instructions: "Audit your daily syncs for speaking time distribution. If 2 individuals dominate 80% of speaking time, introduce round-robin input facilitation.",
-        aiPrompt: `SYSTEM PROMPT: You are an Organizational Psychology Analytics Advisor.
-USER PROMPT: I ran an automated meeting assistant on our 30-minute team architecture sync. The data shows:
-- Lead Architect: 18 mins (60%)
-- Manager: 9 mins (30%)
-- 4 Developers: 3 mins combined (10%)
-
-Task: Provide 3 concrete meeting facilitation techniques I can implement tomorrow to achieve Conversational Turn-Taking Equality without creating awkwardness.`,
-        aiToolkit: ["Read.ai / EqualTime Meeting Tracker", "Miro Round-Robin Canvas", "Claude 3.5 Sonnet"]
+        "title": "Action 3: Measure & Balance Conversational Turn-Taking Equality",
+        "instructions": "Audit your daily syncs for speaking time distribution. If 2 individuals dominate 80% of speaking time, introduce round-robin input facilitation.",
+        "aiPrompt": "SYSTEM PROMPT: You are an Organizational Psychology Analytics Advisor.\nUSER PROMPT: I ran an automated meeting assistant on our 30-minute team architecture sync. The data shows:\n- Lead Architect: 18 mins (60%)\n- Manager: 9 mins (30%)\n- 4 Developers: 3 mins combined (10%)\n\nTask: Provide 3 concrete meeting facilitation techniques I can implement tomorrow to achieve Conversational Turn-Taking Equality without creating awkwardness.",
+        "aiToolkit": [
+          "Read.ai / EqualTime Meeting Tracker",
+          "Miro Round-Robin Canvas",
+          "Claude 3.5 Sonnet"
+        ]
       },
       {
-        title: "Action 4: Practice Amygdala Hijack 6-Second Cognitive Regulation",
-        instructions: "When you feel emotional arousal during a debate, enforce a 6-second pause and take 2 deep breaths before responding.",
-        aiPrompt: `SYSTEM PROMPT: You are an Executive Neuro-Leadership Coach.
-USER PROMPT: Explain the biological mechanics of an Amygdala Hijack during workplace conflict. Provide a 3-step mental micro-habit I can use in real-time when I feel physiological anger or defensiveness during a heated meeting.`,
-        aiToolkit: ["HeartMath Inner Balance / Breathwork App", "Headspace for Work", "ChatGPT 4o"]
+        "title": "Action 4: Practice Amygdala Hijack 6-Second Cognitive Regulation",
+        "instructions": "When you feel emotional arousal during a debate, enforce a 6-second pause and take 2 deep breaths before responding.",
+        "aiPrompt": "SYSTEM PROMPT: You are an Executive Neuro-Leadership Coach.\nUSER PROMPT: Explain the biological mechanics of an Amygdala Hijack during workplace conflict. Provide a 3-step mental micro-habit I can use in real-time when I feel physiological anger or defensiveness during a heated meeting.",
+        "aiToolkit": [
+          "HeartMath Inner Balance / Breathwork App",
+          "Headspace for Work",
+          "ChatGPT 4o"
+        ]
       },
       {
-        title: "Action 5: Conduct a 4-Stage Psychological Safety Audit with Your Team",
-        instructions: "Audit your team against Clark's 4 Stages (Inclusion, Learner, Contributor, Challenger Safety) and implement 1 habit to raise Challenger Safety.",
-        aiPrompt: `SYSTEM PROMPT: You are an Enterprise Workplace Safety Assessor.
-USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evaluating Timothy Clark's 4 Stages of Psychological Safety: Inclusion Safety, Learner Safety, Contributor Safety, and Challenger Safety. Include scoring guidelines.`,
-        aiToolkit: ["Google Forms / SurveyMonkey", "Timothy Clark Safety Benchmark Rubric", "Claude 3.5 Sonnet"]
+        "title": "Action 5: Conduct a 4-Stage Psychological Safety Audit with Your Team",
+        "instructions": "Audit your team against Clark's 4 Stages (Inclusion, Learner, Contributor, Challenger Safety) and implement 1 habit to raise Challenger Safety.",
+        "aiPrompt": "SYSTEM PROMPT: You are an Enterprise Workplace Safety Assessor.\nUSER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evaluating Timothy Clark's 4 Stages of Psychological Safety: Inclusion Safety, Learner Safety, Contributor Safety, and Challenger Safety. Include scoring guidelines.",
+        "aiToolkit": [
+          "Google Forms / SurveyMonkey",
+          "Timothy Clark Safety Benchmark Rubric",
+          "Claude 3.5 Sonnet"
+        ]
       }
     ],
-
-    quiz: [
+    "quiz": [
       {
-        question: "1. What is the primary operational misconception regarding Psychological Safety?",
-        options: [
+        "question": "1. What is the primary operational misconception regarding Psychological Safety?",
+        "options": [
           "It requires lowering performance standards and being soft on accountability",
-          "It was identified by Google's Project Aristotle",
-          "It encourages interpersonal risk-taking",
-          "It reduces fear of failure in learning environments"
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        answer: 0,
-        explanation: "Psychological Safety is NOT about being nice or lowering standards. High safety combined with high standards creates the High-Performance Learning Zone, whereas high safety with low standards leads to the Comfort Zone."
+        "answer": 0,
+        "explanation": "Psychological Safety is NOT about being nice or lowering standards. High safety combined with high standards creates the High-Performance Learning Zone, whereas high safety with low standards leads to the Comfort Zone."
       },
       {
-        question: "2. According to Timothy Clark, what is the 4th and highest stage of Psychological Safety?",
-        options: [
-          "Inclusion Safety",
-          "Learner Safety",
-          "Contributor Safety",
-          "Challenger Safety"
+        "question": "2. According to Timothy Clark, what is the 4th and highest stage of Psychological Safety?",
+        "options": [
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
+          "Challenger Safety",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks",
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership"
         ],
-        answer: 3,
-        explanation: "Stage 4 is Challenger Safety. Members feel safe to challenge the status quo, question authority, and propose radical innovations without fear of retaliation."
+        "answer": 1,
+        "explanation": "Stage 4 is Challenger Safety. Members feel safe to challenge the status quo, question authority, and propose radical innovations without fear of retaliation."
       },
       {
-        question: "3. In the STATE model for Crucial Conversations, what does the 'S' stand for?",
-        options: [
-          "Silence emotional reactions",
+        "question": "3. In the STATE model for Crucial Conversations, what does the 'S' stand for?",
+        "options": [
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
           "Share your facts",
-          "Speak with authority",
-          "Solve the issue immediately"
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        answer: 1,
-        explanation: "'S' stands for Share your facts. Starting dialogue with unarguable, objective empirical facts creates a safe foundation before introducing your tentative story."
+        "answer": 2,
+        "explanation": "'S' stands for Share your facts. Starting dialogue with unarguable, objective empirical facts creates a safe foundation before introducing your tentative story."
       },
       {
-        question: "4. What did Google's Project Aristotle identify as the #1 determinant of team effectiveness?",
-        options: [
-          "Individual coding speed and IQ scores of developers",
-          "Psychological Safety",
-          "Having developers with Master's and PhD degrees",
-          "Using strict 2-week Scrum sprints"
+        "question": "4. What did Google's Project Aristotle identify as the #1 determinant of team effectiveness?",
+        "options": [
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks",
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Psychological Safety"
         ],
-        answer: 1,
-        explanation: "Google's 5-year study of 180+ teams proved that Psychological Safety was by far the single most critical factor distinguishing elite teams from average teams."
+        "answer": 3,
+        "explanation": "Google's 5-year study of 180+ teams proved that Psychological Safety was by far the single most critical factor distinguishing elite teams from average teams."
       },
       {
-        question: "5. Which domain of Daniel Goleman's Emotional Intelligence framework involves recognizing your personal triggers and emotional state in real time?",
-        options: [
-          "Social Awareness",
+        "question": "5. Which domain of Daniel Goleman's Emotional Intelligence framework involves recognizing your personal triggers and emotional state in real time?",
+        "options": [
           "Self-Awareness",
-          "Relationship Management",
-          "Self-Management"
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        answer: 1,
-        explanation: "Self-Awareness is the foundational EQ domain involving deep understanding of one's own emotions, strengths, limitations, values, and psychological triggers."
+        "answer": 0,
+        "explanation": "Self-Awareness is the foundational EQ domain involving deep understanding of one's own emotions, strengths, limitations, values, and psychological triggers."
       },
       {
-        question: "6. What are the two silent or violent behavioral traps people fall into during unmanaged Crucial Conversations?",
-        options: [
-          "Coding and Testing",
+        "question": "6. What are the two silent or violent behavioral traps people fall into during unmanaged Crucial Conversations?",
+        "options": [
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
           "Silence (masking, avoiding, withdrawing) or Violence (controlling, labeling, attacking)",
-          "Laughing and Crying",
-          "Planning and Execution"
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks"
         ],
-        answer: 1,
-        explanation: "When safety is breached in dialogue, people resort to Silence (withholding input) or Violence (forcing opinions onto others)."
+        "answer": 1,
+        "explanation": "When safety is breached in dialogue, people resort to Silence (withholding input) or Violence (forcing opinions onto others)."
       },
       {
-        question: "7. What is Stage 1 in Timothy Clark's 4 Stages of Psychological Safety?",
-        options: [
-          "Challenger Safety",
+        "question": "7. What is Stage 1 in Timothy Clark's 4 Stages of Psychological Safety?",
+        "options": [
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
           "Inclusion Safety - feeling safe to belong and be accepted as your authentic self",
-          "Learner Safety",
-          "Contributor Safety"
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        answer: 1,
-        explanation: "Inclusion Safety is the baseline foundational stage where individuals feel safe to belong to the team without fear of rejection."
+        "answer": 2,
+        "explanation": "Inclusion Safety is the baseline foundational stage where individuals feel safe to belong to the team without fear of rejection."
       },
       {
-        question: "8. What does 'Start with Heart' mean in Crucial Conversations?",
-        options: [
-          "Perform CPR during meetings",
-          "Clarify what you truly want for yourself, for the other person, and for the relationship before starting a high-stakes conversation",
-          "Express extreme emotion",
-          "Bring chocolates to the meeting"
+        "question": "8. What does 'Start with Heart' mean in Crucial Conversations?",
+        "options": [
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks",
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Clarify what you truly want for yourself, for the other person, and for the relationship before starting a high-stakes conversation"
         ],
-        answer: 1,
-        explanation: "Start with Heart means focusing on your true long-term motives and mutual purpose rather than trying to win or save face."
+        "answer": 3,
+        "explanation": "Start with Heart means focusing on your true long-term motives and mutual purpose rather than trying to win or save face."
       },
       {
-        question: "9. In Goleman's EQ framework, what is an 'Amygdala Hijack'?",
-        options: [
-          "A computer virus",
+        "question": "9. In Goleman's EQ framework, what is an 'Amygdala Hijack'?",
+        "options": [
           "An immediate, overwhelming emotional reaction triggered by the brain's threat center before the prefrontal cortex can process logic",
-          "A type of sprint retrospection",
-          "A memory storage algorithm"
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        answer: 1,
-        explanation: "An amygdala hijack occurs when perceived interpersonal threats trigger instantaneous fight-or-flight emotional responses, bypassing logical reasoning."
+        "answer": 0,
+        "explanation": "An amygdala hijack occurs when perceived interpersonal threats trigger instantaneous fight-or-flight emotional responses, bypassing logical reasoning."
       },
       {
-        question: "10. What is 'Conversational Turn-Taking Equality' identified in Project Aristotle?",
-        options: [
-          "Taking turns writing code",
+        "question": "10. What is 'Conversational Turn-Taking Equality' identified in Project Aristotle?",
+        "options": [
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
           "A team dynamic where all team members speak roughly equal amounts over the course of team interactions",
-          "Rotating meeting facilitators every day",
-          "Alternating speaking languages"
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks"
         ],
-        answer: 1,
-        explanation: "Equal speaking distribution ensures all perspectives are heard, fostering high collective intelligence and psychological safety."
+        "answer": 1,
+        "explanation": "Equal speaking distribution ensures all perspectives are heard, fostering high collective intelligence and psychological safety."
       },
       {
-        question: "11. What is Stage 2 of Timothy Clark's 4 Stages of Psychological Safety?",
-        options: [
+        "question": "11. What is Stage 2 of Timothy Clark's 4 Stages of Psychological Safety?",
+        "options": [
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
           "Learner Safety - feeling safe to ask questions, give feedback, experiment, and admit mistakes",
-          "Inclusion Safety",
-          "Challenger Safety",
-          "Contributor Safety"
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        answer: 0,
-        explanation: "Learner Safety enables team members to engage in the learning process—asking questions and experimenting without fear of embarrassment."
+        "answer": 2,
+        "explanation": "Learner Safety enables team members to engage in the learning process—asking questions and experimenting without fear of embarrassment."
       },
       {
-        question: "12. In the STATE model, what does 'T' (Talk tentatively) mean?",
-        options: [
-          "Speak so quietly nobody can hear you",
-          "State your conclusions as tentative interpretations ('In my opinion...', 'The story I'm telling myself is...') rather than absolute facts",
-          "Talk for only 10 seconds",
-          "Use technical jargon"
+        "question": "12. In the STATE model, what does 'T' (Talk tentatively) mean?",
+        "options": [
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks",
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "State your conclusions as tentative interpretations ('In my opinion...', 'The story I'm telling myself is...') rather than absolute facts"
         ],
-        answer: 1,
-        explanation: "Talking tentatively presents your story as an interpretation open to dialogue rather than an indisputable accusation."
+        "answer": 3,
+        "explanation": "Talking tentatively presents your story as an interpretation open to dialogue rather than an indisputable accusation."
       },
       {
-        question: "13. What matrix position is formed by High Psychological Safety and High Accountability?",
-        options: [
-          "Apathy Zone",
+        "question": "13. What matrix position is formed by High Psychological Safety and High Accountability?",
+        "options": [
           "High-Performance Learning Zone",
-          "Anxiety Zone",
-          "Comfort Zone"
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        answer: 1,
-        explanation: "High safety paired with high standards creates the Learning Zone, where teams innovate rapidly and hold themselves accountable."
+        "answer": 0,
+        "explanation": "High safety paired with high standards creates the Learning Zone, where teams innovate rapidly and hold themselves accountable."
       },
       {
-        question: "14. What occurs in the 'Anxiety Zone' (Low Psychological Safety + High Accountability)?",
-        options: [
-          "Team members innovate fearlessly",
+        "question": "14. What occurs in the 'Anxiety Zone' (Low Psychological Safety + High Accountability)?",
+        "options": [
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
           "Team members feel intense anxiety, hide errors, avoid risk, and experience burnout",
-          "Team members fall asleep",
-          "Productivity increases by 500%"
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks"
         ],
-        answer: 1,
-        explanation: "Demanding high performance without psychological safety generates fear, error-hiding, and high turnover."
+        "answer": 1,
+        "explanation": "Demanding high performance without psychological safety generates fear, error-hiding, and high turnover."
       },
       {
-        question: "15. What is a 'Blameless Post-Mortem'?",
-        options: [
-          "A meeting where nobody is allowed to speak",
+        "question": "15. What is a 'Blameless Post-Mortem'?",
+        "options": [
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
           "An incident analysis focused on discovering system design flaws and process vulnerabilities rather than punishing individuals",
-          "A meeting where the manager takes 100% of the blame",
-          "A software testing script"
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        answer: 1,
-        explanation: "Blameless post-mortems treat errors as systemic learning opportunities, building trust and transparency."
+        "answer": 2,
+        "explanation": "Blameless post-mortems treat errors as systemic learning opportunities, building trust and transparency."
       },
       {
-        question: "16. In Goleman's EQ framework, what is Social Awareness (Empathy)?",
-        options: [
-          "Posting regularly on social media",
-          "The ability to understand and sense the emotions, needs, and concerns of other people and teams",
-          "Managing financial budgets",
-          "Writing clear email subjects"
+        "question": "16. In Goleman's EQ framework, what is Social Awareness (Empathy)?",
+        "options": [
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks",
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "The ability to understand and sense the emotions, needs, and concerns of other people and teams"
         ],
-        answer: 1,
-        explanation: "Social Awareness enables leaders to read organizational dynamics, empathize with others' feelings, and tune into implicit needs."
+        "answer": 3,
+        "explanation": "Social Awareness enables leaders to read organizational dynamics, empathize with others' feelings, and tune into implicit needs."
       },
       {
-        question: "17. What is Stage 3 of Timothy Clark's 4 Stages of Psychological Safety?",
-        options: [
-          "Inclusion Safety",
+        "question": "17. What is Stage 3 of Timothy Clark's 4 Stages of Psychological Safety?",
+        "options": [
           "Contributor Safety - feeling safe to use your skills and make a meaningful difference",
-          "Learner Safety",
-          "Challenger Safety"
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        answer: 1,
-        explanation: "Contributor Safety allows individuals to apply their autonomy and competence to contribute meaningfully to team goals."
+        "answer": 0,
+        "explanation": "Contributor Safety allows individuals to apply their autonomy and competence to contribute meaningfully to team goals."
       },
       {
-        question: "18. In the STATE model, what does 'A' (Ask for others' paths) involve?",
-        options: [
-          "Asking for directions to the office",
+        "question": "18. In the STATE model, what does 'A' (Ask for others' paths) involve?",
+        "options": [
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
           "Actively encouraging the other person to share their facts, story, and perspective",
-          "Assigning action items",
-          "Asking for manager approval"
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks"
         ],
-        answer: 1,
-        explanation: "Asking for others' paths demonstrates genuine curiosity and invites the other person to express their viewpoint."
+        "answer": 1,
+        "explanation": "Asking for others' paths demonstrates genuine curiosity and invites the other person to express their viewpoint."
       },
       {
-        question: "19. What is 'Mutual Purpose' in Crucial Conversations?",
-        options: [
-          "Having the exact same job title",
+        "question": "19. What is 'Mutual Purpose' in Crucial Conversations?",
+        "options": [
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
           "Establishing a common outcome or goal that both parties care about, creating a safe foundation for agreement",
-          "Signing a legal contract",
-          "Working in the same time zone"
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        answer: 1,
-        explanation: "Mutual Purpose ensures both sides recognize they are working toward a shared outcome rather than competing."
+        "answer": 2,
+        "explanation": "Mutual Purpose ensures both sides recognize they are working toward a shared outcome rather than competing."
       },
       {
-        question: "20. How does a leader demonstrate 'Situational Humility'?",
-        options: [
-          "By admitting that they do not have all the answers and inviting team expertise ('I might be missing something here')",
-          "By refusing to make decisions",
-          "By delegating all work to junior staff",
-          "By apologizing constantly"
+        "question": "20. How does a leader demonstrate 'Situational Humility'?",
+        "options": [
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks",
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "By admitting that they do not have all the answers and inviting team expertise ('I might be missing something here')"
         ],
-        answer: 0,
-        explanation: "Demonstrating situational humility signals that work is complex, inviting team contribution and psychological safety."
+        "answer": 3,
+        "explanation": "Demonstrating situational humility signals that work is complex, inviting team contribution and psychological safety."
       },
       {
-        question: "21. What is the 6-Second Rule in emotional self-management?",
-        options: [
-          "Limiting speeches to 6 seconds",
+        "question": "21. What is the 6-Second Rule in emotional self-management?",
+        "options": [
           "Waiting 6 seconds when emotionally triggered to allow stress chemicals to dissipate and the rational prefrontal cortex to re-engage",
-          "Deleting emails after 6 seconds",
-          "Running 6-second sprints"
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        answer: 1,
-        explanation: "Pausing 6 seconds prevents immediate amygdala hijack reactions, restoring logical cognitive control."
+        "answer": 0,
+        "explanation": "Pausing 6 seconds prevents immediate amygdala hijack reactions, restoring logical cognitive control."
       },
       {
-        question: "22. In the STATE model, what does 'E' (Encourage testing) mean?",
-        options: [
-          "Running unit tests",
+        "question": "22. In the STATE model, what does 'E' (Encourage testing) mean?",
+        "options": [
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
           "Inviting dissenting views ('Does anyone see this differently?'), testing your story against reality",
-          "Testing new software",
-          "Evaluating employee performance"
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks"
         ],
-        answer: 1,
-        explanation: "Encouraging testing proves your openness by actively seeking out counter-arguments and alternative data."
+        "answer": 1,
+        "explanation": "Encouraging testing proves your openness by actively seeking out counter-arguments and alternative data."
       },
       {
-        question: "23. What characterizes the 'Comfort Zone' in team safety models?",
-        options: [
+        "question": "23. What characterizes the 'Comfort Zone' in team safety models?",
+        "options": [
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
           "High Psychological Safety + Low Accountability",
-          "Low Safety + Low Accountability",
-          "High Safety + High Accountability",
-          "Low Safety + High Accountability"
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        answer: 0,
-        explanation: "High safety without performance accountability leads to comfortable complacency without drive for excellence."
+        "answer": 2,
+        "explanation": "High safety without performance accountability leads to comfortable complacency without drive for excellence."
       },
       {
-        question: "24. What is 'Disaggregating Facts from Stories'?",
-        options: [
-          "Separating unarguable empirical observations from internal emotional interpretations",
-          "Writing fiction stories based on facts",
-          "Deleting database records",
-          "Creating user stories from backlog epics"
+        "question": "24. What is 'Disaggregating Facts from Stories'?",
+        "options": [
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks",
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Separating unarguable empirical observations from internal emotional interpretations"
         ],
-        answer: 0,
-        explanation: "Disaggregation requires separating objective facts (what was said/done) from the narrative story your mind created about it."
+        "answer": 3,
+        "explanation": "Disaggregation requires separating objective facts (what was said/done) from the narrative story your mind created about it."
       },
       {
-        question: "25. What is the overall business impact of high Psychological Safety in technology organizations?",
-        options: [
-          "Lower innovation and higher defect rates",
+        "question": "25. What is the overall business impact of high Psychological Safety in technology organizations?",
+        "options": [
           "Accelerated learning velocity, lower turnover, higher bug disclosure transparency, and superior enterprise innovation",
-          "Slower release cycles",
-          "Increased server costs"
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        answer: 1,
-        explanation: "Psychological Safety unlocks team collective intelligence, rapid problem resolution, high retention, and continuous innovation."
+        "answer": 0,
+        "explanation": "Psychological Safety unlocks team collective intelligence, rapid problem resolution, high retention, and continuous innovation."
       }
     ]
-  }
-,
-
+  },
   {
     "id": "ai-02",
     "track": "Artificial Intelligence",
@@ -1777,21 +1565,21 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "1. What is the primary difference between Dense Semantic Search and Sparse Keyword Search (BM25)?",
         "options": [
-          "Dense search uses SQL queries while sparse search uses NoSQL",
           "Dense search maps text into continuous vector embeddings capturing conceptual meaning, while sparse search relies on exact keyword matching and term frequencies",
+          "Dense search uses SQL queries while sparse search uses NoSQL",
           "Dense search only works for English while sparse search works for all languages",
-          "Dense search requires no GPU computation"
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        "answer": 1,
+        "answer": 0,
         "explanation": "Dense search uses neural embeddings to match meaning (synonyms, intent), while sparse search (BM25) matches exact token strings and unique technical identifiers."
       },
       {
         "question": "2. What is the formula constant 'k' typically used for in Reciprocal Rank Fusion (RRF)?",
         "options": [
-          "To set the GPU thread count",
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
           "To smooth score impact and prevent top-ranked items from dominating low-ranked items (commonly k ≈ 60)",
-          "To specify the number of CPU cores",
-          "To limit vector dimension size to 60"
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits"
         ],
         "answer": 1,
         "explanation": "RRF calculates rank scores as 1/(k + rank). Setting k ≈ 60 balances the weight across multiple search retrieval lists."
@@ -1799,32 +1587,32 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "3. How does a Cross-Encoder Reranker differ from Bi-Encoder Vector Search?",
         "options": [
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
           "Cross-Encoders process Query and Document together in full joint self-attention, while Bi-Encoders compute Q and D vector embeddings separately",
-          "Cross-Encoders are 1000x faster than Bi-Encoders",
-          "Cross-Encoders do not use Transformers",
-          "Bi-Encoders can only compare 2 words at a time"
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        "answer": 0,
+        "answer": 2,
         "explanation": "Bi-Encoders embed Query and Document separately for fast vector search. Cross-Encoders concatenate (Query + Document) into a single Transformer pass, enabling deep cross-token attention for high-precision reranking."
       },
       {
         "question": "4. Why is Parent-Child Document Retrieval effective in RAG pipelines?",
         "options": [
-          "It lowers monthly vector database subscription costs",
-          "Small child chunks produce precise vector retrieval matches, while larger parent chunks supply rich surrounding context to the LLM",
-          "It eliminates the need for embedding models",
-          "It auto-corrects spelling errors in documents"
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Small child chunks produce precise vector retrieval matches, while larger parent chunks supply rich surrounding context to the LLM"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "Small child chunks (128 tokens) avoid embedding dilution for vector search, while fetching the larger parent chunk (1024 tokens) gives the LLM complete context."
       },
       {
         "question": "5. In HNSW (Hierarchical Navigable Small World) vector indexing, what does parameter 'M' control?",
         "options": [
           "The maximum number of bi-directional connections per node in the graph layers",
-          "The total memory size in Megabytes",
-          "The number of GPUs allocated to the index",
-          "The maximum document word count"
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
         "answer": 0,
         "explanation": "Parameter M defines the maximum number of outgoing links per node in HNSW graph layers, balancing retrieval accuracy vs index build memory."
@@ -1832,10 +1620,10 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "6. What is the 'Lost in the Middle' phenomenon in LLM context windows?",
         "options": [
-          "When a model crashes halfway through text generation",
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
           "LLMs pay high attention to the beginning and end of long context prompts, but frequently fail to retrieve information placed in the middle of context",
-          "When vector databases delete middle chunks",
-          "When user queries are missing keywords"
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits"
         ],
         "answer": 1,
         "explanation": "Research shows LLM attention mechanisms suffer U-shaped retrieval accuracy, recalling context at the very start or end of prompts much better than information buried in the middle."
@@ -1843,87 +1631,87 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "7. In RAG evaluation, what does the 'Faithfulness' metric measure?",
         "options": [
-          "The speed of vector retrieval",
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
           "The proportion of claims in the LLM's generated answer that can be directly verified from the retrieved context chunks",
-          "The user's satisfaction rating",
-          "The total token count of the prompt"
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "Faithfulness measures hallucination freedom by dividing verifiable context-grounded claims by total claims made in the LLM output."
       },
       {
         "question": "8. What is Cosine Similarity between two identical normalized vectors?",
         "options": [
-          "0.0",
-          "1.0",
-          "-1.0",
-          "0.5"
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "1.0"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "For identical normalized vectors pointing in the exact same direction, the cosine of the 0-degree angle is 1.0."
       },
       {
         "question": "9. Why is overlap (e.g. 50 tokens) added between consecutive text chunks during document splitting?",
         "options": [
-          "To double the size of the database",
           "To ensure semantic context at the boundary between chunks is not severed or lost",
-          "To speed up text embedding generation",
-          "To compress PDF files"
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        "answer": 1,
+        "answer": 0,
         "explanation": "Chunk overlap preserves sentence continuity across chunk boundaries, preventing key phrases split across boundaries from losing semantic context."
       },
       {
         "question": "10. Which vector quantization technique compresses 32-bit floating point vector components into 8-bit integers?",
         "options": [
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
           "Scalar Quantization (SQ8)",
-          "B-Tree Partitioning",
-          "Softmax Clipping",
-          "JSON Serialization"
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits"
         ],
-        "answer": 0,
+        "answer": 1,
         "explanation": "Scalar Quantization (SQ8) maps FP32 vector values to INT8 representation, reducing vector DB RAM footprint by 75% with minimal accuracy loss."
       },
       {
         "question": "11. What is Naive RAG?",
         "options": [
-          "RAG that uses no computers",
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
           "Direct Vector Search -> Top-K Context -> Simple LLM Prompt without query transformation, reranking, or evaluation guardrails",
-          "RAG designed for children",
-          "Manual document reading"
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "Naive RAG follows basic chunk-embed-store-retrieve-generate flow without advanced reranking, hybrid search, or query rewrite layers."
       },
       {
         "question": "12. What does 'Sub-Question Query Decomposition' do in Advanced RAG?",
         "options": [
-          "Deletes short user questions",
-          "Breaks a complex multi-part user question into simpler sub-queries, executes retrieval for each, and synthesizes a combined answer",
-          "Translates questions into Spanish",
-          "Shortens prompt length"
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Breaks a complex multi-part user question into simpler sub-queries, executes retrieval for each, and synthesizes a combined answer"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "Decomposition breaks complex queries ('Compare Q1 and Q2 revenue') into independent single-topic queries, retrieving target context for each."
       },
       {
         "question": "13. In RAG System Prompts, why is explicit instruction 'Admit when context is insufficient' necessary?",
         "options": [
-          "To make the prompt longer",
           "Because default LLMs try to be helpful and will fallback to pre-training knowledge, producing hallucinations when retrieved context lacks the answer",
-          "To reduce API costs",
-          "To format output as JSON"
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        "answer": 1,
+        "answer": 0,
         "explanation": "Without strict negative constraints, LLMs rely on parametric memory when context is sparse, leading to ungrounded hallucinations."
       },
       {
         "question": "14. What is the role of an Inverted Index in sparse search (BM25)?",
         "options": [
-          "Mapping document IDs to vector embeddings",
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
           "Mapping words/tokens to a list of document IDs and positions where they occur across the corpus",
-          "Inverting image colors for OCR",
-          "Sorting documents by file size"
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits"
         ],
         "answer": 1,
         "explanation": "Inverted indexes allow instant lookup of which specific documents contain query terms and their TF-IDF/BM25 weightings."
@@ -1931,43 +1719,43 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "15. How does Product Quantization (PQ) compress high-dimensional vectors?",
         "options": [
-          "By deleting half the documents",
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
           "By breaking high-dimensional vectors into smaller sub-vectors and mapping each sub-vector to nearest centroid codebook IDs",
-          "By converting text into compressed zip files",
-          "By truncating long documents"
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "PQ splits a 1536-dim vector into e.g. 64 sub-vectors of 24 dimensions, replacing floating point sub-vectors with 1-byte codebook cluster IDs."
       },
       {
         "question": "16. What is 'Context Recall' in RAG evaluation?",
         "options": [
-          "The speed of database disk read",
-          "The percentage of ground-truth reference answer facts that were successfully retrieved in the context chunks",
-          "The number of tokens in the prompt",
-          "The time taken to generate the response"
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "The percentage of ground-truth reference answer facts that were successfully retrieved in the context chunks"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "Context Recall evaluates retrieval completeness by measuring how much of the necessary answer information was successfully fetched into context."
       },
       {
         "question": "17. What is 'Self-RAG' (Self-Reflective Retrieval-Augmented Generation)?",
         "options": [
-          "A model that writes its own code",
           "An architecture where an LLM generates reflection tokens to dynamically decide WHEN to retrieve context, evaluate context relevance, and self-correct output",
-          "RAG that runs without an internet connection",
-          "Using a single document for all queries"
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        "answer": 1,
+        "answer": 0,
         "explanation": "Self-RAG trains LLMs to output special critique tokens ([Retrieve], [IsRel], [IsSupp], [IsUse]) to control retrieval and verify context relevancy on the fly."
       },
       {
-        "title": "18. What is the main drawback of setting chunk size too small (e.g. 32 tokens)?",
+        "question": "18. What is the main drawback of setting chunk size too small (e.g. 32 tokens)?",
         "options": [
-          "Embeddings take up too much disk space",
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
           "Chunks lack sufficient semantic context, leading to fragmented embeddings and uninformative vector matches",
-          "LLMs refuse to read small chunks",
-          "Database connection timeouts"
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits"
         ],
         "answer": 1,
         "explanation": "Very small chunks sever sentences and key relationships, producing weak embeddings that fail to capture meaningful semantic concepts."
@@ -1975,32 +1763,32 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "19. In Qdrant vector database, what is a 'Payload'?",
         "options": [
-          "The GPU power supply",
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
           "Additional JSON metadata attached to a vector point (e.g. author, creation date, document ID, raw text snippet)",
-          "The network packet header",
-          "The weight of the server"
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "Payloads store structured metadata alongside vector points, enabling filtered vector search queries (e.g. similarity search where `year == 2024`)."
       },
       {
         "question": "20. What is 'Hypothetical Document Embeddings' (HyDE)?",
         "options": [
-          "Hiding documents in encrypted folders",
-          "Using an LLM to generate a hypothetical answer to a user query, then using that hypothetical answer vector to retrieve real matching documents",
-          "Generating fake documents for unit testing",
-          "Deleting unread documents"
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Using an LLM to generate a hypothetical answer to a user query, then using that hypothetical answer vector to retrieve real matching documents"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "HyDE uses an LLM to draft a hypothetical document responding to the query, then embeds the hypothetical document to search vector space for real documents with similar content."
       },
       {
         "question": "21. Why is Euclidean Distance (L2) equivalent to Cosine Similarity for normalized vectors?",
         "options": [
           "Because normalized vectors have unit length (magnitude = 1.0), making L2 distance directly proportional to (2 - 2 * CosineSimilarity)",
-          "They are never equivalent under any conditions",
-          "Because L2 distance is measured in degrees",
-          "Because matrix multiplication is commutative"
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
         "answer": 0,
         "explanation": "For unit-norm vectors (||x||=1), ||x - y||^2 = ||x||^2 + ||y||^2 - 2(x·y) = 2 - 2(CosineSimilarity). Maximizing cosine similarity minimizes L2 distance."
@@ -2008,10 +1796,10 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "22. What is an In-Memory Vector Store (e.g. Faiss)?",
         "options": [
-          "A cloud database with 99.999% SLA",
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
           "A high-speed C++ library that stores and searches vector indexes directly in RAM, suitable for local benchmarking and fast prototyping",
-          "A browser extension for storing passwords",
-          "A hardware chip inside GPUs"
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits"
         ],
         "answer": 1,
         "explanation": "Meta's FAISS (Facebook AI Similarity Search) is an in-memory vector index engine optimized for ultra-fast C++/CUDA vector similarity search."
@@ -2019,32 +1807,32 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "23. In Advanced RAG, what is 'Corrective RAG' (CRAG)?",
         "options": [
-          "RAG that fixes spelling errors",
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
           "A framework that evaluates retrieved context quality; if retrieval is low confidence, it triggers web search or query rewriting to correct the retrieval failure",
-          "RAG for grammar checking",
-          "Deleting incorrect database records"
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "CRAG uses a lightweight evaluator to score retrieved documents. If context is deemed irrelevant, it triggers external search engines or query rewrites to correct the context gap."
       },
       {
         "question": "24. What is 'Context Relevancy' metric in RAG evaluation?",
         "options": [
-          "The total file size of the vector DB",
-          "The ratio of relevant context sentences used in the answer compared to total context sentences retrieved (measuring signal-to-noise ratio)",
-          "The latency of the LLM call",
-          "The number of words in the user question"
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "The ratio of relevant context sentences used in the answer compared to total context sentences retrieved (measuring signal-to-noise ratio)"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "Context Relevancy measures prompt efficiency by ensuring retrieved context chunks contain minimal irrelevant noise."
       },
       {
         "question": "25. What is the ultimate benefit of enterprise RAG over fine-tuning LLM base weights for knowledge updates?",
         "options": [
           "RAG allows instantaneous knowledge updates without re-training, provides verifiable citations, and respects document access permissions",
-          "RAG makes models 10x smaller",
-          "RAG eliminates the need for prompts",
-          "RAG removes the need for GPUs"
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
         "answer": 0,
         "explanation": "RAG updates knowledge instantly by inserting new chunks into the vector store, provides exact source citations, and respects ACL access permissions without expensive model re-training."
@@ -2145,18 +1933,18 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "type": "RSA Animate Keynote",
         "title": "Drive: The Surprising Truth About What Motivates Us",
-        channel: "Daniel H. Pink (Royal Society of Arts)",
-        url: "https://www.youtube.com/watch?v=u6XAPnuFjJc",
-        duration: "11 mins",
-        keyInsight: "Visual breakdown showing how Autonomy, Mastery, and Purpose outperform financial bonuses for knowledge workers."
+        "channel": "Daniel H. Pink (Royal Society of Arts)",
+        "url": "https://www.youtube.com/watch?v=u6XAPnuFjJc",
+        "duration": "11 mins",
+        "keyInsight": "Visual breakdown showing how Autonomy, Mastery, and Purpose outperform financial bonuses for knowledge workers."
       },
       {
         "type": "TED Masterclass",
         "title": "How Great Leaders Inspire Action (The Golden Circle)",
-        channel: "Simon Sinek (TED Talks)",
-        url: "https://www.youtube.com/watch?v=qp0HIF3SfI4",
-        duration: "18 mins",
-        keyInsight: "Explains how starting with 'Why' creates deep systemic commitment across engineering teams and executive stakeholders."
+        "channel": "Simon Sinek (TED Talks)",
+        "url": "https://www.youtube.com/watch?v=qp0HIF3SfI4",
+        "duration": "18 mins",
+        "keyInsight": "Explains how starting with 'Why' creates deep systemic commitment across engineering teams and executive stakeholders."
       }
     ],
     "caseStudy": {
@@ -2224,21 +2012,21 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "1. What does the acronym ART stand for in Scaled Agile Framework (SAFe)?",
         "options": [
-          "Automated Regression Testing",
           "Agile Release Train",
-          "Architectural Review Team",
-          "Advanced Resource Tracking"
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Isolated departmental siloing without cross-functional release train dependency mapping"
         ],
-        "answer": 1,
+        "answer": 0,
         "explanation": "Agile Release Train (ART) is a long-lived team of Agile teams (typically 50-125 people) that incrementally delivers enterprise value."
       },
       {
         "question": "2. How is WSJF (Weighted Shortest Job First) calculated in SAFe?",
         "options": [
-          "Job Size / Cost of Delay",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
           "Cost of Delay / Job Size",
-          "User Value * Job Size",
-          "Time Criticality + Duration"
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done"
         ],
         "answer": 1,
         "explanation": "WSJF = Cost of Delay / Job Size. Prioritizing high CoD and smaller job sizes maximizes economic flow."
@@ -2246,43 +2034,43 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "3. In ROAM risk management, what does 'O' stand for?",
         "options": [
-          "Overlooked",
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
           "Owned",
-          "Outstanding",
-          "Optional"
+          "Isolated departmental siloing without cross-functional release train dependency mapping"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "ROAM stands for Resolved, Owned (assigned to a specific individual to manage), Accepted, and Mitigated."
       },
       {
         "question": "4. What is the standard duration of a Program Increment (PI) in SAFe?",
         "options": [
-          "1 week",
-          "8 to 12 weeks (typically 10 weeks comprising 4 execution iterations + 1 IP iteration)",
-          "1 year",
-          "6 months"
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done",
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "8 to 12 weeks (typically 10 weeks comprising 4 execution iterations + 1 IP iteration)"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "A PI typically spans 10 weeks, consisting of four 2-week execution iterations followed by one Innovation and Planning (IP) iteration."
       },
       {
         "question": "5. Who presents the Business Context at the start of Day 1 PI Planning?",
         "options": [
-          "Junior Developer",
           "Enterprise Executive / Business Owner",
-          "Scrum Master",
-          "External Consultant"
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Isolated departmental siloing without cross-functional release train dependency mapping"
         ],
-        "answer": 1,
+        "answer": 0,
         "explanation": "Business Owners / Enterprise Executives present current market context, strategy, and business performance to start Day 1."
       },
       {
         "question": "6. What is the purpose of the Red Strings on a physical or virtual Program Board?",
         "options": [
-          "To mark completed user stories",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
           "To visually show feature dependencies between teams and target iterations",
-          "To indicate cancelled projects",
-          "To highlight team member vacations"
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done"
         ],
         "answer": 1,
         "explanation": "Red strings map feature dependencies across teams and iterations, making critical path risks visible."
@@ -2290,32 +2078,32 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "7. What score during a Fist-of-Five confidence vote indicates a team agrees the plan is achievable?",
         "options": [
-          "1 or 2",
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
           "3, 4, or 5",
-          "0",
-          "Negative scores"
+          "Isolated departmental siloing without cross-functional release train dependency mapping"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "Scores of 3, 4, or 5 indicate agreement and confidence. Scores of 1 or 2 represent significant concern requiring immediate replanning."
       },
       {
         "question": "8. What is the Innovation and Planning (IP) Iteration used for?",
         "options": [
-          "Adding extra feature scope at the last minute",
-          "Innovation time, hackathons, continuous education, PI planning preparation, and buffer for cadence finalization",
-          "Team vacation without work",
-          "Deleting legacy code"
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done",
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "Innovation time, hackathons, continuous education, PI planning preparation, and buffer for cadence finalization"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "The IP iteration provides guardrail buffer time for innovation, hackathons, learning, infrastructure maintenance, and PI planning readiness."
       },
       {
         "question": "9. What three components make up Cost of Delay (CoD) in SAFe?",
         "options": [
           "User-Business Value + Time Criticality + Risk Reduction / Opportunity Enablement (RR/OE)",
-          "Hardware Cost + Salary + Office Rent",
-          "Story Points + Defect Count + Velocity",
-          "Lines of code + Hours + Budget"
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Isolated departmental siloing without cross-functional release train dependency mapping"
         ],
         "answer": 0,
         "explanation": "Cost of Delay = User-Business Value + Time Criticality + Risk Reduction/Opportunity Enablement."
@@ -2323,10 +2111,10 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "10. Who facilitates the overall PI Planning event and manages ART execution?",
         "options": [
-          "Product Owner",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
           "Release Train Engineer (RTE)",
-          "Database Administrator",
-          "QA Tester"
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done"
         ],
         "answer": 1,
         "explanation": "The Release Train Engineer (RTE) acts as the master Scrum Master for the train, facilitating PI Planning and clearing ART blockers."
@@ -2334,87 +2122,87 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "11. What is an Uncommitted Objective in PI Planning?",
         "options": [
-          "A feature that was rejected by the team",
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
           "A high-variable capacity objective planned by the team that counts toward capacity but is not guaranteed in the committed PI plan",
-          "An objective assigned to external contractors",
-          "An illegal requirement"
+          "Isolated departmental siloing without cross-functional release train dependency mapping"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "Uncommitted objectives help improve plan reliability by accounting for high-uncertainty items without penalizing committed predictability scores."
       },
       {
         "question": "12. What takes place during the Day 1 Evening Management Review & Problem Solving session?",
         "options": [
-          "A dinner party",
-          "RTE, Business Owners, Product Management, and System Architects negotiate scope adjustments and address dependency blockers raised during Day 1 breakouts",
-          "Writing code for Sprint 1",
-          "Testing software releases"
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done",
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "RTE, Business Owners, Product Management, and System Architects negotiate scope adjustments and address dependency blockers raised during Day 1 breakouts"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "Day 1 evening review allows leadership to resolve cross-team resource conflicts, adjust feature scope, and provide solutions for Day 2 planning."
       },
       {
         "question": "13. In SAFe, what is the role of the System Architect / Engineering Lead during PI Planning?",
         "options": [
-          "Managing vacation schedules",
           "Presenting Architectural Runway, non-functional requirements (NFRs), and guiding technical feasibility during team breakouts",
-          "Writing user documentation",
-          "Approving expense reports"
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Isolated departmental siloing without cross-functional release train dependency mapping"
         ],
-        "answer": 1,
+        "answer": 0,
         "explanation": "System Architecture presents the architectural vision and Enabler roadmap, ensuring teams build within common architectural guardrails."
       },
       {
-        "title": "14. What is the ART Predictability Measure?",
+        "question": "14. What is the ART Predictability Measure?",
         "options": [
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
           "The percentage of planned objective business value actually achieved by the train over a PI (target: 80-100%)",
-          "The number of hours developers work per day",
-          "The CPU utilization rate of servers",
-          "The count of bugs logged in Jira"
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done"
         ],
-        "answer": 0,
+        "answer": 1,
         "explanation": "ART Predictability Measure compares planned vs achieved business value scores across team PI objectives (target range: 80% to 100%)."
       },
       {
         "question": "15. What is an Enabler Feature in SAFe?",
         "options": [
-          "A marketing promotion",
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
           "A technical feature (architecture, infrastructure, exploration) that supports upcoming business features",
-          "A user survey",
-          "A team social event"
+          "Isolated departmental siloing without cross-functional release train dependency mapping"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "Enabler features extend the Architectural Runway, conduct technical exploration, or upgrade infrastructure needed for future business value."
       },
       {
         "question": "16. In ROAM, what does 'A' (Accepted) mean?",
         "options": [
-          "The risk has been completely eliminated",
-          "The risk is recognized as an unavoidable operational reality and accepted without active mitigation expense",
-          "The risk was assigned to an intern",
-          "The risk was deleted from Jira"
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done",
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "The risk is recognized as an unavoidable operational reality and accepted without active mitigation expense"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "Accepted risks are acknowledged as realities that cannot be economically mitigated or resolved, and the team accepts the potential impact."
       },
       {
         "question": "17. What is a Strategic Theme in SAFe Portfolio Management?",
         "options": [
-          "A color scheme for slide decks",
           "Differentiating business objectives that connect enterprise strategy to portfolio vision and backlog decisions",
-          "A monthly newsletter",
-          "A coding style guide"
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Isolated departmental siloing without cross-functional release train dependency mapping"
         ],
-        "answer": 1,
+        "answer": 0,
         "explanation": "Strategic Themes connect enterprise portfolio vision directly to execution backlogs and funding allocations."
       },
       {
         "question": "18. What is the primary output of Day 2 PI Planning?",
         "options": [
-          "A 500-page PDF manual",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
           "Finalized Team PI Objectives, Program Board dependencies, ROAMed Program Risks, and Committed PI Plan",
-          "New laptop assignments",
-          "Source code for all features"
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done"
         ],
         "answer": 1,
         "explanation": "Day 2 outputs include committed team PI objectives, mapped dependencies, ROAMed risks, and ART confidence vote approval."
@@ -2422,43 +2210,43 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "19. What is a System Demo in SAFe?",
         "options": [
-          "A slide presentation given by sales",
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
           "A regular bi-weekly event testing integrated software across all teams on the Agile Release Train in a staging environment",
-          "A hardware assembly test",
-          "An annual shareholder meeting"
+          "Isolated departmental siloing without cross-functional release train dependency mapping"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "System Demo tests the fully integrated solution built by all ART teams every 2 weeks, providing objective proof of progress."
       },
       {
         "question": "20. What does 'Feature' represent in SAFe taxonomy?",
         "options": [
-          "A single line of code",
-          "A service that fulfills a stakeholder need, sized to be delivered by a single ART within a single PI",
-          "A 3-year enterprise initiative",
-          "A individual task assigned to one developer"
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done",
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "A service that fulfills a stakeholder need, sized to be delivered by a single ART within a single PI"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "Features are business deliverables maintained in the Program Backlog, sized to fit comfortably within a single 10-week PI pass."
       },
       {
         "question": "21. What is the role of Product Management during PI Planning?",
         "options": [
-          "Writing unit test code",
           "Presenting top Program Features, clarifying acceptance criteria, and prioritizing scope trade-offs with teams",
-          "Configuring CI/CD pipelines",
-          "Auditing server firewall logs"
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Isolated departmental siloing without cross-functional release train dependency mapping"
         ],
-        "answer": 1,
+        "answer": 0,
         "explanation": "Product Management owns the Program Backlog, presents the vision/features, and clarifies business priorities during breakouts."
       },
       {
         "question": "22. In WSJF, if Feature X has CoD=15 and Size=3 (WSJF=5), and Feature Y has CoD=20 and Size=10 (WSJF=2), which feature should be executed first?",
         "options": [
-          "Feature Y",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
           "Feature X",
-          "Both simultaneously",
-          "Neither"
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done"
         ],
         "answer": 1,
         "explanation": "Feature X has a higher WSJF score (5 > 2), meaning it delivers higher economic value per unit of time/duration and should be scheduled first."
@@ -2466,34 +2254,34 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "23. What is 'Architectural Runway' in SAFe?",
         "options": [
-          "A runway at an airport",
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
           "Existing technical code, infrastructure, and components that allow business features to be implemented without excessive refactoring delays",
-          "The blueprint of an office building",
-          "A hardware server rack"
+          "Isolated departmental siloing without cross-functional release train dependency mapping"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "Architectural Runway consists of existing technical foundation that enables smooth, near-zero-delay feature delivery."
       },
       {
         "question": "24. What is the Inspect & Adapt (I&A) event?",
         "options": [
-          "A annual performance review",
-          "A significant PI milestone event where the entire ART evaluates systemic performance, conducts PI System Demo, and executes a Problem-Solving Workshop",
-          "A code audit by external auditors",
-          "A daily standup meeting"
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done",
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "A significant PI milestone event where the entire ART evaluates systemic performance, conducts PI System Demo, and executes a Problem-Solving Workshop"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "The I&A event ends every PI with an ART-wide system demo, metrics review, and root-cause problem-solving workshop to drive continuous improvement."
       },
       {
         "question": "25. What is the ultimate goal of SAFe PI Planning & ART Alignment?",
         "options": [
-          "To create maximum paperwork",
           "To align business strategy with technical execution, foster cross-team transparency, manage dependencies, and deliver continuous economic value",
-          "To replace all software developers with AI",
-          "To eliminate all meetings forever"
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Isolated departmental siloing without cross-functional release train dependency mapping"
         ],
-        "answer": 1,
+        "answer": 0,
         "explanation": "PI Planning aligns enterprise vision with team execution, ensuring cross-functional teams deliver maximum customer value with high predictability."
       }
     ]
@@ -2670,9 +2458,9 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
         "question": "1. What two axes define Kim Scott's Radical Candor matrix?",
         "options": [
           "Care Personally and Challenge Directly",
-          "Work Hard and Play Hard",
-          "Speed and Quality",
-          "Authority and Control"
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
         "answer": 0,
         "explanation": "Radical Candor is created at the intersection of caring personally about the individual while having the courage to challenge them directly."
@@ -2680,10 +2468,10 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "2. What quadrant represents High Care Personally + Low Challenge Directly?",
         "options": [
-          "Manipulative Insincerity",
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
           "Ruinous Empathy",
-          "Obnoxious Aggression",
-          "Radical Candor"
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks"
         ],
         "answer": 1,
         "explanation": "Ruinous Empathy occurs when leaders care so much about avoiding temporary awkwardness or hurting feelings that they fail to deliver direct, necessary feedback."
@@ -2691,32 +2479,32 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "3. In the Situation-Behavior-Impact (SBI) framework, what does 'Behavior' refer to?",
         "options": [
-          "Your opinion of the person's character or attitude",
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
           "Observable, specific, non-judgmental actions that took place",
-          "The company's revenue impact",
-          "The employee's psychological background"
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "Behavior focuses exclusively on observable physical/verbal actions (what was said or done), avoiding subjective character judgments."
       },
       {
         "question": "4. In the Johari Window model, what is the 'Blind Spot' quadrant?",
         "options": [
-          "Information known to self and known to others",
-          "Information known to others but unknown to self",
-          "Information unknown to self and unknown to others",
-          "Information known to self but hidden from others"
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks",
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Information known to others but unknown to self"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "The Blind Spot contains behaviors, habits, and impacts that others clearly observe in you, but which you are blind to yourself."
       },
       {
         "question": "5. What characterizes 'Manipulative Insincerity' in Radical Candor?",
         "options": [
           "Low Care Personally + Low Challenge Directly",
-          "High Care + High Challenge",
-          "High Care + Low Challenge",
-          "Low Care + High Challenge"
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
         "answer": 0,
         "explanation": "Manipulative Insincerity is passive-aggressive behavior where someone neither cares about the person nor challenges them directly, resulting in backstabbing and gossip."
@@ -2724,10 +2512,10 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "6. What is the recommended rule for praise versus criticism?",
         "options": [
-          "Criticize in public, praise in private",
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
           "Praise in public, criticize in private",
-          "Praise and criticize simultaneously in public",
-          "Never give praise or criticism"
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks"
         ],
         "answer": 1,
         "explanation": "Praising in public elevates morale and models good behavior, while criticizing in private preserves dignity and lowers defensiveness."
@@ -2735,76 +2523,76 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "7. According to Sheila Heen in 'Thanks for the Feedback', what is a 'Truth Trigger'?",
         "options": [
-          "When feedback is delivered in a foreign language",
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
           "When feedback feels wrong, unhelpful, or factually inaccurate, causing immediate cognitive rejection",
-          "When feedback is given by a friend",
-          "When feedback is written in code"
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "Truth Triggers fire when we perceive feedback as factually wrong or unfair, leading us to dismiss the input instead of investigating the sender's underlying perspective."
       },
       {
         "question": "8. What is the first thing a leader should do before giving feedback to others?",
         "options": [
-          "Fire low performers",
-          "Solicit feedback on their own performance to model vulnerability and build trust",
-          "Send an email warning",
-          "Write a negative review"
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks",
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Solicit feedback on their own performance to model vulnerability and build trust"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "Asking for feedback first demonstrates humility, proves you can take criticism, and lowers team defensiveness."
       },
       {
         "question": "9. In the Johari Window, how do you expand the 'Open Arena' quadrant?",
         "options": [
-          "By keeping secrets and avoiding conversation",
           "By soliciting feedback from others (shrinking Blind Spot) and self-disclosing relevant context (shrinking Hidden Facade)",
-          "By closing the company office",
-          "By deleting email records"
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        "answer": 1,
+        "answer": 0,
         "explanation": "The Open Arena grows when you actively ask for feedback (uncovering blindspots) and share authentic context with your team."
       },
       {
         "question": "10. What is 'Obnoxious Aggression' in Kim Scott's model?",
         "options": [
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
           "High Challenge Directly + Low Care Personally",
-          "High Care + High Challenge",
-          "Low Care + Low Challenge",
-          "High Care + Low Challenge"
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks"
         ],
-        "answer": 0,
+        "answer": 1,
         "explanation": "Obnoxious Aggression (brutal honesty / fronting) occurs when feedback is delivered directly but without genuine care for the person."
       },
       {
         "question": "11. Why should feedback be given as close in time to the event as possible?",
         "options": [
-          "To save paper",
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
           "Because immediate feedback keeps details fresh, prevents silent resentment from compounding, and enables rapid behavioral iteration",
-          "To meet HR monthly deadlines",
-          "Because computers forget data"
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "Timely feedback ensures context is fresh in memory and prevents minor issues from compounding into unvoiced resentment."
       },
       {
         "question": "12. In the SBI model, why is 'You were rude in the meeting' a poor behavior statement?",
         "options": [
-          "It is too short",
-          "It is a subjective character judgement rather than an observable, non-judgmental action",
-          "It uses English words",
-          "It mentions a meeting"
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks",
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "It is a subjective character judgement rather than an observable, non-judgmental action"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "'Rude' is an interpretation. A proper behavior statement describes the exact observable action: 'You spoke over Sarah while she was presenting slide 4'."
       },
       {
         "question": "13. What is an 'Identity Trigger' when receiving feedback?",
         "options": [
           "When feedback causes you to question your self-worth, competence, or core sense of identity",
-          "When feedback is sent via SMS",
-          "When feedback comes from a customer",
-          "When feedback is printed on paper"
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
         "answer": 0,
         "explanation": "Identity Triggers destabilize us because the feedback feels like an attack on our core story about who we are ('I am a good leader/engineer')."
@@ -2812,43 +2600,43 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "14. How does Radical Candor differ from 'Brutal Honesty'?",
         "options": [
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
           "Brutal honesty lacks personal care and often seeks to humiliate, while Radical Candor comes from a place of deep care for the person's growth",
-          "They are identical concepts",
-          "Brutal honesty is only used in sports",
-          "Radical Candor is written only in emails"
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks"
         ],
-        "answer": 0,
+        "answer": 1,
         "explanation": "Brutal honesty is Obnoxious Aggression (lacking care). Radical Candor pairs direct challenge with explicit personal care and support."
       },
       {
         "question": "15. What is 'Ruinous Empathy' in code reviews?",
         "options": [
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
           "Approving a PR with known architectural flaws or bugs because you don't want to hurt the developer's feelings",
-          "Writing detailed unit tests",
-          "Rejecting a PR with angry comments",
-          "Refactoring code automatically"
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        "answer": 0,
+        "answer": 2,
         "explanation": "Ruinous Empathy in code reviews occurs when reviewers sign off on bad code to avoid awkwardness, harming software quality and the developer's long-term growth."
       },
       {
         "question": "16. In the Johari Window, what is the 'Hidden Facade'?",
         "options": [
-          "Information known to self but intentionally hidden from others",
-          "Information known to others but unknown to self",
-          "Information unknown to everyone",
-          "Information visible to the whole team"
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks",
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Information known to self but intentionally hidden from others"
         ],
-        "answer": 0,
+        "answer": 3,
         "explanation": "The Hidden Facade contains thoughts, fears, or context that you keep private from others."
       },
       {
         "question": "17. What is a 'Relationship Trigger' when receiving criticism?",
         "options": [
           "When you dismiss feedback based on WHO delivered it ('I don't respect them' or 'They have no right to tell me that')",
-          "When feedback is about database tables",
-          "When feedback comes from a vendor",
-          "When feedback is delivered on a weekend"
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
         "answer": 0,
         "explanation": "Relationship Triggers focus on the messenger rather than the message, causing us to reject valid input because of past conflict with the speaker."
@@ -2856,43 +2644,43 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "18. What is the 'AWE' question in Michael Bungay Stanier's coaching habit?",
         "options": [
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
           "And What Else?",
-          "Are We Done?",
-          "Always Work Hard",
-          "Ask With Energy"
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks"
         ],
-        "answer": 0,
+        "answer": 1,
         "explanation": "'And What Else?' (AWE) encourages the coachee to dig deeper, uncovering additional options and deeper insights."
       },
       {
         "question": "19. Why is 'Why did you do that?' often a poor coaching question?",
         "options": [
-          "It is too short",
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
           "It triggers defensiveness by making the person feel interrogated and forced to justify their actions",
-          "It uses the word 'why'",
-          "It is only used in legal trials"
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "'Why' questions often sound accusatory. Replacing 'Why did you do X?' with 'What led to X?' or 'How did you approach X?' reduces defensiveness."
       },
       {
         "question": "20. What is the impact of Ruinous Empathy over time in a software team?",
         "options": [
-          "High morale and zero bugs",
-          "Standards degrade, high performers get frustrated carrying underperformers, and unvoiced resentment explodes later",
-          "Faster release speed",
-          "Lower server maintenance costs"
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks",
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Standards degrade, high performers get frustrated carrying underperformers, and unvoiced resentment explodes later"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "When leaders avoid difficult conversations, quality drops, high performers leave out of frustration, and silent resentment erodes culture."
       },
       {
         "question": "21. How should a manager handle feedback when an employee becomes tearful or defensive?",
         "options": [
           "Acknowledge the emotion with empathy, pause, validate their feelings, and offer to continue when they are ready without abandoning the feedback",
-          "Yell at them to stop crying",
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
           "Withdraw the feedback completely and pretend nothing happened",
-          "Fire the employee on the spot"
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy"
         ],
         "answer": 0,
         "explanation": "Empathy validates the human emotion without backing down from the necessary feedback commitment."
@@ -2900,10 +2688,10 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "22. In the SBI model, what is the 'Impact' section intended to convey?",
         "options": [
-          "The emotional damage to your ego",
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals",
           "The concrete, objective consequence of the behavior on the team, project, client, or workflow",
-          "The financial salary of the employee",
-          "The time of day"
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership"
         ],
         "answer": 1,
         "explanation": "Impact explains the actual result of the behavior ('it delayed the QA testing cycle by 2 days'), helping the person understand why change matters."
@@ -2911,39 +2699,38 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
       {
         "question": "23. What is the 'Advice Monster' in coaching literature?",
         "options": [
-          "A mythical creature",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks",
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
           "The strong internal urge to jump in with advice and solutions before fully understanding the person's problem",
-          "A bad software bug",
-          "A strict manager"
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "Taming the Advice Monster means resisting the immediate impulse to offer solutions, staying curious longer to let others solve their problems."
       },
       {
         "question": "24. What does 'Clean Feedback' mean in team communication?",
         "options": [
-          "Feedback written in polite formal English",
-          "Feedback free of personal judgments, emotional exaggeration ('always/never'), or hidden agendas",
-          "Feedback sent via automated script",
-          "Feedback approved by legal"
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals",
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
+          "Feedback free of personal judgments, emotional exaggeration ('always/never'), or hidden agendas"
         ],
-        "answer": 1,
+        "answer": 3,
         "explanation": "Clean feedback sticks strictly to facts, avoids generalizations like 'you always', and focuses on constructive growth."
       },
       {
         "question": "25. What is the ultimate cultural outcome of embedding Radical Candor across an organization?",
         "options": [
-          "Constant arguing and chaos",
           "High trust, fast psychological safety, continuous learning, rapid problem resolution, and exceptional team performance",
-          "Higher employee turnover",
-          "Slower decision making"
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks",
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy"
         ],
-        "answer": 1,
+        "answer": 0,
         "explanation": "Radical Candor builds high-trust, high-candor environments where people grow fast, solve problems transparently, and achieve extraordinary results."
       }
     ]
   }
-
 ];
 
 if (typeof module !== 'undefined' && module.exports) {

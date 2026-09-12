@@ -301,30 +301,38 @@ function renderConceptDetails(concept) {
   document.getElementById('notes-status-msg').textContent = '';
 }
 
-// 4. Render Quiz Options
+// 4. Render Quiz Options (With Robust Fallbacks & Option Lettering)
 function renderQuiz(quizArray) {
   const quizContainer = document.getElementById('quiz-container');
   document.getElementById('quiz-score-banner').className = 'score-banner hidden';
   
+  const optionLetters = ['A', 'B', 'C', 'D'];
+
   quizContainer.innerHTML = `
     <div class="quiz-header-badge">
       <span>📊 TOTAL ASSESSMENT QUESTIONS: ${quizArray.length}</span>
       <span>Passing Score: 80% (20/25)</span>
     </div>
-    ${quizArray.map((q, qIndex) => `
-      <div class="quiz-item" data-qindex="${qIndex}">
-        <div class="quiz-question">${q.question}</div>
-        <div class="quiz-options">
-          ${q.options.map((opt, optIndex) => `
-            <label class="quiz-option-label">
-              <input type="radio" name="quiz-q-${qIndex}" value="${optIndex}">
-              <span>${opt}</span>
-            </label>
-          `).join('')}
+    ${quizArray.map((q, qIndex) => {
+      const questionText = q.question || q.title || q.q || `Question ${qIndex + 1}`;
+      const correctIndex = typeof q.answer === 'number' ? q.answer : 0;
+
+      return `
+        <div class="quiz-item" data-qindex="${qIndex}" data-correct="${correctIndex}">
+          <div class="quiz-question"><span class="q-number-badge">Q${qIndex + 1}</span> ${questionText}</div>
+          <div class="quiz-options">
+            ${q.options.map((opt, optIndex) => `
+              <label class="quiz-option-label" id="opt-label-${qIndex}-${optIndex}">
+                <input type="radio" name="quiz-q-${qIndex}" value="${optIndex}">
+                <span class="opt-letter">${optionLetters[optIndex] || ''}.</span>
+                <span class="opt-text">${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div class="quiz-explanation hidden" id="explanation-${qIndex}"></div>
         </div>
-        <div class="quiz-explanation hidden" id="explanation-${qIndex}"></div>
-      </div>
-    `).join('')}
+      `;
+    }).join('')}
   `;
 }
 
@@ -334,17 +342,44 @@ function evaluateQuiz() {
   
   let score = 0;
   const total = currentConcept.quiz.length;
+  const optionLetters = ['A', 'B', 'C', 'D'];
 
   currentConcept.quiz.forEach((q, qIndex) => {
     const selected = document.querySelector(`input[name="quiz-q-${qIndex}"]:checked`);
     const expDiv = document.getElementById(`explanation-${qIndex}`);
+    const correctIndex = typeof q.answer === 'number' ? q.answer : 0;
+    const correctLetter = optionLetters[correctIndex] || 'A';
+    const correctText = q.options[correctIndex] || '';
+
     expDiv.classList.remove('hidden');
 
-    if (selected && parseInt(selected.value) === q.answer) {
-      score++;
-      expDiv.innerHTML = `<span style="color: var(--success); font-weight: bold;">✅ Correct!</span> ${q.explanation}`;
+    // Reset option label styles
+    q.options.forEach((_, oIdx) => {
+      const lbl = document.getElementById(`opt-label-${qIndex}-${oIdx}`);
+      if (lbl) lbl.classList.remove('opt-correct', 'opt-incorrect');
+    });
+
+    if (selected) {
+      const selectedIndex = parseInt(selected.value);
+      const selectedLabel = document.getElementById(`opt-label-${qIndex}-${selectedIndex}`);
+
+      if (selectedIndex === correctIndex) {
+        score++;
+        if (selectedLabel) selectedLabel.classList.add('opt-correct');
+        expDiv.innerHTML = `<span style="color: var(--success); font-weight: bold;">✅ Correct! (${correctLetter})</span> ${q.explanation}`;
+      } else {
+        if (selectedLabel) selectedLabel.classList.add('opt-incorrect');
+        const correctLabel = document.getElementById(`opt-label-${qIndex}-${correctIndex}`);
+        if (correctLabel) correctLabel.classList.add('opt-correct');
+
+        expDiv.innerHTML = `<span style="color: var(--danger); font-weight: bold;">❌ Incorrect.</span> Correct Answer: <strong>Option ${correctLetter}</strong> — ${correctText}.<br><br>${q.explanation}`;
+      }
     } else {
-      expDiv.innerHTML = `<span style="color: var(--danger); font-weight: bold;">❌ Incorrect.</span> Correct Answer: ${q.options[q.answer]}.<br>${q.explanation}`;
+      // Unanswered
+      const correctLabel = document.getElementById(`opt-label-${qIndex}-${correctIndex}`);
+      if (correctLabel) correctLabel.classList.add('opt-correct');
+
+      expDiv.innerHTML = `<span style="color: #f59e0b; font-weight: bold;">⚠️ Not Answered.</span> Correct Answer: <strong>Option ${correctLetter}</strong> — ${correctText}.<br><br>${q.explanation}`;
     }
   });
 
