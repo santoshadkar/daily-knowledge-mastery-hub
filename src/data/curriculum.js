@@ -1436,21 +1436,36 @@ const curriculumData = [
         "author": "Martin Kleppmann (O'Reilly Media)",
         "url": "https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/",
         "keyChapters": "Chapter 3: Storage and Retrieval (SSTables, LSM-Trees, B-Trees & Inverted Indexes)",
-        "summary": "Essential architectural foundational text covering search indexes, partitioning, replication, and query execution engines."
+        "summary": "In Chapter 3, Martin Kleppmann provides an exhaustive analysis of core database storage and retrieval engines. He contrasts Log-Structured Merge-Trees (LSM-Trees, utilized in high-throughput key-value systems) with traditional B-Trees.\n\nHe deconstructs how inverted indexes process term frequency vectors, laying the foundational mathematical and data-structure principles behind modern high-dimensional vector search engines, sparse inverted indexes (BM25), and distributed retrieval systems.",
+        "keyTakeaways": [
+          "**Inverted Index Mechanics**: Inverted indexes map terms/tokens to document IDs, serving as the backbone for BM25 keyword retrieval.",
+          "**Indexing Trade-Offs**: LSM-trees optimize for write throughput; B-trees optimize for point-lookup query latency.",
+          "**Sparse vs Dense Vector Foundation**: Index structures dictate retrieval efficiency across keyword and vector databases."
+        ]
       },
       {
         "title": "Vector Search and Information Retrieval Systems",
         "author": "Pinecone Engineering Team & O'Reilly Media",
         "url": "https://www.pinecone.io/learn/vector-database/",
         "keyChapters": "Chapter 2: HNSW Graphs vs IVF Indexes & Chapter 5: Hybrid Search Architectures",
-        "summary": "Deep technical guide on high-dimensional vector spaces, quantization techniques (PQ, SQ), and production vector DB scaling."
+        "summary": "Chapter 2 deconstructs Approximate Nearest Neighbor (ANN) search algorithms, evaluating Hierarchical Navigable Small World (HNSW) graphs against Inverted File (IVF) index structures. The authors demonstrate how HNSW constructs multi-layer skip-list graph networks that achieve logarithmic $O(\\log N)$ query routing across million-scale vector spaces.\n\nChapter 5 details production Hybrid Search architectures, demonstrating how Reciprocal Rank Fusion (RRF) merges dense semantic embedding rankings with sparse BM25 keyword search to maximize retrieval accuracy.",
+        "keyTakeaways": [
+          "**HNSW Graph Efficiency**: Multi-layer graph skip-lists enable sub-linear vector search scaling up to billions of embeddings.",
+          "**Quantization Compression**: Product Quantization (PQ) compresses 1536-dim vectors into compact byte codes, saving 75%+ GPU VRAM.",
+          "**Hybrid Search RRF Fusion**: Combines dense semantic intent with exact keyword precision to prevent RAG retrieval misses."
+        ]
       },
       {
         "title": "Building LLM Apps: Retrieval, Fine-Tuning, and RAG",
         "author": "Valentina Alto (Packt Publishing)",
         "url": "https://www.packtpub.com/en-us/product/building-llm-powered-applications-9781835462317",
         "keyChapters": "Chapter 4: Advanced RAG Patterns & Chapter 7: Reranking and Evaluation Frameworks",
-        "summary": "Hands-on engineering manual detailing Advanced RAG architectures, LlamaIndex data frameworks, and Ragas evaluation metrics."
+        "summary": "Chapter 4 details Advanced RAG production patterns: semantic sentence-window chunking, parent-document retrievers, and structured metadata filtering to eliminate noise before feeding LLM context windows.\n\nChapter 7 introduces Cross-Encoder Reranking models and automated evaluation pipelines (Ragas framework). It provides step-by-step methodologies for scoring Faithfulness, Answer Relevance, and Context Precision to systematically detect and eliminate LLM hallucinations.",
+        "keyTakeaways": [
+          "**Semantic Chunking**: Split documents by semantic topic boundaries rather than arbitrary character lengths to preserve sentence context.",
+          "**Cross-Encoder Reranking**: Re-scores Top-K retrieved chunks using joint self-attention, dramatically increasing precision.",
+          "**Ragas Triad Evaluation**: Benchmark Faithfulness, Answer Relevance, and Context Recall to validate RAG pipeline quality."
+        ]
       }
     ],
     "articles": [
@@ -1884,21 +1899,36 @@ const curriculumData = [
         "author": "Dean Leffingwell & Inbar Oren (Addison-Wesley)",
         "url": "https://www.scaledagile.com/safe-distilled-book/",
         "keyChapters": "Chapter 5: The Agile Release Train & Chapter 8: PI Planning Cadence",
-        "summary": "The definitive reference manual for SAFe 6.0, detailing ART execution, Solution Trains, Lean Portfolio Management, and RTE orchestration."
+        "summary": "Chapter 5 details how the Agile Release Train (ART) aligns 50–125+ cross-functional engineering, product, and business practitioners around a continuous delivery cadence.\n\nChapter 8 provides a minute-by-minute operational blueprint for the 2-Day Program Increment (PI) Planning event: Day 1 business context keynotes, draft plan team breakouts, and executive problem-solving; Day 2 plan adjustments, Program Board dependency mapping, ROAM risk categorization, and the final Fist-of-Five confidence vote.",
+        "keyTakeaways": [
+          "**ART Synchronization**: Aligns multi-team delivery cycles on a fixed 10-week iteration cadence.",
+          "**PI Planning Face-to-Face**: Resolves cross-team dependencies in real time during Day 1 & Day 2 breakout sessions.",
+          "**ROAM Risk Management**: Categorizes program risks into Resolved, Owned, Accepted, or Mitigated."
+        ]
       },
       {
         "title": "Large-Scale Scrum: More with LeSS",
         "author": "Craig Larman & Bas Vodde (Addison-Wesley)",
         "url": "https://less.works/less/framework/index",
         "keyChapters": "Chapter 3: LeSS Huge Structure & Chapter 6: Feature Team Adoption",
-        "summary": "Explores scaling agile using Scrum-based principles, feature team organization, and minimal scaling overhead."
+        "summary": "Chapter 3 breaks down scaling Scrum to hundreds of developers without adding management bureaucracy or overhead roles. The authors advocate for 'descaling' organizational complexity rather than adding heavy processes.\n\nChapter 6 illustrates how cross-functional Feature Teams own end-to-end customer features across all subsystem codebases, eliminating handoff delays, component-team silos, and multi-tier project management governance.",
+        "keyTakeaways": [
+          "**Descale Over Scale**: Reduce organizational complexity, specialized roles, and handoffs instead of creating new governance layers.",
+          "**Cross-Component Feature Teams**: Teams build features end-to-end across code boundaries rather than working in siloed layers.",
+          "**Single Product Backlog**: Maintains a unified, prioritized backlog across all teams to ensure strategic alignment."
+        ]
       },
       {
         "title": "Principles of Product Development Flow: Second Generation Lean Product Development",
         "author": "Donald G. Reinertsen (Celeritas Publishing)",
         "url": "https://www.amazon.com/Principles-Product-Development-Flow-Generation/dp/1935401009",
         "keyChapters": "Chapter 3: The Economics of Cost of Delay & Chapter 5: Managing Batch Size",
-        "summary": "The mathematical backbone of SAFe WSJF economic framework, fast feedback loops, and queue management."
+        "summary": "Chapter 3 provides the rigorous mathematical derivation of Cost of Delay (CoD) and Weighted Shortest Job First (WSJF), demonstrating why economic prioritization dramatically outperforms subjective executive opinions.\n\nChapter 5 proves why reducing batch size decreases lead time, lowers queue sizes, and accelerates feedback loops. Reinertsen shows that operating software development pipelines above 80% capacity causes exponential queue delays.",
+        "keyTakeaways": [
+          "**Cost of Delay (CoD)**: Quantify the financial impact of delaying feature delivery per unit of time.",
+          "**WSJF Economic Prioritization**: Prioritize jobs by dividing Cost of Delay by Job Duration/Size.",
+          "**Batch Size Reduction**: Smaller release batches reduce cycle time variance and accelerate customer feedback."
+        ]
       }
     ],
     "articles": [
@@ -2331,21 +2361,36 @@ const curriculumData = [
         "author": "Kim Scott (St. Martin's Press)",
         "url": "https://www.radicalcandor.com/the-book/",
         "keyChapters": "Chapter 2: Build Radical Relationships & Chapter 6: Guidance: How to Give, Get, and Encourage Feedback",
-        "summary": "The definitive guide to workplace communication, feedback loops, and building high-trust, high-accountability team cultures."
+        "summary": "In Chapter 2, Kim Scott establishes the 2x2 Radical Candor matrix defined by two fundamental dimensions: Caring Personally and Challenging Directly. She contrasts **Radical Candor** (High Care / High Challenge) with **Ruinous Empathy** (High Care / Low Challenge), **Obnoxious Aggression** (Low Care / High Challenge), and **Manipulative Insincerity** (Low Care / Low Challenge).\n\nIn Chapter 6, she provides actionable operational rules for delivering feedback: praise in public, criticize in private, deliver feedback immediately using the Situation-Behavior-Impact (SBI) format, and always request feedback on your own leadership before giving it.",
+        "keyTakeaways": [
+          "**Care Personally + Challenge Directly**: Radical Candor requires genuine personal care paired with direct, unvarnished feedback.",
+          "**Beware Ruinous Empathy**: Withholding critical feedback out of a desire to be polite hurts team growth and performance.",
+          "**SBI Feedback Model**: State the specific Situation, describe the observable Behavior, and explain the Impact clearly."
+        ]
       },
       {
         "title": "Thanks for the Feedback: The Science and Art of Receiving Feedback Well",
         "author": "Sheila Heen & Douglas Stone (Penguin Books / Harvard Negotiation Project)",
         "url": "https://www.stoneandheen.com/thanks-feedback",
         "keyChapters": "Chapter 4: Separate the Signal from the Noise & Chapter 8: Track the Disconnection",
-        "summary": "Explores the psychological triggers of feedback reception (Truth Triggers, Relationship Triggers, Identity Triggers) and how to extract value from tough input."
+        "summary": "Chapter 4 analyzes the 3 psychological triggers that cause leaders to reject feedback: **Truth Triggers** (believing feedback is inaccurate), **Relationship Triggers** (distrusting the feedback giver), and **Identity Triggers** (feeling one's self-worth is threatened).\n\nChapter 8 provides practical mental models for separating the signal from the noise, helping managers extract valuable growth insights even from poorly delivered or harsh emotional critiques.",
+        "keyTakeaways": [
+          "**Recognize Feedback Triggers**: Identify whether resistance stems from truth perception, relationship dynamics, or identity threats.",
+          "**Separate Evaluation from Coaching**: Distinguish between performance rating assessments and forward-looking developmental coaching.",
+          "**Unpack Wrong-Feeling Feedback**: Ask 'What leads you to see this differently?' rather than immediately defending yourself."
+        ]
       },
       {
         "title": "Crucial Accountability: Tools for Resolving Broken Promises, Violated Expectations, and Bad Behavior",
         "author": "Kerry Patterson, Joseph Grenny et al. (McGraw Hill)",
         "url": "https://www.mheducation.com/highered/product/crucial-accountability-tools-resolving-broken-promises-violated-expectations-bad-behavior-second-edition-patterson-grenny/9780071829311.html",
         "keyChapters": "Chapter 2: Work on What to Say Before You Say It & Chapter 5: Make It Easy",
-        "summary": "Step-by-step framework for addressing repeated performance failures, unfulfilled commitments, and boundary violations constructively."
+        "summary": "Chapter 2 details the CPR framework (**Content**, **Pattern**, **Relationship**) to diagnose accountability failures. For a single incident, address the Content; for repeated issues, address the Pattern; for broken trust, address the Relationship.\n\nChapter 5 explains how to make action easy and desirable by diagnosing motivation vs ability barriers (Six Sources of Influence), converting team commitments into explicit Who-Does-What-By-When (WWWF) execution tracking.",
+        "keyTakeaways": [
+          "**CPR Diagnosis**: Address Content for first-time issues, Pattern for recurring issues, and Relationship for systemic trust breakdown.",
+          "**Motivation vs Ability**: Determine whether a team member lacks motivation or lacks ability/resources before holding them accountable.",
+          "**WWWF Tracking**: Ensure every discussion ends with Who does What by When and how it will be Followed up."
+        ]
       }
     ],
     "articles": [
