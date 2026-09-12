@@ -322,15 +322,9 @@ function renderConceptDetails(concept) {
     }
   }, 100);
 
-  // Tab 2: Books & Chapter Summaries (Full In-Portal Access)
+  // Tab 2: Books & Chapter Summaries
   const booksContainer = document.getElementById('books-container');
-  booksContainer.innerHTML = `
-    <div class="in-portal-banner">
-      <div class="banner-badge">📖 FULL IN-PORTAL CHAPTER SUMMARIES</div>
-      <div class="banner-title">No External Book Purchase or Paywall Required</div>
-      <p class="banner-text">Below are the comprehensive executive chapter breakdowns, key frameworks, and practical takeaways from top published books on this masterclass topic. Everything you need to learn is available right here inside your portal.</p>
-    </div>
-    ${concept.books.map((b, idx) => `
+  booksContainer.innerHTML = concept.books.map((b, idx) => `
       <div class="book-card full-width-card">
         <div class="card-header-flex">
           <div>
@@ -360,8 +354,7 @@ function renderConceptDetails(concept) {
           </div>
         ` : ''}
       </div>
-    `).join('')}
-  `;
+    `).join('');
 
   // Tab 3: Articles & Papers with Direct Links
   const articlesContainer = document.getElementById('articles-container');
