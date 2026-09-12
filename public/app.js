@@ -275,6 +275,10 @@ function renderConceptDetails(concept) {
   document.getElementById('sidebar-concept-tagline').textContent = `"${concept.tagline}"`;
   document.getElementById('sidebar-read-time').textContent = concept.estimatedTime;
   document.getElementById('sidebar-day-index').textContent = concept.currentIndex || 1;
+  const totalEl = document.getElementById('sidebar-total-count');
+  if (totalEl) {
+    totalEl.textContent = concept.totalConceptsCount || allConcepts.length || 8;
+  }
 
   // Header Banner
   const trackBadge = document.getElementById('concept-track-badge');
