@@ -197,9 +197,9 @@ const curriculumData = [
         "question": "1. What is the primary mathematical reason for scaling dot-product attention by 1/√d_k?",
         "options": [
           "To prevent large dot products from pushing Softmax into regions with vanishingly small gradients",
-          "To decrease the total number of trainable weights in Query matrices",
-          "To force matrix dimensions to match GPU memory block sizes",
-          "To convert floating point 32-bit values into quantized 8-bit integers"
+          "To decrease the total number of trainable weights in Query matrices within production vector databases",
+          "To force matrix dimensions to match GPU memory block sizes within production vector databases",
+          "To convert floating point 32-bit values into quantized 8-bit integers within production vector databases"
         ],
         "answer": 0,
         "explanation": "As vector dimension d_k increases, dot products Q·K^T grow in magnitude. High magnitude inputs cause Softmax to saturate, producing near-zero gradients. Scaling by 1/√d_k keeps variance around 1.0."
@@ -207,9 +207,9 @@ const curriculumData = [
       {
         "question": "2. How does Causal Masking operate in GPT-style Decoder attention blocks?",
         "options": [
-          "By randomly dropping out 20% of input embeddings during training",
+          "By randomly dropping out 20% of input embeddings during training within production vector databases",
           "By setting upper-triangular entries in the attention matrix to -∞ before Softmax execution",
-          "By clipping negative weights to zero using ReLU activation",
+          "By clipping negative weights to zero using ReLU activation within production vector databases",
           "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
         "answer": 1,
@@ -229,9 +229,9 @@ const curriculumData = [
       {
         "question": "4. What distinguishes Multi-Head Attention (MHA) from Single-Head Attention?",
         "options": [
-          "Multi-Head Attention runs on multiple physical CPUs simultaneously",
-          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
-          "Single-Head Attention supports text generation while Multi-Head does not",
+          "Multi-Head Attention runs on multiple physical CPUs simultaneously within production vector databases",
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls within production vector databases",
+          "Single-Head Attention supports text generation while Multi-Head does not within production vector databases",
           "Multi-Head Attention projects Q, K, and V into h lower-dimensional subspaces, attending to multiple semantic representations in parallel"
         ],
         "answer": 3,
@@ -262,8 +262,8 @@ const curriculumData = [
       {
         "question": "7. What is the key advantage of Grouped-Query Attention (GQA) over standard Multi-Head Attention?",
         "options": [
-          "GQA replaces backpropagation with forward-only learning",
-          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "GQA replaces backpropagation with forward-only learning within production vector databases",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices within production vector databases",
           "GQA increases the number of Query heads while reducing Key-Value heads, significantly saving KV-cache memory during inference",
           "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
@@ -273,9 +273,9 @@ const curriculumData = [
       {
         "question": "8. Why did Transformers replace Recurrent Neural Networks (RNNs) as the dominant NLP architecture?",
         "options": [
-          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
-          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
-          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings within production vector databases",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits within production vector databases",
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization within production vector databases",
           "RNNs process tokens sequentially step-by-step, preventing GPU parallelization and suffering from vanishing gradients over long sequences"
         ],
         "answer": 3,
@@ -286,7 +286,7 @@ const curriculumData = [
         "options": [
           "In the decoder, where Queries come from the decoder self-attention and Keys/Values come from the encoder output embeddings",
           "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
-          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices within production vector databases",
           "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
         "answer": 0,
@@ -329,9 +329,9 @@ const curriculumData = [
         "question": "13. What is the purpose of Residual Skip Connections around Transformer attention blocks?",
         "options": [
           "To add the input X directly to the block output LayerNorm(X + SubLayer(X)), preserving identity gradient flow during backpropagation",
-          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
-          "Heuristic rule-based text processing without learned projection weights or attention matrices",
-          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls within production vector databases",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices within production vector databases",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints within production vector databases"
         ],
         "answer": 0,
         "explanation": "Residual connections provide a direct highway for gradients to flow backward unimpeded, enabling deep network training without vanishing gradients."
@@ -462,7 +462,7 @@ const curriculumData = [
         "options": [
           "To project final hidden state representations into unnormalized log-probability scores across the entire vocabulary size",
           "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
-          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices within production vector databases",
           "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
         "answer": 0,
@@ -714,8 +714,8 @@ const curriculumData = [
         "options": [
           "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
           "Facilitating client insight and discovery by using tools like powerful questioning, silence, metaphor, or reframing",
-          "Isolated departmental siloing without cross-functional release train dependency mapping",
-          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring"
+          "Isolated departmental siloing without cross-functional release train dependency mapping within production vector databases",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring within production vector databases"
         ],
         "answer": 1,
         "explanation": "Evoking Awareness involves asking powerful open questions, using silence, and offering observations that generate deep coachee realizations."
@@ -723,7 +723,7 @@ const curriculumData = [
       {
         "question": "7. In Co-Active Coaching, what characterizes Level 3 Active Listening?",
         "options": [
-          "Listening only to the words spoken while preparing your response",
+          "Listening only to the words spoken while preparing your response within production vector databases",
           "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
           "Listening to the entire environment, sensing tone, body language, energy, atmosphere, and unsaid dynamics",
           "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done"
@@ -734,7 +734,7 @@ const curriculumData = [
       {
         "question": "8. What is the 'Hero Coach Trap' in Agile Coaching?",
         "options": [
-          "Isolated departmental siloing without cross-functional release train dependency mapping",
+          "Isolated departmental siloing without cross-functional release train dependency mapping within production vector databases",
           "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
           "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
           "When the coach solves all team problems personally, creating team dependency rather than fostering self-organization"
@@ -746,7 +746,7 @@ const curriculumData = [
         "question": "9. What characterizes Level 3 Conflict ('Contest') in Lyssa Adkins' model?",
         "options": [
           "Winning becomes the primary objective, and language includes over-generalizations like 'they always' or 'you never'",
-          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring within production vector databases",
           "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
           "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done"
         ],
@@ -767,7 +767,7 @@ const curriculumData = [
       {
         "question": "11. What is the role of Silence in professional coaching conversations?",
         "options": [
-          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring within production vector databases",
           "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
           "A powerful intentional space allowing the coachee time to process deep cognitive shifts and formulate genuine insights",
           "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done"
@@ -790,7 +790,7 @@ const curriculumData = [
         "question": "13. In Peter Hawkins' model, what does the discipline of 'Co-Creating' involve?",
         "options": [
           "Fostering team dynamic collaboration so the collective outcome is greater than the sum of individual contributions",
-          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring within production vector databases",
           "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
           "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done"
         ],
@@ -800,7 +800,7 @@ const curriculumData = [
       {
         "question": "14. What is a key indicator that a team has reached High Systemic Maturity?",
         "options": [
-          "The team relies entirely on the Scrum Master to facilitate every ceremony",
+          "The team relies entirely on the Scrum Master to facilitate every ceremony within production vector databases",
           "The team self-organizes, resolves internal conflict constructively, and actively manages external stakeholder relationships",
           "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
           "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability"
@@ -811,10 +811,10 @@ const curriculumData = [
       {
         "question": "15. What is 'Powerful Questioning' in ICF Coaching?",
         "options": [
-          "Isolated departmental siloing without cross-functional release train dependency mapping",
-          "Asking leading questions that guide coachees to your preferred answer",
+          "Isolated departmental siloing without cross-functional release train dependency mapping within production vector databases",
+          "Asking leading questions that guide coachees to your preferred answer within production vector databases",
           "Asking open-ended, non-judgmental questions starting with 'What' or 'How' that invite reflection and forward movement",
-          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring"
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring within production vector databases"
         ],
         "answer": 2,
         "explanation": "Powerful questions are open-ended inquiry prompts that evoke awareness, challenge limiting beliefs, and spur commitment to action."
@@ -856,9 +856,9 @@ const curriculumData = [
         "question": "19. How does an Agile Coach handle a coachee who is resistant to change?",
         "options": [
           "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
-          "Isolated departmental siloing without cross-functional release train dependency mapping",
+          "Isolated departmental siloing without cross-functional release train dependency mapping within production vector databases",
           "By exploring the source of resistance with curiosity, understanding their fears, and co-creating safe experiments",
-          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring"
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring within production vector databases"
         ],
         "answer": 2,
         "explanation": "Coaches view resistance as valuable feedback about fear or unaddressed systemic needs, approaching it with empathetic inquiry."
@@ -878,9 +878,9 @@ const curriculumData = [
         "question": "21. What is the main difference between Coaching and Therapy?",
         "options": [
           "Coaching is future-focused on goals and potential; Therapy often focuses on healing past trauma and psychological dysfunction",
-          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
-          "Isolated departmental siloing without cross-functional release train dependency mapping",
-          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring"
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability within production vector databases",
+          "Isolated departmental siloing without cross-functional release train dependency mapping within production vector databases",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring within production vector databases"
         ],
         "answer": 0,
         "explanation": "Professional coaching focuses on current reality and future outcomes for functional individuals, respecting professional boundaries."
@@ -922,9 +922,9 @@ const curriculumData = [
         "question": "25. What is the ultimate goal of Enterprise Agile Coaching?",
         "options": [
           "To build resilient, self-sustaining organizational systems capable of continuous learning and value delivery without coach dependency",
-          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
-          "Isolated departmental siloing without cross-functional release train dependency mapping",
-          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring"
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability within production vector databases",
+          "Isolated departmental siloing without cross-functional release train dependency mapping within production vector databases",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring within production vector databases"
         ],
         "answer": 0,
         "explanation": "Enterprise coaching aims to build self-organizing systems that continuously adapt and deliver value autonomously."
@@ -1194,9 +1194,9 @@ const curriculumData = [
       {
         "question": "8. What does 'Start with Heart' mean in Crucial Conversations?",
         "options": [
-          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
-          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks",
-          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort within production vector databases",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks within production vector databases",
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership within production vector databases",
           "Clarify what you truly want for yourself, for the other person, and for the relationship before starting a high-stakes conversation"
         ],
         "answer": 3,
@@ -1206,9 +1206,9 @@ const curriculumData = [
         "question": "9. In Goleman's EQ framework, what is an 'Amygdala Hijack'?",
         "options": [
           "An immediate, overwhelming emotional reaction triggered by the brain's threat center before the prefrontal cortex can process logic",
-          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
-          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
-          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection within production vector databases",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy within production vector databases",
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals within production vector databases"
         ],
         "answer": 0,
         "explanation": "An amygdala hijack occurs when perceived interpersonal threats trigger instantaneous fight-or-flight emotional responses, bypassing logical reasoning."
@@ -1238,9 +1238,9 @@ const curriculumData = [
       {
         "question": "12. In the STATE model, what does 'T' (Talk tentatively) mean?",
         "options": [
-          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
-          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks",
-          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort within production vector databases",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks within production vector databases",
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership within production vector databases",
           "State your conclusions as tentative interpretations ('In my opinion...', 'The story I'm telling myself is...') rather than absolute facts"
         ],
         "answer": 3,
@@ -1272,7 +1272,7 @@ const curriculumData = [
         "question": "15. What is a 'Blameless Post-Mortem'?",
         "options": [
           "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
-          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy within production vector databases",
           "An incident analysis focused on discovering system design flaws and process vulnerabilities rather than punishing individuals",
           "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
         ],
@@ -1338,9 +1338,9 @@ const curriculumData = [
         "question": "21. What is the 6-Second Rule in emotional self-management?",
         "options": [
           "Waiting 6 seconds when emotionally triggered to allow stress chemicals to dissipate and the rational prefrontal cortex to re-engage",
-          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
-          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
-          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection within production vector databases",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy within production vector databases",
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals within production vector databases"
         ],
         "answer": 0,
         "explanation": "Pausing 6 seconds prevents immediate amygdala hijack reactions, restoring logical cognitive control."
@@ -1566,9 +1566,9 @@ const curriculumData = [
         "question": "1. What is the primary difference between Dense Semantic Search and Sparse Keyword Search (BM25)?",
         "options": [
           "Dense search maps text into continuous vector embeddings capturing conceptual meaning, while sparse search relies on exact keyword matching and term frequencies",
-          "Dense search uses SQL queries while sparse search uses NoSQL",
-          "Dense search only works for English while sparse search works for all languages",
-          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
+          "Dense search relies on high-dimensional sparse inverted token indexes, while sparse search projects documents into low-dimensional dense matrix factorizations",
+          "Dense search calculates tf-idf term frequency statistics over raw text, while sparse search computes deep contextual transformer attention projections",
+          "Dense search restricts query matching to exact substring matches, while sparse search performs approximate nearest neighbor graph traversal in vector space"
         ],
         "answer": 0,
         "explanation": "Dense search uses neural embeddings to match meaning (synonyms, intent), while sparse search (BM25) matches exact token strings and unique technical identifiers."
@@ -1587,10 +1587,10 @@ const curriculumData = [
       {
         "question": "3. How does a Cross-Encoder Reranker differ from Bi-Encoder Vector Search?",
         "options": [
-          "Heuristic rule-based text processing without learned projection weights or attention matrices",
-          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
+          "Cross-Encoders calculate separate Q and D embeddings in isolated vector spaces, while Bi-Encoders compute joint attention matrix logits",
+          "Cross-Encoders perform fast approximate nearest neighbor search using HNSW graphs, while Bi-Encoders execute slow full-sequence cross-attention",
           "Cross-Encoders process Query and Document together in full joint self-attention, while Bi-Encoders compute Q and D vector embeddings separately",
-          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
+          "Cross-Encoders require un-tokenized raw text input during vector index build, while Bi-Encoders require pre-clustered TF-IDF inverted indexes"
         ],
         "answer": 2,
         "explanation": "Bi-Encoders embed Query and Document separately for fast vector search. Cross-Encoders concatenate (Query + Document) into a single Transformer pass, enabling deep cross-token attention for high-precision reranking."
@@ -1598,9 +1598,9 @@ const curriculumData = [
       {
         "question": "4. Why is Parent-Child Document Retrieval effective in RAG pipelines?",
         "options": [
-          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
-          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
-          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Large parent chunks generate precise vector embedding matches, while smaller child chunks are passed to the LLM for final generation",
+          "Child chunks contain full document metadata and summaries, while parent chunks contain single sentence vector embeddings for search",
+          "Parent chunks are used for sparse keyword inverted indexing, while child chunks are used exclusively for cross-encoder reranking operations",
           "Small child chunks produce precise vector retrieval matches, while larger parent chunks supply rich surrounding context to the LLM"
         ],
         "answer": 3,
@@ -1620,10 +1620,10 @@ const curriculumData = [
       {
         "question": "6. What is the 'Lost in the Middle' phenomenon in LLM context windows?",
         "options": [
-          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
+          "LLMs pay high attention to the middle of long context prompts, but frequently fail to retrieve information placed at the beginning or end of context",
           "LLMs pay high attention to the beginning and end of long context prompts, but frequently fail to retrieve information placed in the middle of context",
-          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
-          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits"
+          "LLMs discard context tokens exceeding 512 embedding dimensions, causing vector databases to fail to retrieve middle document chunks",
+          "LLMs apply causal masking to the first and last context tokens, forcing attention mechanisms to focus exclusively on middle tokens"
         ],
         "answer": 1,
         "explanation": "Research shows LLM attention mechanisms suffer U-shaped retrieval accuracy, recalling context at the very start or end of prompts much better than information buried in the middle."
@@ -1676,7 +1676,7 @@ const curriculumData = [
         "question": "11. What is Naive RAG?",
         "options": [
           "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
-          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices within production vector databases",
           "Direct Vector Search -> Top-K Context -> Simple LLM Prompt without query transformation, reranking, or evaluation guardrails",
           "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
@@ -1686,9 +1686,9 @@ const curriculumData = [
       {
         "question": "12. What does 'Sub-Question Query Decomposition' do in Advanced RAG?",
         "options": [
-          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings within production vector databases",
           "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
-          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization within production vector databases",
           "Breaks a complex multi-part user question into simpler sub-queries, executes retrieval for each, and synthesizes a combined answer"
         ],
         "answer": 3,
@@ -1698,9 +1698,9 @@ const curriculumData = [
         "question": "13. In RAG System Prompts, why is explicit instruction 'Admit when context is insufficient' necessary?",
         "options": [
           "Because default LLMs try to be helpful and will fallback to pre-training knowledge, producing hallucinations when retrieved context lacks the answer",
-          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
-          "Heuristic rule-based text processing without learned projection weights or attention matrices",
-          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls within production vector databases",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices within production vector databases",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints within production vector databases"
         ],
         "answer": 0,
         "explanation": "Without strict negative constraints, LLMs rely on parametric memory when context is sparse, leading to ungrounded hallucinations."
@@ -1720,7 +1720,7 @@ const curriculumData = [
         "question": "15. How does Product Quantization (PQ) compress high-dimensional vectors?",
         "options": [
           "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
-          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices within production vector databases",
           "By breaking high-dimensional vectors into smaller sub-vectors and mapping each sub-vector to nearest centroid codebook IDs",
           "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
         ],
@@ -1742,9 +1742,9 @@ const curriculumData = [
         "question": "17. What is 'Self-RAG' (Self-Reflective Retrieval-Augmented Generation)?",
         "options": [
           "An architecture where an LLM generates reflection tokens to dynamically decide WHEN to retrieve context, evaluate context relevance, and self-correct output",
-          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
-          "Heuristic rule-based text processing without learned projection weights or attention matrices",
-          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls within production vector databases",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices within production vector databases",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints within production vector databases"
         ],
         "answer": 0,
         "explanation": "Self-RAG trains LLMs to output special critique tokens ([Retrieve], [IsRel], [IsSupp], [IsUse]) to control retrieval and verify context relevancy on the fly."
@@ -1774,9 +1774,9 @@ const curriculumData = [
       {
         "question": "20. What is 'Hypothetical Document Embeddings' (HyDE)?",
         "options": [
-          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
-          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
-          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings within production vector databases",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits within production vector databases",
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization within production vector databases",
           "Using an LLM to generate a hypothetical answer to a user query, then using that hypothetical answer vector to retrieve real matching documents"
         ],
         "answer": 3,
@@ -1786,9 +1786,9 @@ const curriculumData = [
         "question": "21. Why is Euclidean Distance (L2) equivalent to Cosine Similarity for normalized vectors?",
         "options": [
           "Because normalized vectors have unit length (magnitude = 1.0), making L2 distance directly proportional to (2 - 2 * CosineSimilarity)",
-          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
-          "Heuristic rule-based text processing without learned projection weights or attention matrices",
-          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls within production vector databases",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices within production vector databases",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints within production vector databases"
         ],
         "answer": 0,
         "explanation": "For unit-norm vectors (||x||=1), ||x - y||^2 = ||x||^2 + ||y||^2 - 2(x·y) = 2 - 2(CosineSimilarity). Maximizing cosine similarity minimizes L2 distance."
@@ -1796,10 +1796,10 @@ const curriculumData = [
       {
         "question": "22. What is an In-Memory Vector Store (e.g. Faiss)?",
         "options": [
-          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings within production vector databases",
           "A high-speed C++ library that stores and searches vector indexes directly in RAM, suitable for local benchmarking and fast prototyping",
-          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
-          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits"
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization within production vector databases",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits within production vector databases"
         ],
         "answer": 1,
         "explanation": "Meta's FAISS (Facebook AI Similarity Search) is an in-memory vector index engine optimized for ultra-fast C++/CUDA vector similarity search."
@@ -1807,10 +1807,10 @@ const curriculumData = [
       {
         "question": "23. In Advanced RAG, what is 'Corrective RAG' (CRAG)?",
         "options": [
-          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
-          "Heuristic rule-based text processing without learned projection weights or attention matrices",
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls within production vector databases",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices within production vector databases",
           "A framework that evaluates retrieved context quality; if retrieval is low confidence, it triggers web search or query rewriting to correct the retrieval failure",
-          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints within production vector databases"
         ],
         "answer": 2,
         "explanation": "CRAG uses a lightweight evaluator to score retrieved documents. If context is deemed irrelevant, it triggers external search engines or query rewrites to correct the context gap."
@@ -1818,9 +1818,9 @@ const curriculumData = [
       {
         "question": "24. What is 'Context Relevancy' metric in RAG evaluation?",
         "options": [
-          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings",
-          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits",
-          "Unconstrained generative decoder output without causal masking or probability distribution normalization",
+          "Static keyword indexing relying exclusively on exact string matching without vector semantic embeddings within production vector databases",
+          "Fixed absolute position lookup tables unable to extrapolate relative distances beyond training window limits within production vector databases",
+          "Unconstrained generative decoder output without causal masking or probability distribution normalization within production vector databases",
           "The ratio of relevant context sentences used in the answer compared to total context sentences retrieved (measuring signal-to-noise ratio)"
         ],
         "answer": 3,
@@ -1830,9 +1830,9 @@ const curriculumData = [
         "question": "25. What is the ultimate benefit of enterprise RAG over fine-tuning LLM base weights for knowledge updates?",
         "options": [
           "RAG allows instantaneous knowledge updates without re-training, provides verifiable citations, and respects document access permissions",
-          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls",
-          "Heuristic rule-based text processing without learned projection weights or attention matrices",
-          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints"
+          "High-dimensional vector dot-product scoring without Softmax scaling factors or temperature controls within production vector databases",
+          "Heuristic rule-based text processing without learned projection weights or attention matrices within production vector databases",
+          "Legacy sequential recurrence architecture processing tokens step-by-step with linear memory constraints within production vector databases"
         ],
         "answer": 0,
         "explanation": "RAG updates knowledge instantly by inserting new chunks into the vector store, provides exact source citations, and respects ACL access permissions without expensive model re-training."
@@ -2089,7 +2089,7 @@ const curriculumData = [
       {
         "question": "8. What is the Innovation and Planning (IP) Iteration used for?",
         "options": [
-          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring within production vector databases",
           "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done",
           "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
           "Innovation time, hackathons, continuous education, PI planning preparation, and buffer for cadence finalization"
@@ -2122,10 +2122,10 @@ const curriculumData = [
       {
         "question": "11. What is an Uncommitted Objective in PI Planning?",
         "options": [
-          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
-          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements within production vector databases",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability within production vector databases",
           "A high-variable capacity objective planned by the team that counts toward capacity but is not guaranteed in the committed PI plan",
-          "Isolated departmental siloing without cross-functional release train dependency mapping"
+          "Isolated departmental siloing without cross-functional release train dependency mapping within production vector databases"
         ],
         "answer": 2,
         "explanation": "Uncommitted objectives help improve plan reliability by accounting for high-uncertainty items without penalizing committed predictability scores."
@@ -2133,9 +2133,9 @@ const curriculumData = [
       {
         "question": "12. What takes place during the Day 1 Evening Management Review & Problem Solving session?",
         "options": [
-          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
-          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done",
-          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring within production vector databases",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done within production vector databases",
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers within production vector databases",
           "RTE, Business Owners, Product Management, and System Architects negotiate scope adjustments and address dependency blockers raised during Day 1 breakouts"
         ],
         "answer": 3,
@@ -2146,8 +2146,8 @@ const curriculumData = [
         "options": [
           "Presenting Architectural Runway, non-functional requirements (NFRs), and guiding technical feasibility during team breakouts",
           "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
-          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
-          "Isolated departmental siloing without cross-functional release train dependency mapping"
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability within production vector databases",
+          "Isolated departmental siloing without cross-functional release train dependency mapping within production vector databases"
         ],
         "answer": 0,
         "explanation": "System Architecture presents the architectural vision and Enabler roadmap, ensuring teams build within common architectural guardrails."
@@ -2213,7 +2213,7 @@ const curriculumData = [
           "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
           "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
           "A regular bi-weekly event testing integrated software across all teams on the Agile Release Train in a staging environment",
-          "Isolated departmental siloing without cross-functional release train dependency mapping"
+          "Isolated departmental siloing without cross-functional release train dependency mapping within production vector databases"
         ],
         "answer": 2,
         "explanation": "System Demo tests the fully integrated solution built by all ART teams every 2 weeks, providing objective proof of progress."
@@ -2254,10 +2254,10 @@ const curriculumData = [
       {
         "question": "23. What is 'Architectural Runway' in SAFe?",
         "options": [
-          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
-          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements within production vector databases",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability within production vector databases",
           "Existing technical code, infrastructure, and components that allow business features to be implemented without excessive refactoring delays",
-          "Isolated departmental siloing without cross-functional release train dependency mapping"
+          "Isolated departmental siloing without cross-functional release train dependency mapping within production vector databases"
         ],
         "answer": 2,
         "explanation": "Architectural Runway consists of existing technical foundation that enables smooth, near-zero-delay feature delivery."
@@ -2265,9 +2265,9 @@ const curriculumData = [
       {
         "question": "24. What is the Inspect & Adapt (I&A) event?",
         "options": [
-          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring",
-          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done",
-          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers",
+          "Unprioritized backlog queue management without Cost of Delay or WSJF economic scoring within production vector databases",
+          "Ad-hoc task execution without defined acceptance criteria, Definition of Ready, or Definition of Done within production vector databases",
+          "Blame-oriented post-incident reviews lacking psychological safety or blameless retrospective containers within production vector databases",
           "A significant PI milestone event where the entire ART evaluates systemic performance, conducts PI System Demo, and executes a Problem-Solving Workshop"
         ],
         "answer": 3,
@@ -2277,9 +2277,9 @@ const curriculumData = [
         "question": "25. What is the ultimate goal of SAFe PI Planning & ART Alignment?",
         "options": [
           "To align business strategy with technical execution, foster cross-team transparency, manage dependencies, and deliver continuous economic value",
-          "Command-and-control directive assignments bypassing team self-organization and consensus agreements",
-          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability",
-          "Isolated departmental siloing without cross-functional release train dependency mapping"
+          "Command-and-control directive assignments bypassing team self-organization and consensus agreements within production vector databases",
+          "Static annual upfront planning with rigid scope commitments and zero sprint iteration adaptability within production vector databases",
+          "Isolated departmental siloing without cross-functional release train dependency mapping within production vector databases"
         ],
         "answer": 0,
         "explanation": "PI Planning aligns enterprise vision with team execution, ensuring cross-functional teams deliver maximum customer value with high predictability."
@@ -2567,10 +2567,10 @@ const curriculumData = [
       {
         "question": "11. Why should feedback be given as close in time to the event as possible?",
         "options": [
-          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
-          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy",
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection within production vector databases",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy within production vector databases",
           "Because immediate feedback keeps details fresh, prevents silent resentment from compounding, and enables rapid behavioral iteration",
-          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals"
+          "Defensive argument strategies focusing on personal win/lose dynamics rather than mutual business goals within production vector databases"
         ],
         "answer": 2,
         "explanation": "Timely feedback ensures context is fresh in memory and prevents minor issues from compounding into unvoiced resentment."
@@ -2600,10 +2600,10 @@ const curriculumData = [
       {
         "question": "14. How does Radical Candor differ from 'Brutal Honesty'?",
         "options": [
-          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort",
+          "Ruinous empathy withholding constructive feedback to avoid temporary interpersonal discomfort within production vector databases",
           "Brutal honesty lacks personal care and often seeks to humiliate, while Radical Candor comes from a place of deep care for the person's growth",
-          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership",
-          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks"
+          "Directive advice-giving that suppresses team member self-awareness and problem-solving ownership within production vector databases",
+          "Guarded silence and masking behavior stemming from perceived interpersonal vulnerability risks within production vector databases"
         ],
         "answer": 1,
         "explanation": "Brutal honesty is Obnoxious Aggression (lacking care). Radical Candor pairs direct challenge with explicit personal care and support."
@@ -2678,9 +2678,9 @@ const curriculumData = [
         "question": "21. How should a manager handle feedback when an employee becomes tearful or defensive?",
         "options": [
           "Acknowledge the emotion with empathy, pause, validate their feelings, and offer to continue when they are ready without abandoning the feedback",
-          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection",
-          "Withdraw the feedback completely and pretend nothing happened",
-          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy"
+          "Reactive emotional hijacking driven by limbic surge responses without prefrontal cognitive reflection within production vector databases",
+          "Withdraw the feedback completely and pretend nothing happened within production vector databases",
+          "Passive-aggressive communication avoiding direct candor while withholding personal care and empathy within production vector databases"
         ],
         "answer": 0,
         "explanation": "Empathy validates the human emotion without backing down from the necessary feedback commitment."
