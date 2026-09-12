@@ -173,28 +173,28 @@ Scaling by $1/\\sqrt{d_k}$ normalizes variance to 1.0, preventing gradient vanis
 
     media: [
       {
-        type: "Video Breakdown",
-        title: "Transformers, explained visually: Deep Learning Chapter 5",
-        channel: "3Blue1Brown (Grant Sanderson)",
-        url: "https://www.youtube.com/watch?v=eMlx5fFNoYc",
-        duration: "27 mins",
-        keyInsight: "Geometric visualization showing how attention matrices rotate high-dimensional word vectors toward specific semantic directions."
-      },
-      {
         type: "Full Code Walkthrough",
         title: "Let's build GPT: from scratch, in code, spelled out",
-        channel: "Andrej Karpathy (Former Director of AI at Tesla / OpenAI)",
+        channel: "Andrej Karpathy (Former Director of AI at Tesla / OpenAI Founder)",
         url: "https://www.youtube.com/watch?v=kCc8FmEb1nY",
         duration: "1 hour 56 mins",
         keyInsight: "Building a complete GPT decoder model from scratch in PyTorch, coding multi-head attention, residual connections, and token embeddings step-by-step."
       },
       {
-        type: "Podcast / Masterclass",
-        title: "Generative AI & LLM Architecture Masterclass",
-        channel: "Andrew Ng (DeepLearning.AI / Stanford University)",
-        url: "https://www.youtube.com/watch?v=5sLYAJKmv6I",
-        duration: "42 mins",
-        keyInsight: "Explaining scaling laws, context windows, and how self-attention transforms multi-billion parameter foundation models."
+        type: "Visual Masterclass",
+        title: "Decoder-Only Transformers & ChatGPT Architecture, Clearly Explained!",
+        channel: "StatQuest with Josh Starmer",
+        url: "https://www.youtube.com/watch?v=bQ5BoolX9Ag",
+        duration: "18 mins",
+        keyInsight: "Step-by-step visual breakdown of Query, Key, and Value vector matrices and how decoder blocks predict tokens."
+      },
+      {
+        type: "Geometric Visual Breakdown",
+        title: "Transformers, the tech behind LLMs (Deep Learning Chapter 5)",
+        channel: "3Blue1Brown (Grant Sanderson)",
+        url: "https://www.youtube.com/watch?v=wjZofJX0v4M",
+        duration: "27 mins",
+        keyInsight: "Geometric visualization showing how attention matrices rotate high-dimensional word vectors toward specific semantic directions."
       }
     ],
 
@@ -711,28 +711,28 @@ Systemic Team Coaching combines System Dynamics (Hawkins), International Coachin
 
     media: [
       {
-        type: "Coaching Demonstration",
-        title: "Master Certified Coach (MCC) Live Session & Deconstruct",
-        channel: "International Coaching Federation (ICF Channel)",
-        url: "https://www.youtube.com/watch?v=gT8Y_Qy0LGY",
-        duration: "45 mins",
-        keyInsight: "Demonstrates how 10 seconds of silence after a powerful question allows cognitive processing and deep self-generated insights."
+        type: "Agile Culture Masterclass",
+        title: "Spotify Engineering Culture (Autonomous Squads, Tribes & Guilds)",
+        channel: "Henrik Kniberg (Agile Coach & Author)",
+        url: "https://www.youtube.com/watch?v=4GK1NDTWbkY",
+        duration: "13 mins",
+        keyInsight: "Demonstrates how autonomous squads align internal team ownership with enterprise architecture goals without bureaucratic red tape."
       },
       {
-        type: "Keynote Masterclass",
-        title: "Systemic Team Coaching & The 5 Disciplines Framework",
-        channel: "Prof. Peter Hawkins (Global Team Coaching Institute)",
-        url: "https://www.youtube.com/watch?v=Rvh8R3aKk0E",
-        duration: "38 mins",
-        keyInsight: "Walkthrough of Commissioning, Clarifying, Co-creating, Connecting, and Core Learning in large-scale agile release trains."
+        type: "RSA Animate Keynote",
+        title: "Drive: The Surprising Truth About What Motivates Us",
+        channel: "Daniel H. Pink (Royal Society of Arts)",
+        url: "https://www.youtube.com/watch?v=u6XAPnuFjJc",
+        duration: "11 mins",
+        keyInsight: "Visual breakdown showing how Autonomy, Mastery, and Purpose outperform financial bonuses for knowledge workers."
       },
       {
-        type: "Podcast / Talk",
-        title: "The Art of Asking Powerful Non-Directive Questions",
-        channel: "Michael Bungay Stanier (The Coaching Habit Series)",
-        url: "https://www.youtube.com/watch?v=E-rUeQW21u8",
-        duration: "24 mins",
-        keyInsight: "How to stay curious longer, tame your Advice Monster, and ask 'And what else?' to uncover deeper systemic obstacles."
+        type: "TED Masterclass",
+        title: "How Great Leaders Inspire Action (The Golden Circle)",
+        channel: "Simon Sinek (TED Talks)",
+        url: "https://www.youtube.com/watch?v=qp0HIF3SfI4",
+        duration: "18 mins",
+        keyInsight: "Explains how starting with 'Why' creates deep systemic commitment across engineering teams and executive stakeholders."
       }
     ],
 
@@ -1246,19 +1246,19 @@ Psychological Safety combines Amy Edmondson's Safety Matrix, Timothy Clark's 4 S
       },
       {
         type: "Keynote Talk",
-        title: "Emotional Intelligence & Self-Regulation in High-Pressure Teams",
-        channel: "Daniel Goleman (Author of Emotional Intelligence)",
+        title: "Daniel Goleman Introduces Emotional Intelligence",
+        channel: "Daniel Goleman (Big Think)",
         url: "https://www.youtube.com/watch?v=Y7m9eNoB3NU",
-        duration: "35 mins",
-        keyInsight: "Walkthrough of how the amygdala hijacking mechanism operates during conflict and how 6-second breathing pauses restore executive brain function."
+        duration: "5 mins",
+        keyInsight: "Walkthrough of how the amygdala hijacking mechanism operates during conflict and how self-awareness restores executive brain function."
       },
       {
-        type: "Executive Podcast",
-        title: "Mastering Crucial Conversations & High-Stakes Dialogue",
-        channel: "Joseph Grenny (Crucial Learning Series)",
-        url: "https://www.youtube.com/watch?v=Pu435X_O090",
-        duration: "28 mins",
-        keyInsight: "Detailed breakdown of the STATE framework (Share facts, Tell story, Ask path, Talk tentatively, Encourage testing) during heated leadership debates."
+        type: "Executive Keynote",
+        title: "Radical Candor — The Surprising Secret to Being a Good Boss",
+        channel: "Kim Scott (First Round Review)",
+        url: "https://www.youtube.com/watch?v=4yODalLQ2lM",
+        duration: "22 mins",
+        keyInsight: "Detailed breakdown of combining personal care with direct challenge to build high-performing, authentic engineering teams."
       }
     ],
 
@@ -1687,18 +1687,10 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
     ],
     "media": [
       {
-        "type": "Keynote Masterclass",
-        "title": "Advanced RAG Architecture & Context Engineering",
-        "channel": "Harrison Chase (CEO & Founder of LangChain)",
-        "url": "https://www.youtube.com/watch?v=2TJxpyO3ei4",
-        "duration": "45 mins",
-        "keyInsight": "Explaining query transformations, multi-vector indexing, and self-reflective RAG agents."
-      },
-      {
         "type": "Deep Dive Lecture",
         "title": "Vector Databases & HNSW Search Mechanics Explained",
         "channel": "James Briggs (Pinecone / AI Engineering Channel)",
-        "url": "https://www.youtube.com/watch?v=Qv2edv6zndw",
+        "url": "https://www.youtube.com/watch?v=klTvEwg3oJ4",
         "duration": "32 mins",
         "keyInsight": "Visual walkthrough showing how high-dimensional vectors navigate multi-layer HNSW graphs to achieve sub-millisecond retrieval."
       },
@@ -1706,9 +1698,17 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
         "type": "Podcast / Workshop",
         "title": "Building Production RAG Systems without Hallucinations",
         "channel": "Jerry Liu (CEO of LlamaIndex) & Latent Space Podcast",
-        "url": "https://www.youtube.com/watch?v=TRjq7t26gHM",
+        "url": "https://www.youtube.com/watch?v=tcqEUSNCn8I",
         "duration": "58 mins",
-        "keyInsight": "Practical lessons on data parsing, evaluation benchmarks, and avoiding production RAG failure modes."
+        "keyInsight": "Architectural principles for context window optimization, reranking, parent-child retrieval, and evaluation metrics."
+      },
+      {
+        "type": "Visual Masterclass",
+        "title": "Decoder-Only Transformers & ChatGPT Architecture, Clearly Explained!",
+        "channel": "StatQuest with Josh Starmer",
+        "url": "https://www.youtube.com/watch?v=bQ5BoolX9Ag",
+        "duration": "18 mins",
+        "keyInsight": "Step-by-step visual breakdown of Query, Key, and Value vector matrices and how decoder blocks predict tokens."
       }
     ],
     "caseStudy": {
@@ -2135,28 +2135,28 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
     ],
     "media": [
       {
-        "type": "Keynote Simulation",
-        "title": "SAFe 6.0 PI Planning in Action: Full 2-Day Virtual Simulation",
-        "channel": "Scaled Agile Media & Enterprise Case Studies",
-        "url": "https://www.youtube.com/watch?v=mLtr1T_4f-E",
-        "duration": "48 mins",
-        "keyInsight": "Step-by-step visual demonstration of Day 1 presentations, team breakouts, management review, and Program Board mapping."
+        "type": "Agile Culture Masterclass",
+        "title": "Spotify Engineering Culture (Autonomous Squads, Tribes & Guilds)",
+        "channel": "Henrik Kniberg (Agile Coach & Author)",
+        "url": "https://www.youtube.com/watch?v=4GK1NDTWbkY",
+        "duration": "13 mins",
+        "keyInsight": "Demonstrates how autonomous squads align internal team ownership with enterprise architecture goals without bureaucratic red tape."
       },
       {
-        "type": "Framework Masterclass",
-        "title": "Cost of Delay & WSJF Prioritization Deep Dive",
-        "channel": "Dean Leffingwell (Creator of SAFe)",
-        "url": "https://www.youtube.com/watch?v=5n_h9FzS2wM",
-        "duration": "34 mins",
-        "keyInsight": "Explaining why relative Fibonacci estimation of Cost of Delay transforms enterprise portfolio throughput."
+        "type": "RSA Animate Keynote",
+        "title": "Drive: The Surprising Truth About What Motivates Us",
+        channel: "Daniel H. Pink (Royal Society of Arts)",
+        url: "https://www.youtube.com/watch?v=u6XAPnuFjJc",
+        duration: "11 mins",
+        keyInsight: "Visual breakdown showing how Autonomy, Mastery, and Purpose outperform financial bonuses for knowledge workers."
       },
       {
-        "type": "RTE Facilitation Workshop",
-        "title": "Fist-of-Five Confidence Voting & Risk ROAMing Workshop",
-        "channel": "Agile Release Train Engineer Guild",
-        "url": "https://www.youtube.com/watch?v=Vp76ZqZ9E4w",
-        "duration": "26 mins",
-        "keyInsight": "How Release Train Engineers handle low confidence votes (<3) and facilitate executive risk resolution."
+        "type": "TED Masterclass",
+        "title": "How Great Leaders Inspire Action (The Golden Circle)",
+        channel: "Simon Sinek (TED Talks)",
+        url: "https://www.youtube.com/watch?v=qp0HIF3SfI4",
+        duration: "18 mins",
+        keyInsight: "Explains how starting with 'Why' creates deep systemic commitment across engineering teams and executive stakeholders."
       }
     ],
     "caseStudy": {
@@ -2582,28 +2582,28 @@ USER PROMPT: Create a 12-question anonymous survey (3 questions per stage) evalu
     ],
     "media": [
       {
-        "type": "Keynote Masterclass",
-        "title": "Radical Candor: The Surprising Secret to Being a Good Boss",
-        "channel": "Kim Scott (Authors@Google & TEDx)",
-        "url": "https://www.youtube.com/watch?v=f-Tcr0T9VYc",
-        "duration": "41 mins",
-        "keyInsight": "Explaining the 4 quadrants (Radical Candor, Ruinous Empathy, Obnoxious Aggression, Manipulative Insincerity) with real Silicon Valley stories."
-      },
-      {
-        "type": "Harvard Law Workshop",
-        "title": "The Art and Science of Receiving Feedback Well",
-        "channel": "Prof. Sheila Heen (Harvard Law School / Triad Consulting)",
-        "url": "https://www.youtube.com/watch?v=FQNbaKkYk_Q",
-        "duration": "46 mins",
-        "keyInsight": "How to master Truth Triggers and Identity Triggers to extract actionable insights from poorly delivered criticism."
-      },
-      {
-        "type": "Executive Podcast",
-        "title": "Mastering the Situation-Behavior-Impact (SBI) Feedback Framework",
-        "channel": "Center for Creative Leadership Podcast Series",
-        "url": "https://www.youtube.com/watch?v=t5A-w_Z3y70",
+        "type": "Executive Keynote",
+        "title": "Radical Candor — The Surprising Secret to Being a Good Boss",
+        "channel": "Kim Scott (First Round Review)",
+        "url": "https://www.youtube.com/watch?v=4yODalLQ2lM",
         "duration": "22 mins",
-        "keyInsight": "Practical roleplay demonstration of converting vague complaints into precise SBI feedback."
+        "keyInsight": "Detailed breakdown of combining personal care with direct challenge to build high-performing, authentic engineering teams."
+      },
+      {
+        "type": "TED Talk",
+        "title": "Building a Psychologically Safe Workplace",
+        "channel": "TEDxHGSE (Dr. Amy Edmondson)",
+        "url": "https://www.youtube.com/watch?v=LhoLuui9gX8",
+        "duration": "11 mins 30 secs",
+        "keyInsight": "Explains how framed expectations, acknowledging fallibility, and modeled curiosity create environments where people feel safe to take interpersonal risks."
+      },
+      {
+        "type": "Keynote Talk",
+        "title": "Daniel Goleman Introduces Emotional Intelligence",
+        "channel": "Daniel Goleman (Big Think)",
+        "url": "https://www.youtube.com/watch?v=Y7m9eNoB3NU",
+        "duration": "5 mins",
+        "keyInsight": "Walkthrough of how the amygdala hijacking mechanism operates during conflict and how self-awareness restores executive brain function."
       }
     ],
     "caseStudy": {
