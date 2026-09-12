@@ -2730,9 +2730,419 @@ const curriculumData = [
         "explanation": "Radical Candor builds high-trust, high-candor environments where people grow fast, solve problems transparently, and achieve extraordinary results."
       }
     ]
+  },
+  {
+    "id": "soft-03",
+    "track": "Leadership & Soft Skills",
+    "title": "Executive Presence, Gravitas & Strategic Storytelling for Leaders",
+    "tagline": "Mastering the 3 Pillars of Executive Influence: Signal Gravitas under pressure, project authentic communication, and command organizational buy-in using narrative frameworks.",
+    "estimatedTime": "60 mins deep study",
+    "overview": "# 💡 SIMPLE LAYMAN'S EXPLANATION (Explain Like I'm 5)\n\nImagine you are at an airport terminal where 200 people are waiting for a delayed flight:\n- **Low Executive Presence**: Someone stands up, waves their hands frantically, and shouts instructions. Everyone gets nervous, confused, and ignores them.\n- **High Executive Presence**: Someone speaks with a calm, deliberate tone, makes clear eye contact, and says, *\"Here is the exact situation, here are the 3 steps we are taking, and here is when you will hear from us next.\"* Instantly, the room becomes calm and trusts them completely.\n\nExecutive Presence is not about being loud or wearing an expensive suit. It is the combination of **Gravitas** (grace under pressure), **Communication** (clarity and warmth), and **Appearance** (projecting confidence and authenticity).\n\n---\n\n# 🎨 VISUAL ARCHITECTURE DIAGRAM: THE 3 PILLARS OF EXECUTIVE PRESENCE\n\n```mermaid\ngraph TD\n    EP['EXECUTIVE PRESENCE CORE ENGINE'] --> G['Pillar 1: Gravitas - Calm Confidence Under Fire']\n    EP --> C['Pillar 2: Communication - Clear Concise & Compelling']\n    EP --> A['Pillar 3: Appearance & Demeanor - Authentic Authority']\n    G --> G1['Emotional Self-Regulation & Resilience']\n    G --> G2['Decisiveness in Ambiguity']\n    C --> C1['Strategic Storytelling & Data Synthesis']\n    C --> C2['Active Listening & Empathetic Presence']\n    A --> A1['Body Language & Posture Signature']\n    A --> A2['Executive Poise & Non-Verbal Alignment']\n```\n\n---\n\n# 🌍 WHERE & HOW THIS CONCEPT IS USED IN THE REAL WORLD\n\n1. **Boardroom & Investor Presentations (Crisis Management)**:\n   - *Where Used*: Leading earnings calls, restructuring, or post-incident reviews.\n   - *How It Works*: Leaders state facts transparently without defensiveness, outlining decisive action steps that reassure stakeholders.\n2. **Engineering & Technical Leadership (Influencing Without Authority)**:\n   - *Where Used*: Architects proposing expensive architectural migration to C-suite executives.\n   - *How It Works*: Translating complex technical debt into strategic business outcomes (risk reduction, time-to-market speedup).\n3. **Town Halls & All-Hands Alignment (Inspiring Large Organizations)**:\n   - *Where Used*: Driving cultural shifts or strategic pivots.\n   - *How It Works*: Combining hard numbers with human customer stories to align multi-disciplinary teams around a shared vision.\n\n---\n\n# 🔬 DEEP TECHNICAL ARCHITECTURE & DERIVATION\n\nExecutive Presence (EP) is an empirically studied behavioral synthesis framework defined by Sylvia Ann Hewlett (Center for Talent Innovation). Research shows EP accounts for up to 26% of what gets senior leaders promoted to C-suite roles.\n\n### The Gravitas Equation:\n$$\\text{Executive Gravitas} = \\frac{\\text{Emotional Regulation} \\times \\text{Decisive Clarity}}{\\text{Reactive Noise} + \\text{Defensiveness}}$$",
+    "corePrinciples": [
+      {
+        "title": "1. Emotional Regulation (Grace Under Fire)",
+        "meaning": "Maintaining psychological composure and analytical clarity during high-stakes crises or critical challenges.",
+        "whyItMatters": "Prevents organizational panic and establishes psychological safety across direct reports and executive peers.",
+        "implementation": "Practice the 3-second tactical breath before responding to aggressive questions in steering committee meetings."
+      },
+      {
+        "title": "2. The Pyramidal Communication Structure (BLUF)",
+        "meaning": "Leading presentations with the Bottom Line Up Front (BLUF), followed by 3 supporting strategic pillars.",
+        "whyItMatters": "Respects senior leaders' cognitive bandwidth and prevents rambling technical explanations.",
+        "implementation": "Structure key executive updates as: Result/Recommendation -> 3 Strategic Reasons -> Supporting Evidence."
+      },
+      {
+        "title": "3. Decisiveness in High Ambiguity",
+        "meaning": "Making timely 70/30 decisions based on incomplete information rather than defaulting to analysis paralysis.",
+        "whyItMatters": "Keeps engineering and product delivery trains moving forward without stalling on edge cases.",
+        "implementation": "Establish two-way door decision criteria vs one-way door irreversible decisions (Jeff Bezos framework)."
+      },
+      {
+        "title": "4. Empathetic Active Listening",
+        "meaning": "Listening to understand underlying strategic intent rather than listening to formulate an immediate counter-argument.",
+        "whyItMatters": "Builds deep coalition trust across cross-functional engineering, product, and business units.",
+        "implementation": "Paraphrase stakeholder concerns: 'What I am hearing is that security compliance is your primary bottleneck, correct?'"
+      },
+      {
+        "title": "5. Strategic Narrative Synthesis",
+        "meaning": "Combining quantitative data with human customer stories to make strategic proposals memorable.",
+        "whyItMatters": "Data informs the mind, but strategic storytelling moves hearts and triggers organizational action.",
+        "implementation": "Frame technical RFC proposals using the Context-Conflict-Resolution storytelling arc."
+      }
+    ],
+    "books": [
+      {
+        "title": "Executive Presence: The Missing Link Between Merit and Success",
+        "author": "Sylvia Ann Hewlett (HarperBusiness)",
+        "url": "https://www.harpercollins.com/products/executive-presence-sylvia-ann-hewlett",
+        "keyChapters": "Chapter 1: Gravitas & Chapter 4: Communication That Commands the Room",
+        "summary": "Sylvia Ann Hewlett reveals that technical competence alone is insufficient for senior leadership promotion. In Chapter 1, she establishes Gravitas as the foundational pillar of Executive Presence—demonstrated through grace under pressure, projection of confidence, and decisiveness. In Chapter 4, she analyzes executive communication traits, emphasizing brevity, vocal tone, and elimination of filler words.",
+        "keyTakeaways": [
+          "**Gravitas Primacy**: 67% of senior executives rate Gravitas as the single most critical component of Executive Presence.",
+          "**Concise Command**: Avoid qualifier phrases like 'I feel like' or 'Just my opinion'; state recommendations with quiet confidence.",
+          "**Vocal Posture**: Use downward inflection at the end of sentences to convey certainty rather than upward questioning pitch."
+        ]
+      },
+      {
+        "title": "Made to Stick: Why Some Ideas Survive and Others Die",
+        "author": "Chip Heath & Dan Heath (Random House)",
+        "url": "https://heathbrothers.com/books/made-to-stick/",
+        "keyChapters": "Chapter 1: Simple & Chapter 6: Stories",
+        "summary": "Chip and Dan Heath present the SUCCES framework (Simple, Unexpected, Concrete, Credible, Emotional, Stories) to make ideas stick in audience minds. Chapter 1 explains how leaders must find the core of an idea without oversimplifying it. Chapter 6 proves that stories act as mental flight simulators, enabling teams to visualize execution and remember strategic priorities.",
+        "keyTakeaways": [
+          "**Find the Core**: Strip ideas down to their absolute essence; a leader who says 10 things says nothing.",
+          "**Concrete Imagery**: Replace abstract jargon with tangible, visual mental models that teams can picture.",
+          "**Narrative Flight Simulators**: Stories prepare people to act by showing cause-and-effect in realistic scenarios."
+        ]
+      },
+      {
+        "title": "Resonate: Present Visual Stories That Transform Audiences",
+        "author": "Nancy Duarte (John Wiley & Sons)",
+        "url": "https://www.duarte.com/resonate/",
+        "keyChapters": "Chapter 3: Structure the Hero's Journey & Chapter 5: Create a Star Moment",
+        "summary": "Nancy Duarte illustrates how top leaders structure strategic presentations by contrasting 'What Is' (current state problem) with 'What Could Be' (future transformed vision). Chapter 5 details how to engineer a S.T.A.R. moment (Something They'll Always Remember) to anchor strategic key takeaways.",
+        "keyTakeaways": [
+          "**The Contrast Cadence**: Alternate between the current pain point and the future solution state to create emotional tension.",
+          "**Audience as Hero**: Position the team or customer as the hero, and the leader/framework as the guiding mentor.",
+          "**S.T.A.R. Moment**: Create one memorable visual statistic or demonstration that anchors the core message."
+        ]
+      }
+    ],
+    "articles": [
+      {
+        "title": "High-Performing Teams Need Executive Presence: Here's How to Cultivate It",
+        "source": "Harvard Business Review",
+        "url": "https://hbr.org/2017/08/high-performing-teams-need-psychological-safety-heres-how-to-create-it",
+        "takeaway": "Actionable guide for leaders to project authenticity, poise, and empathetic clarity under high pressure."
+      },
+      {
+        "title": "The Art of Strategic Storytelling for Technical Leaders",
+        "source": "MIT Sloan Management Review",
+        "url": "https://sloanreview.mit.edu/article/the-art-of-strategic-storytelling/",
+        "takeaway": "How CTOs and VP Engineers translate complex tech debt into strategic ROI narratives for executive boards."
+      },
+      {
+        "title": "How Great Leaders Command the Room in Remote & Hybrid Meetings",
+        "source": "McKinsey & Company Insights",
+        "url": "https://www.mckinsey.com/featured-insights/leadership",
+        "takeaway": "Best practices for maintaining non-verbal gravitas, eye contact, and vocal authority in virtual meetings."
+      }
+    ],
+    "media": [
+      {
+        "title": "How Great Leaders Inspire Action (The Golden Circle)",
+        "channel": "TED Talks / Simon Sinek",
+        "duration": "18 mins",
+        "url": "https://www.youtube.com/watch?v=qp0HIF3SfI4",
+        "keyInsight": "Leaders communicate from the inside out: starting with WHY (purpose), then HOW (process), and finally WHAT (product)."
+      },
+      {
+        "title": "Building a Psychologically Safe Workplace",
+        "channel": "TEDx Talks / Amy Edmondson",
+        "duration": "12 mins",
+        "url": "https://www.youtube.com/watch?v=LhoLuui9gX8",
+        "keyInsight": "Executive presence pairs quiet confidence with humble vulnerability, encouraging teams to voice risks early."
+      },
+      {
+        "title": "Daniel Goleman Introduces Emotional Intelligence",
+        "channel": "Big Think / Daniel Goleman",
+        "duration": "5 mins",
+        "url": "https://www.youtube.com/watch?v=Y7m9eNoB3NU",
+        "keyInsight": "Self-awareness and emotional self-regulation form the prerequisite bedrock of authentic executive gravitas."
+      }
+    ],
+    "caseStudy": {
+      "title": "Enterprise Cloud Migration Governance & Board Realignment",
+      "context": "A global financial service enterprise's $40M cloud modernization initiative was stalled due to conflicting priorities between Risk/Compliance officers and Product Engineering units.",
+      "solution": "The VP of Engineering reframed the migration using Pyramidal Executive Communication (BLUF): highlighting automated compliance auditing (Risk win) and 4x faster release velocity (Product win).",
+      "impact": "Unanimous board approval achieved in a single steering meeting, accelerating cloud transition by 9 months and saving $6.2M in legacy infrastructure fees."
+    },
+    "actionPlan": [
+      {
+        "title": "Audit Communication BLUF (Bottom Line Up Front)",
+        "instructions": "Review your last 3 executive emails or presentation slides. Restructure them so the primary recommendation appears in sentence 1.",
+        "aiPrompt": "Acts as an Executive Communication Coach. Review the following project update draft and rewrite it using the BLUF (Bottom Line Up Front) framework with 3 strategic bullet points for C-suite review.",
+        "aiToolkit": [
+          "ChatGPT Plus",
+          "Claude 3.5 Sonnet",
+          "Grammarly Business"
+        ]
+      },
+      {
+        "title": "Practice the Tactical Pause Under Pressure",
+        "instructions": "In your next high-stakes meeting, pause for 2 full seconds before answering challenging questions to project calm gravitas.",
+        "aiPrompt": "Give me a simulation of a tough steering committee Q&A where an executive challenges our architectural budget. Provide 3 poise-building response templates.",
+        "aiToolkit": [
+          "Otter.ai",
+          "Gong.io",
+          "Executive Coaching Prompts"
+        ]
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Which component is identified by executive research as the single largest contributor (67%) to Executive Presence?",
+        "options": [
+          "Personal wardrobe and expensive attire selection",
+          "Gravitas—demonstrated through composure and decisiveness under pressure",
+          "Using complex technical vocabulary during board presentations",
+          "Speaking continuously without pausing to prevent interruption"
+        ],
+        "answer": 1,
+        "explanation": "Gravitas (grace under fire, composure, and decisive clarity) accounts for 67% of what senior leaders evaluate when assessing Executive Presence."
+      },
+      {
+        "question": "What does the BLUF (Bottom Line Up Front) executive communication framework mandate?",
+        "options": [
+          "Beginning presentations with a 15-minute background history of the project",
+          "Stating the core result or recommendation immediately in sentence 1",
+          "Sending raw technical logs to stakeholders without summary conclusions",
+          "Ending meetings without clarifying the final decision"
+        ],
+        "answer": 1,
+        "explanation": "BLUF requires stating the bottom-line recommendation or result right at the beginning, respecting senior leaders' cognitive bandwidth."
+      },
+      {
+        "question": "How should a leader handle a high-stakes crisis presentation when technical data is incomplete?",
+        "options": [
+          "Postpone all communications until 100% data certainty is achieved",
+          "Demonstrate decisive 70/30 clarity by communicating known facts, action steps, and next update timing transparently",
+          "Blame downstream vendor teams for the missing data",
+          "Speculate on unverified numbers to reassure stakeholders"
+        ],
+        "answer": 1,
+        "explanation": "High executive presence involves transparent, calm communication of verified facts and clear next steps even amid partial information."
+      },
+      {
+        "question": "In Chip and Dan Heath's 'Made to Stick' framework, why are strategic stories effective in leadership communications?",
+        "options": [
+          "They make presentations longer and more detailed",
+          "They act as mental flight simulators, enabling teams to visualize execution and remember key priorities",
+          "They eliminate the need for any quantitative metric tracking",
+          "They prevent stakeholders from asking clarifying questions"
+        ],
+        "answer": 1,
+        "explanation": "Stories function as mental flight simulators by grounding abstract strategic concepts in concrete, actionable human experiences."
+      },
+      {
+        "question": "When presenting technical proposals to C-suite executives, how should engineering leaders frame technical debt?",
+        "options": [
+          "Focus exclusively on low-level code refactoring syntax details",
+          "Connect technical debt reduction directly to business ROI, risk mitigation, and time-to-market speed",
+          "Demand budget approval without explaining operational impact",
+          "Hide technical debt issues until system failure occurs"
+        ],
+        "answer": 1,
+        "explanation": "Translating technical debt into strategic business outcomes (risk, speed, ROI) aligns engineering priorities with executive goals."
+      }
+    ]
+  },
+  {
+    "id": "soft-04",
+    "track": "Leadership & Soft Skills",
+    "title": "Situational Leadership II, Coaching Styles & Delegative Empowerment",
+    "tagline": "Adapting your leadership style (Directing, Coaching, Supporting, Delegating) to match team member competence and commitment levels across key tasks.",
+    "estimatedTime": "60 mins deep study",
+    "overview": "# 💡 SIMPLE LAYMAN'S EXPLANATION (Explain Like I'm 5)\n\nImagine you are teaching someone how to cook:\n- **Day 1 (Enthusiastic Beginner)**: They don't know how to chop onions safely. You sit right next to them and give step-by-step instructions (*Directing*).\n- **Week 2 (Disillusioned Learner)**: The food burned, and they feel frustrated. You encourage them, explain why it happened, and guide them to try again (*Coaching*).\n- **Month 2 (Capable Performer)**: They know the recipes but lack confidence to host a dinner party alone. You offer encouragement and stay available (*Supporting*).\n- **Year 1 (Self-Reliant Master)**: They design their own 5-course menu. You hand them the kitchen keys and let them shine (*Delegating*).\n\nIf you micromanage a Self-Reliant Master, they quit! If you delegate blindly to an Enthusiastic Beginner, they crash! Great leaders match their style to the learner's exact stage.\n\n---\n\n# 🎨 VISUAL ARCHITECTURE DIAGRAM: SITUATIONAL LEADERSHIP MATRIX\n\n```mermaid\ngraph TD\n    SL['SITUATIONAL LEADERSHIP II MATRIX'] --> S1['Style 1: Directing (High Directive / Low Supportive)']\n    SL --> S2['Style 2: Coaching (High Directive / High Supportive)']\n    SL --> S3['Style 3: Supporting (Low Directive / High Supportive)']\n    SL --> S4['Style 4: Delegating (Low Directive / Low Supportive)']\n    S1 --> D1['Development Level 1: Low Competence / High Commitment']\n    S2 --> D2['Development Level 2: Low-to-Moderate Competence / Low Commitment']\n    S3 --> D3['Development Level 3: High Competence / Variable Commitment']\n    S4 --> D4['Development Level 4: High Competence / High Commitment']\n```\n\n---\n\n# 🌍 WHERE & HOW THIS CONCEPT IS USED IN THE REAL WORLD\n\n1. **Engineering Team Onboarding & Career Growth**:\n   - *Where Used*: Managing junior developers vs senior staff engineers.\n   - *How It Works*: Juniors receive clear task boundaries (Directing); senior staff receive high-level strategic objectives (Delegating).\n2. **Agile Transformations & Scrum Team Coaching**:\n   - *Where Used*: Guiding newly formed Agile Release Trains.\n   - *How It Works*: Scrum Masters direct ceremonies in Sprint 1, then transition to supporting and delegating by Sprint 6.\n3. **Cross-Functional Project Delegation (Turn the Ship Around)**:\n   - *Where Used*: Empowering team leads to take ownership of production deployments.\n   - *How It Works*: Moving from 'Tell me what to do' to 'I intend to deploy build #402 because tests passed'.\n\n---\n\n# 🔬 DEEP TECHNICAL ARCHITECTURE & DERIVATION\n\nSituational Leadership II (SLII), pioneered by Ken Blanchard, posits that there is no single 'best' leadership style. Leadership effectiveness is a function of matching leadership behavior (Directive vs Supportive) to follower readiness ($D1 \\rightarrow D4$).\n\n### Leadership Match Equation:\n$$\\text{Effectiveness} = f(\\text{Directive Behavior}, \\text{Supportive Behavior}) \\quad \\text{where } S_{\\text{style}} \\equiv D_{\\text{development level}}$$",
+    "corePrinciples": [
+      {
+        "title": "1. Diagnosis of Development Level (D1 - D4)",
+        "meaning": "Evaluating a team member's competence and commitment specifically for a given task, not as a blanket personality rating.",
+        "whyItMatters": "Prevents misdiagnosing a senior expert in Coding as competent in Client Presentations.",
+        "implementation": "Assess competence (skills/experience) and commitment (confidence/motivation) per individual goal."
+      },
+      {
+        "title": "2. Flexibility Across 4 Leadership Styles (S1 - S4)",
+        "meaning": "Seamlessly shifting between Directing (S1), Coaching (S2), Supporting (S3), and Delegating (S4) as task complexity evolves.",
+        "whyItMatters": "Eliminates one-size-fits-all leadership traps (e.g., perpetual micromanagement or total abandonment).",
+        "implementation": "Match S1 to D1, S2 to D2, S3 to D3, and S4 to D4 dynamically."
+      },
+      {
+        "title": "3. Intent-Based Leadership Framework",
+        "meaning": "Encouraging team members to phrase requests as 'I intend to [action] because [reason]' rather than asking 'What should I do?'.",
+        "whyItMatters": "Shifts organizational culture from passive compliance to proactive psychological ownership (L. David Marquet framework).",
+        "implementation": "Require team members to present problem analysis and proposed solution before seeking sign-off."
+      },
+      {
+        "title": "4. Overcoming Micromanagement & Abandonment",
+        "meaning": "Avoiding over-direction for high performers (micromanagement) and under-direction for novices (abandonment).",
+        "whyItMatters": "Micromanagement destroys senior engagement; abandonment triggers beginner anxiety and delivery failure.",
+        "implementation": "Calibrate check-in frequency based on development stage: daily for S1/S2, bi-weekly for S3/S4."
+      },
+      {
+        "title": "5. Partnering for Performance",
+        "meaning": "Openly discussing the SLII framework with team members so they understand why your leadership approach changes by task.",
+        "whyItMatters": "Builds transparency and psychological safety, making coaching conversations collaborative rather than punitive.",
+        "implementation": "Share SLII matrix during 1-on-1 career conversations to align expectations."
+      }
+    ],
+    "books": [
+      {
+        "title": "Leadership and the One Minute Manager: Increasing Effectiveness Through Situational Leadership",
+        "author": "Ken Blanchard, Patricia Zigarmi, Drea Zigarmi (William Morrow)",
+        "url": "https://www.kenblanchard.com/Products-Services/Situational-Leadership-II",
+        "keyChapters": "Chapter 2: The 4 Leadership Styles & Chapter 4: Diagnosing Development Levels",
+        "summary": "Ken Blanchard outlines the foundational Situational Leadership II model. He establishes that great managers adapt their leadership style based on two variables: Directive Behavior (one-way guidance) and Supportive Behavior (two-way dialogue and encouragement). The book demonstrates how matching S1-S4 styles to D1-D4 follower stages accelerates growth and team performance.",
+        "keyTakeaways": [
+          "**No One Best Style**: Adapt leadership style to the task-specific maturity of each team member.",
+          "**Competence vs Commitment**: D1 beginners have high commitment but low competence; D2 learners experience a commitment dip as difficulty increases.",
+          "**Leadership Alignment**: Misalignment causes friction; over-directing creates resentment, while under-directing creates anxiety."
+        ]
+      },
+      {
+        "title": "Turn the Ship Around!: A True Story of Turning Followers into Leaders",
+        "author": "L. David Marquet (Portfolio / Penguin)",
+        "url": "https://ldavidmarquet.com/turn-the-ship-around-book/",
+        "keyChapters": "Chapter 8: Change the Goal from Passive Obedience to Active Ownership & Chapter 15: I Intend To",
+        "summary": "Captain David Marquet details how he transformed the US Navy submarine USS Santa Fe from the worst-performing ship into the top-rated fleet using Leader-Leader empowerment. Instead of giving orders, he required officers to state 'I intend to...'. This mechanism pushed decision-making authority down to where information actually existed.",
+        "keyTakeaways": [
+          "**Leader-Leader Model**: Replace the leader-follower top-down hierarchy with distributed psychological ownership.",
+          "**I Intend To Mechanism**: Forces team members to evaluate technical facts, risks, and reasoning before taking action.",
+          "**Control & Competence**: Control can only be safely delegated when technical competence and clarity of intent are established."
+        ]
+      },
+      {
+        "title": "Multipliers: How the Best Leaders Make Everyone Smarter",
+        "author": "Liz Wiseman (HarperBusiness)",
+        "url": "https://thewisemangroup.com/books/multipliers/",
+        "keyChapters": "Chapter 3: The Liberator & Chapter 6: The Investor",
+        "summary": "Liz Wiseman distinguishes between Diminishers (leaders who drain intelligence and micromanage) and Multipliers (leaders who amplify team talent). In Chapter 6, she explores 'The Investor' persona, who gives team members 100% ownership of outcomes while holding them accountable for results.",
+        "keyTakeaways": [
+          "**Invest, Don't Micromanage**: Give team members complete ownership of key deliverables rather than taking back control at the first sign of friction.",
+          "**Space for Thought**: Create a intense environment that demands people's best work while providing safety to fail forward.",
+          "**100% Ownership**: When leaders own 51% of a problem, the team drops their ownership to 0%."
+        ]
+      }
+    ],
+    "articles": [
+      {
+        "title": "Situational Leadership: Adapting Your Style to the Worker",
+        "source": "MindTools Management Review",
+        "url": "https://www.mindtools.com/a42b1zp/situational-leadership-grid",
+        "takeaway": "Comprehensive guide to identifying D1-D4 readiness and applying S1-S4 directive/supportive behaviors."
+      },
+      {
+        "title": "How Great Leaders Shift from Telling to Coaching",
+        "source": "Harvard Business Review",
+        "url": "https://hbr.org/2019/11/the-leader-as-coach",
+        "takeaway": "Why the modern leader's primary role is asking powerful open questions rather than issuing command-and-control orders."
+      },
+      {
+        "title": "Empowerment Without Chaos: Operationalizing 'I Intend To'",
+        "source": "McKinsey Quarterly",
+        "url": "https://www.mckinsey.com/featured-insights/leadership",
+        "takeaway": "Frameworks for delegating high-stakes production authority while preserving enterprise governance and safety."
+      }
+    ],
+    "media": [
+      {
+        "title": "Great Leadership Starts with 'I Intend To'",
+        "channel": "TEDx Talks / L. David Marquet",
+        "duration": "14 mins",
+        "url": "https://www.youtube.com/watch?v=psAXLqy0uuU",
+        "keyInsight": "Pushing decision-making authority to where the information resides creates resilient, self-organizing teams."
+      },
+      {
+        "title": "Building a Psychologically Safe Workplace",
+        "channel": "TEDx Talks / Amy Edmondson",
+        "duration": "12 mins",
+        "url": "https://www.youtube.com/watch?v=LhoLuui9gX8",
+        "keyInsight": "Supportive leadership builds safe psychological spaces where team members openly share mistakes and learn faster."
+      },
+      {
+        "title": "How Great Leaders Inspire Action (The Golden Circle)",
+        "channel": "TED Talks / Simon Sinek",
+        "duration": "18 mins",
+        "url": "https://www.youtube.com/watch?v=qp0HIF3SfI4",
+        "keyInsight": "Connecting delegation to strategic purpose ('Why') enables teams to execute with autonomy and high alignment."
+      }
+    ],
+    "caseStudy": {
+      "title": "Scaling Agile Engineering Leadership Across 14 Squads",
+      "context": "An enterprise SaaS firm grew from 3 to 14 engineering squads. Tech leads were micromanaging senior devs while abandoning junior hires, causing 30% voluntary turnover.",
+      "solution": "Implemented Situational Leadership II (SLII) training and mandatory 'I Intend To' delegation protocols across all tech leads.",
+      "impact": "Turnover dropped from 30% to 4%, feature velocity increased by 45%, and junior developers reached self-reliant D4 status 2x faster."
+    },
+    "actionPlan": [
+      {
+        "title": "Classify Team Members on the D1-D4 Matrix",
+        "instructions": "List your direct reports and assign their readiness level (D1 to D4) for their top 2 strategic goals.",
+        "aiPrompt": "Acts as an Agile Leadership Coach. Help me map out a Situational Leadership II plan for a senior developer transitioning into a new Lead Architect role.",
+        "aiToolkit": [
+          "ChatGPT Plus",
+          "Claude 3.5 Sonnet",
+          "Blanchard SLII Coaching Prompts"
+        ]
+      },
+      {
+        "title": "Implement the 'I Intend To' Protocol",
+        "instructions": "In your next 1-on-1, instruct team members to bring proposals formatted as 'I intend to... because...' rather than asking for step-by-step instructions.",
+        "aiPrompt": "Draft a team agreement memo introducing the 'I Intend To' empowerment framework for our software engineering team.",
+        "aiToolkit": [
+          "Notion AI",
+          "Slack Canvas",
+          "Marquet Leadership Toolkit"
+        ]
+      }
+    ],
+    "quiz": [
+      {
+        "question": "In the Situational Leadership II (SLII) framework, how is a follower's Development Level evaluated?",
+        "options": [
+          "As a permanent overall rating of personality and intelligence",
+          "Specifically for a given task, based on their competence and commitment",
+          "By their job title and years of experience at the company",
+          "By how often they attend team social events"
+        ],
+        "answer": 1,
+        "explanation": "SLII evaluates development level (D1-D4) specifically per task, recognizing that a person can be D4 (expert) in one skill and D1 (beginner) in another."
+      },
+      {
+        "question": "What is the recommended leadership style (S1) for an Enthusiastic Beginner (D1) who has low task competence but high commitment?",
+        "options": [
+          "Delegating—handing over full control without check-ins",
+          "Directing—providing clear, step-by-step guidance and close supervision",
+          "Supporting—offering emotional praise while giving zero technical direction",
+          "Ignoring the beginner until they solve the problem independently"
+        ],
+        "answer": 1,
+        "explanation": "D1 beginners require a Directing style (high directive / low supportive) to build foundational technical competence safely."
+      },
+      {
+        "question": "What occurs when a leader applies a Directing/Micromanaging style (S1) to a Self-Reliant Achiever (D4)?",
+        "options": [
+          "The D4 performer becomes significantly more productive",
+          "Frustration, resentment, and a collapse in motivation or retention",
+          "The D4 performer transforms into a D1 beginner",
+          "No impact on performance or morale"
+        ],
+        "answer": 1,
+        "explanation": "Over-directing a competent, committed expert creates resentment and micromanagement burnout."
+      },
+      {
+        "question": "In David Marquet's 'Turn the Ship Around!', what is the primary benefit of the 'I Intend To' communication protocol?",
+        "options": [
+          "It forces the leader to make every minor operational decision",
+          "It shifts team culture from passive obedience to proactive psychological ownership",
+          "It eliminates the need for any technical competence verification",
+          "It slows down team execution speed"
+        ],
+        "answer": 1,
+        "explanation": "'I Intend To' requires team members to analyze facts and state intended actions, building active leadership and ownership."
+      },
+      {
+        "question": "According to Liz Wiseman's 'Multipliers', how do 'Investor' leaders approach task delegation?",
+        "options": [
+          "They retain 51% ownership so they can take credit for successes",
+          "They give team members 100% ownership of outcomes while holding them accountable for results",
+          "They avoid assigning any high-stakes deliverables to team members",
+          "They dictate every line of execution code personally"
+        ],
+        "answer": 1,
+        "explanation": "Multipliers transfer 100% ownership of deliverables, empowering teams to operate with full accountability."
+      }
+    ]
   }
 ];
 
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { curriculumData };
-}
+module.exports = { curriculumData };

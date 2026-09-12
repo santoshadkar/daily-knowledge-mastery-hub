@@ -226,15 +226,15 @@ function renderSidebarTrackList() {
   const tracks = [
     { name: 'Artificial Intelligence', icon: '🤖', desc: 'Transformers, RAG & LLMs' },
     { name: 'Agile Coaching', icon: '🎯', desc: 'SAFe PI Planning & Systemic Teams' },
-    { name: 'Leadership & Soft Skills', icon: '🧠', desc: 'Psychological Safety & Radical Candor' }
+    { name: 'Leadership & Soft Skills', icon: '🧠', desc: 'Psychological Safety & Executive Presence' }
   ];
 
   tracksContainer.innerHTML = `
-    <h3>🎓 Curriculum Tracks (0ms Switch)</h3>
+    <h3>🎓 Curriculum Tracks</h3>
     ${tracks.map(t => {
       const isActiveTrack = currentConcept && currentConcept.track === t.name;
       const trackConcepts = allConcepts.filter(c => c.track === t.name);
-      const activeRotated = todayActiveByTrack[t.name] || trackConcepts[0];
+      const activeRotated = todayActiveByTrack[t.name] || (isActiveTrack ? currentConcept : trackConcepts[0]);
 
       return `
         <div class="track-item ${isActiveTrack ? 'active' : ''}" onclick="selectTrack('${t.name}')">
@@ -246,20 +246,10 @@ function renderSidebarTrackList() {
             </div>
           </div>
           
-          ${trackConcepts.length > 0 ? `
-            <div class="track-subtopics-list">
-              ${trackConcepts.map(sc => {
-                const isCurrentDisplayed = currentConcept && currentConcept.id === sc.id;
-                const isToday7AMActive = activeRotated && activeRotated.id === sc.id;
-                const shortTitle = sc.title.split(',')[0].substring(0, 32);
-                return `
-                  <div class="subtopic-chip ${isCurrentDisplayed ? 'active-subtopic' : ''}" 
-                       onclick="event.stopPropagation(); loadConceptByIdLocally('${sc.id}')">
-                    <span>${sc.id.toUpperCase()}: ${shortTitle}</span>
-                    ${isToday7AMActive ? '<span class="today-active-pill">7 AM</span>' : ''}
-                  </div>
-                `;
-              }).join('')}
+          ${activeRotated ? `
+            <div class="track-active-badge">
+              <span class="active-dot"></span>
+              <span class="active-label">LATEST: ${activeRotated.title.split(',')[0]}</span>
             </div>
           ` : ''}
         </div>
